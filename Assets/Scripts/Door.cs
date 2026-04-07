@@ -8,13 +8,7 @@ public class Door : MonoBehaviour, IInteractable
     public Transform LabelAnchor => labelAnchor;
     public void Interact()
     {
-        if (!isInteractable) return;
-
-        // Perform the opening logic
-        Debug.Log("Opening the mansion door...");
         transform.Rotate(0, 90, 0);
-
-        // Disable further interaction so you can't "open" it again
-        isInteractable = false;
+        isInteractable = false;  
     }
 }
