@@ -21,7 +21,7 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         target = PlayerController.instance.transform.position;
-        target.y = transform.position.y;
+        //target.y = transform.position.y;
 
         agent.destination = target; 
 
