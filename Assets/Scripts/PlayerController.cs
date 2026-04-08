@@ -193,25 +193,34 @@ public WeaponController gun;
         readyToAttack = true;
     }
 
-    void AttackRaycast()
-    {
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+  void AttackRaycast()
+{
+    if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+    { 
+        HitTarget(hit);
+
+        if(hit.transform.TryGetComponent<Actor>(out Actor T))
         { 
-            HitTarget(hit.point);
+            T.TakeDamage(attackDamage); 
+        }
+    } 
+}
 
-            if(hit.transform.TryGetComponent<Actor>(out Actor T))
-            { T.TakeDamage(attackDamage); }
-        } 
-    }
+    void HitTarget(RaycastHit hit)
+{
+    audioSource.pitch = 1;
+    audioSource.PlayOneShot(hitSound);
 
-    void HitTarget(Vector3 pos)
-    {
-        audioSource.pitch = 1;
-        audioSource.PlayOneShot(hitSound);
+    GameObject GO = Instantiate(
+        hitEffect,
+        hit.point,
+        Quaternion.LookRotation(hit.normal)
+    );
 
-        GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
-        Destroy(GO, 20);
-    }
+    GO.transform.SetParent(hit.transform);
+
+    Destroy(GO, 20);
+}
     public void PlayAnimation(string anim)
 {
     if(animator != null)
