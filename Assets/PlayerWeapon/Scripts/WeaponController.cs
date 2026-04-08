@@ -13,7 +13,7 @@ public class WeaponController : MonoBehaviour
     public Transform muzzle;
     public WeaponData weaponData;
 
-    public PlayerController myController { get; set; }
+   public PlayerControllerGun myController;
     public int ammoCount { get; private set; }
 
     bool reloading = false;
@@ -61,6 +61,8 @@ public class WeaponController : MonoBehaviour
     public void Reload()
     {
         if(ammoCount == weaponData.maxAmmo || reloading) return;
+
+        Debug.Log("Reload called");
 
         reloading = true;
 
