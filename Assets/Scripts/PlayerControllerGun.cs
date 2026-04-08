@@ -9,7 +9,7 @@ public class PlayerControllerGun : MonoBehaviour
     PlayerInput.MainActions input;
 
     CharacterController controller;
-    Animator animator;
+    [SerializeField] private Animator animator;
     AudioSource audioSource;
 
     WeaponController currentWeapon;
@@ -35,12 +35,11 @@ public class PlayerControllerGun : MonoBehaviour
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         playerInput = new PlayerInput();
         input = playerInput.Main;
-
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -145,21 +144,27 @@ public class PlayerControllerGun : MonoBehaviour
     }
 
     void AssignInputs()
+{
+    input.Jump.performed += ctx => Jump();
+
+    // Shoot
+    input.Attack.started += ctx =>
     {
-        input.Jump.performed += ctx => Jump();
+        if (currentWeapon != null)
+            currentWeapon.Shoot();
+    };
 
-        // ✅ FIXED: Shoot → Attack
-        input.Attack.started += ctx =>
-        {
-            if (currentWeapon != null)
-                currentWeapon.Shoot();
-        };
-
-        // ❌ REMOVED Reload (does not exist in Input System)
-    }
+    // Reload
+    input.Reload.started += ctx =>
+    {
+        if (currentWeapon != null)
+            currentWeapon.Reload();
+    };
+}
 
     public void PlayAnimation(string newState)
     {
+        Debug.Log("Playing animation: " + newState);
         animator.Play(newState);
     }
 }

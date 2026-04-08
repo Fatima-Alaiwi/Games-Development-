@@ -62,6 +62,8 @@ public class WeaponController : MonoBehaviour
     {
         if(ammoCount == weaponData.maxAmmo || reloading) return;
 
+        Debug.Log("Reload called");
+
         reloading = true;
 
         myController.PlayAnimation(RELOAD);
