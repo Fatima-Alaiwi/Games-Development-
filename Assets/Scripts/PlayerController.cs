@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     CharacterController controller;
     Animator animator;
     AudioSource audioSource;
-
+public WeaponController gun;
     [Header("Controller")]
     public float moveSpeed = 5;
     public float gravity = -9.8f;
@@ -48,6 +48,13 @@ public class PlayerController : MonoBehaviour
         // Repeat Inputs
         if(input.Attack.IsPressed())
         { Attack(); }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (gun != null)
+            {
+                gun.Shoot();
+            }
+        }
 
         SetAnimations();
     }
@@ -205,4 +212,11 @@ public class PlayerController : MonoBehaviour
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
     }
+    public void PlayAnimation(string anim)
+{
+    if(animator != null)
+    {
+        animator.Play(anim);
+    }
+}
 }
