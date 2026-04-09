@@ -5,13 +5,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
     CharacterController controller;
     Animator animator;
     AudioSource audioSource;
-
+public WeaponController gun;
     [Header("Controller")]
     public float moveSpeed = 5;
     public float gravity = -9.8f;
@@ -29,6 +30,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     { 
+        instance = this;
         controller = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -48,6 +50,13 @@ public class PlayerController : MonoBehaviour
         // Repeat Inputs
         if(input.Attack.IsPressed())
         { Attack(); }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (gun != null)
+            {
+                gun.Shoot();
+            }
+        }
 
         SetAnimations();
     }
@@ -205,4 +214,11 @@ public class PlayerController : MonoBehaviour
         GameObject GO = Instantiate(hitEffect, pos, Quaternion.identity);
         Destroy(GO, 20);
     }
+    public void PlayAnimation(string anim)
+{
+    if(animator != null)
+    {
+        animator.Play(anim);
+    }
+}
 }
