@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput.MainActions input;
 
     CharacterController controller;
-    Animator animator;
+   [SerializeField] private Animator animator;
     AudioSource audioSource;
 public WeaponController gun;
     [Header("Controller")]
@@ -30,7 +30,6 @@ public WeaponController gun;
     void Awake()
     { 
         controller = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
 
         playerInput = new PlayerInput();
@@ -46,15 +45,13 @@ public WeaponController gun;
         isGrounded = controller.isGrounded;
 
         // Repeat Inputs
-        if(input.Attack.IsPressed())
-        { Attack(); }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (gun != null)
-            {
-                gun.Shoot();
-            }
-        }
+        // if (Input.GetKeyDown(KeyCode.F))
+        // {
+        //     if (gun != null)
+        //     {
+        //         gun.Shoot();
+        //     }
+        // }
 
         SetAnimations();
     }
@@ -128,6 +125,7 @@ public WeaponController gun;
 
         // PLAY THE ANIMATION //
         currentAnimationState = newState;
+        Debug.Log("Animator object: " + animator.gameObject.name + " | State: " + newState);
         animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
     }
 
@@ -177,11 +175,13 @@ public WeaponController gun;
 
         if(attackCount == 0)
         {
+            Debug.Log("Playing Attack 1");
             ChangeAnimationState(ATTACK1);
             attackCount++;
         }
         else
         {
+            Debug.Log("Playing Attack 2");
             ChangeAnimationState(ATTACK2);
             attackCount = 0;
         }
