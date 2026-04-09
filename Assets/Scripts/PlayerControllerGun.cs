@@ -32,6 +32,16 @@ public class PlayerControllerGun : MonoBehaviour
     public float sensitivity;
     float xRotation;
 
+
+    //added this for footstep sound    
+    [Header("Footsteps")]
+    public AudioClip footstepClip;
+    public float footstepInterval = 0.5f;
+    public float minimumMoveAmount = 0.1f;
+
+    private float footstepTimer;
+    private Vector2 currentMoveInput;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -86,12 +96,22 @@ public class PlayerControllerGun : MonoBehaviour
                 currentWeapon.Shoot();
             }
         }
+        //added this
+        HandleFootsteps();
     }
 
-    void FixedUpdate()
-    {
-        MoveInput(input.Movement.ReadValue<Vector2>());
-    }
+    // void FixedUpdate()
+    // {
+    //     MoveInput(input.Movement.ReadValue<Vector2>());
+    // }
+// changed this to 
+void FixedUpdate()
+{
+    currentMoveInput = input.Movement.ReadValue<Vector2>();
+    MoveInput(currentMoveInput);
+}
+
+
 
     void LateUpdate()
     {
@@ -126,6 +146,30 @@ public class PlayerControllerGun : MonoBehaviour
 
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
     }
+
+    //added this
+    void HandleFootsteps()
+{
+    if (footstepClip == null || audioSource == null)
+        return;
+
+    bool isMoving = currentMoveInput.magnitude > minimumMoveAmount;
+
+    if (isGrounded && isMoving)
+    {
+        footstepTimer -= Time.deltaTime;
+
+        if (footstepTimer <= 0f)
+        {
+            audioSource.PlayOneShot(footstepClip, 0.3f);
+            footstepTimer = footstepInterval;
+        }
+    }
+    else
+    {
+        footstepTimer = 0f;
+    }
+}
 
     void OnEnable()
     {
