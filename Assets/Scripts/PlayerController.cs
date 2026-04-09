@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
@@ -29,6 +30,7 @@ public WeaponController gun;
 
     void Awake()
     { 
+        instance = this;
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
 
