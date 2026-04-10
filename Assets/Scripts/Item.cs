@@ -7,6 +7,8 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Something entered trigger: " + other.name);
+        
         if (other.CompareTag("Player"))
         {
             InventoryManager.instance.AddItem(itemName, itemIcon);

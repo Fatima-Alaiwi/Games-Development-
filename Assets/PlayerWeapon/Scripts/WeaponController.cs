@@ -109,19 +109,18 @@ public class WeaponController : MonoBehaviour
     }
 
     void HitTarget(RaycastHit hit)
-    {
-        if(hit.transform.parent.TryGetComponent<Actor>(out Actor T))
-        {
-            if(hit.transform.tag == "Head")
-            {
-                int dmg = Mathf.RoundToInt(weaponData.attackDamage * weaponData.headshotMultiplier);
-                T.TakeDamage(dmg);
-            }
-            else
-            { T.TakeDamage(weaponData.attackDamage); }
-        }
+{
+    Actor target = hit.transform.GetComponentInParent<Actor>();
 
-        GameObject GO = Instantiate(weaponData.hitEffect, hit.point, Quaternion.identity);
-        Destroy(GO, 4);
+    if (target != null)
+    {
+        target.TakeDamage(weaponData.attackDamage);
     }
+
+    if (weaponData.hitEffect != null)
+    {
+        GameObject go = Instantiate(weaponData.hitEffect, hit.point, Quaternion.identity);
+        Destroy(go, 4f);
+    }
+}
 }
