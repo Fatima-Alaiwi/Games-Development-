@@ -8,17 +8,22 @@ public class Item : MonoBehaviour
     public AudioClip collectSound;
 
     private void OnTriggerEnter(Collider other)
+{
+    Debug.Log("Something entered trigger: " + other.name);
+
+    if (other.CompareTag("Player"))
     {
-        Debug.Log("Something entered trigger: " + other.name);
+        bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
 
-        if (other.CompareTag("Player"))
+        if (added)
         {
-            InventoryManager.instance.AddItem(itemName, itemIcon);
-
-            // 👇 play sound before destroying
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
-
             Destroy(gameObject);
         }
+        else
+        {
+            Debug.Log("Cannot collect item, inventory is full.");
+        }
     }
+}
 }

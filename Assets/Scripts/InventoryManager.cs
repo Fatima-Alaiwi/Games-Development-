@@ -21,28 +21,36 @@ public class InventoryManager : MonoBehaviour
     public List<InventoryItem> items = new List<InventoryItem>();
     public InventorySlot[] slots; // assign in inspector
 
-    public void AddItem(string name, Sprite icon)
+    public bool AddItem(string name, Sprite icon)
+{
+    // Check if item already exists (stacking does NOT take space)
+    foreach (var item in items)
     {
-        // Check if item already exists
-        foreach (var item in items)
+        if (item.itemName == name)
         {
-            if (item.itemName == name)
-            {
-                item.count++;
-                UpdateUI();
-                return;
-            }
+            item.count++;
+            UpdateUI();
+            return true;
         }
-
-        // Add new item
-        InventoryItem newItem = new InventoryItem();
-        newItem.itemName = name;
-        newItem.icon = icon;
-        newItem.count = 1;
-
-        items.Add(newItem);
-        UpdateUI();
     }
+
+    // Check if inventory is full (only for NEW items)
+    if (items.Count >= slots.Length)
+    {
+        Debug.Log("Inventory is full!");
+        return false;
+    }
+
+    // Add new item
+    InventoryItem newItem = new InventoryItem();
+    newItem.itemName = name;
+    newItem.icon = icon;
+    newItem.count = 1;
+
+    items.Add(newItem);
+    UpdateUI();
+    return true;
+}
 
     void UpdateUI()
     {
