@@ -10,23 +10,31 @@ public class PlayerController : MonoBehaviour
     PlayerInput.MainActions input;
 
     CharacterController controller;
-   [SerializeField] private Animator animator;
+    [SerializeField] private Animator animator;
     AudioSource audioSource;
-public WeaponController gun;
+    public WeaponController gun;
+
     [Header("Controller")]
     public float moveSpeed = 5;
     public float gravity = -9.8f;
     public float jumpHeight = 1.2f;
 
     Vector3 _PlayerVelocity;
-
     bool isGrounded;
 
     [Header("Camera")]
     public Camera cam;
     public float sensitivity;
-
     float xRotation = 0f;
+
+    // Footsteps 
+    [Header("Footsteps")]
+    public AudioClip footstepClip;
+    public float footstepInterval = 0.5f;
+    public float minimumMoveAmount = 0.1f;
+
+    private float footstepTimer;
+    private Vector2 currentMoveInput;
 
     void Awake()
     { 
@@ -45,21 +53,17 @@ public WeaponController gun;
     void Update()
     {
         isGrounded = controller.isGrounded;
-
-        // Repeat Inputs
-        // if (Input.GetKeyDown(KeyCode.F))
-        // {
-        //     if (gun != null)
-        //     {
-        //         gun.Shoot();
-        //     }
-        // }
-
         SetAnimations();
+
+        HandleFootsteps();
     }
 
-    void FixedUpdate() 
-    { MoveInput(input.Movement.ReadValue<Vector2>()); }
+    // store move input
+    void FixedUpdate()
+    {
+        currentMoveInput = input.Movement.ReadValue<Vector2>();
+        MoveInput(currentMoveInput);
+    }
 
     void LateUpdate() 
     { LookInput(input.Look.ReadValue<Vector2>()); }
@@ -86,8 +90,31 @@ public WeaponController gun;
         xRotation = Mathf.Clamp(xRotation, -80, 80);
 
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
+    }
+
+    // ✅ ADDED: copied exactly from gun script
+    void HandleFootsteps()
+    {
+        if (footstepClip == null || audioSource == null)
+            return;
+
+        bool isMoving = currentMoveInput.magnitude > minimumMoveAmount;
+
+        if (isGrounded && isMoving)
+        {
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                audioSource.PlayOneShot(footstepClip, 0.3f);
+                footstepTimer = footstepInterval;
+            }
+        }
+        else
+        {
+            footstepTimer = 0f;
+        }
     }
 
     void OnEnable() 
@@ -98,7 +125,6 @@ public WeaponController gun;
 
     void Jump()
     {
-        // Adds force to the player rigidbody to jump
         if (isGrounded)
             _PlayerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
     }
@@ -122,10 +148,7 @@ public WeaponController gun;
 
     public void ChangeAnimationState(string newState) 
     {
-        // STOP THE SAME ANIMATION FROM INTERRUPTING WITH ITSELF //
         if (currentAnimationState == newState) return;
-
-        // PLAY THE ANIMATION //
         currentAnimationState = newState;
         Debug.Log("Animator object: " + animator.gameObject.name + " | State: " + newState);
         animator.CrossFadeInFixedTime(currentAnimationState, 0.2f);
@@ -133,10 +156,9 @@ public WeaponController gun;
 
     void SetAnimations()
     {
-        // If player is not attacking
         if(!attacking)
         {
-            if(_PlayerVelocity.x == 0 &&_PlayerVelocity.z == 0)
+            if(_PlayerVelocity.x == 0 && _PlayerVelocity.z == 0)
             { ChangeAnimationState(IDLE); }
             else
             { ChangeAnimationState(WALK); }
@@ -177,13 +199,11 @@ public WeaponController gun;
 
         if(attackCount == 0)
         {
-            Debug.Log("Playing Attack 1");
             ChangeAnimationState(ATTACK1);
             attackCount++;
         }
         else
         {
-            Debug.Log("Playing Attack 2");
             ChangeAnimationState(ATTACK2);
             attackCount = 0;
         }
@@ -195,39 +215,29 @@ public WeaponController gun;
         readyToAttack = true;
     }
 
-  void AttackRaycast()
-{
-    if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
-    { 
-        HitTarget(hit);
-
-        if(hit.transform.TryGetComponent<Actor>(out Actor T))
+    void AttackRaycast()
+    {
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
         { 
-            T.TakeDamage(attackDamage); 
-        }
-    } 
-}
+            HitTarget(hit);
+            if(hit.transform.TryGetComponent<Actor>(out Actor T))
+            { T.TakeDamage(attackDamage); }
+        } 
+    }
 
     void HitTarget(RaycastHit hit)
-{
-    audioSource.pitch = 1;
-    audioSource.PlayOneShot(hitSound);
-
-    GameObject GO = Instantiate(
-        hitEffect,
-        hit.point,
-        Quaternion.LookRotation(hit.normal)
-    );
-
-    GO.transform.SetParent(hit.transform);
-
-    Destroy(GO, 20);
-}
-    public void PlayAnimation(string anim)
-{
-    if(animator != null)
     {
-        animator.Play(anim);
+        audioSource.pitch = 1;
+        audioSource.PlayOneShot(hitSound);
+
+        GameObject GO = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+        GO.transform.SetParent(hit.transform);
+        Destroy(GO, 20);
     }
-}
+
+    public void PlayAnimation(string anim)
+    {
+        if(animator != null)
+            animator.Play(anim);
+    }
 }
