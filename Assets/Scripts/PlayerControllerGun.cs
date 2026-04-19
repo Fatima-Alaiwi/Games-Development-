@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerControllerGun : MonoBehaviour
 {
+    //added this 19-4
+     public static PlayerControllerGun instance;
     PlayerInput playerInput;
     PlayerInput.MainActions input;
 
@@ -44,6 +46,9 @@ public class PlayerControllerGun : MonoBehaviour
 
     void Awake()
     {
+        //added this 19-4
+             instance = this;
+
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
 
