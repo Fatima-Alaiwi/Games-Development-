@@ -5,10 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerControllerGun : MonoBehaviour
 {
-    //added this 19-4
-     public static PlayerControllerGun instance;
+    public static PlayerControllerGun instance;
     PlayerInput playerInput;
     PlayerInput.MainActions input;
+
+    [Header("Interaction")]
+    public float interactRange = 3f;
+    private IInteractable currentInteractable;
 
     CharacterController controller;
     [SerializeField] private Animator animator;
@@ -26,7 +29,6 @@ public class PlayerControllerGun : MonoBehaviour
     public float jumpHeight = 1.2f;
 
     Vector3 _PlayerVelocity;
-
     bool isGrounded;
 
     [Header("Camera")]
@@ -34,8 +36,6 @@ public class PlayerControllerGun : MonoBehaviour
     public float sensitivity;
     float xRotation;
 
-
-    //added this for footstep sound    
     [Header("Footsteps")]
     public AudioClip footstepClip;
     public float footstepInterval = 0.5f;
@@ -46,47 +46,24 @@ public class PlayerControllerGun : MonoBehaviour
 
     void Awake()
     {
-        //added this 19-4
-             instance = this;
-
+        instance = this;
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
-
         playerInput = new PlayerInput();
         input = playerInput.Main;
-        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
         SetWeapon(defaultWeapon);
         AssignInputs();
     }
 
     public void SetWeapon(WeaponData newWeapon)
     {
-        if(newWeapon == null)
-        {
-            Debug.LogError("PlayerControllerGun: defaultWeapon is not assigned!");
-            return;
-        }
-
-        if(newWeapon.weaponPrefab == null)
-        {
-            Debug.LogError("PlayerControllerGun: weaponPrefab in WeaponData is missing!");
-            return;
-        }
-
-        if(currentWeapon != null)
-        {
-            Destroy(currentWeapon.gameObject);
-        }
-
+        if(newWeapon == null) { Debug.LogError("defaultWeapon is not assigned!"); return; }
+        if(newWeapon.weaponPrefab == null) { Debug.LogError("weaponPrefab is missing!"); return; }
+        if(currentWeapon != null) Destroy(currentWeapon.gameObject);
         currentWeapon = Instantiate(newWeapon.weaponPrefab, weaponHolderPosition);
-
-        if (currentWeapon != null)
-        {
-            currentWeapon.myController = this;
-        }
+        if (currentWeapon != null) currentWeapon.myController = this;
     }
 
     void Update()
@@ -95,28 +72,19 @@ public class PlayerControllerGun : MonoBehaviour
 
         if (currentWeapon != null && currentWeapon.weaponData != null)
         {
-            // ✅ FIXED: Shoot → Attack
             if(input.Attack.IsPressed() && currentWeapon.weaponData.automatic)
-            {
                 currentWeapon.Shoot();
-            }
         }
-        //added this
+
         HandleFootsteps();
+        CheckForInteractable();
     }
 
-    // void FixedUpdate()
-    // {
-    //     MoveInput(input.Movement.ReadValue<Vector2>());
-    // }
-// changed this to 
-void FixedUpdate()
-{
-    currentMoveInput = input.Movement.ReadValue<Vector2>();
-    MoveInput(currentMoveInput);
-}
-
-
+    void FixedUpdate()
+    {
+        currentMoveInput = input.Movement.ReadValue<Vector2>();
+        MoveInput(currentMoveInput);
+    }
 
     void LateUpdate()
     {
@@ -128,14 +96,9 @@ void FixedUpdate()
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
-
         controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
-
         _PlayerVelocity.y += gravity * Time.deltaTime;
-
-        if(isGrounded && _PlayerVelocity.y < 0)
-            _PlayerVelocity.y = -2f;
-
+        if(isGrounded && _PlayerVelocity.y < 0) _PlayerVelocity.y = -2f;
         controller.Move(_PlayerVelocity * Time.deltaTime);
     }
 
@@ -143,48 +106,50 @@ void FixedUpdate()
     {
         float mouseX = input.x;
         float mouseY = input.y;
-
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
-
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
-
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
     }
 
-    //added this
     void HandleFootsteps()
-{
-    if (footstepClip == null || audioSource == null)
-        return;
-
-    bool isMoving = currentMoveInput.magnitude > minimumMoveAmount;
-
-    if (isGrounded && isMoving)
     {
-        footstepTimer -= Time.deltaTime;
-
-        if (footstepTimer <= 0f)
+        if (footstepClip == null || audioSource == null) return;
+        bool isMoving = currentMoveInput.magnitude > minimumMoveAmount;
+        if (isGrounded && isMoving)
         {
-            audioSource.PlayOneShot(footstepClip, 0.3f);
-            footstepTimer = footstepInterval;
+            footstepTimer -= Time.deltaTime;
+            if (footstepTimer <= 0f)
+            {
+                audioSource.PlayOneShot(footstepClip, 0.3f);
+                footstepTimer = footstepInterval;
+            }
         }
-    }
-    else
-    {
-        footstepTimer = 0f;
-    }
-}
-
-    void OnEnable()
-    {
-        input.Enable();
+        else { footstepTimer = 0f; }
     }
 
-    void OnDisable()
+    // ✅ FIXED: Now outside Update(), proper method
+    void CheckForInteractable()
     {
-        input.Disable();
+        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, interactRange))
+        {
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            if (interactable != null && interactable.isInteractable)
+            {
+                currentInteractable = interactable;
+                Debug.Log(interactable.InteractionText);
+                return;
+            }
+        }
+
+        currentInteractable = null;
     }
+
+    void OnEnable() { input.Enable(); }
+    void OnDisable() { input.Disable(); }
 
     void Jump()
     {
@@ -193,23 +158,25 @@ void FixedUpdate()
     }
 
     void AssignInputs()
-{
-    input.Jump.performed += ctx => Jump();
-
-    // Shoot
-    input.Attack.started += ctx =>
     {
-        if (currentWeapon != null)
-            currentWeapon.Shoot();
-    };
+        input.Jump.performed += ctx => Jump();
 
-    // Reload
-    input.Reload.started += ctx =>
-    {
-        if (currentWeapon != null)
-            currentWeapon.Reload();
-    };
-}
+        input.Attack.started += ctx =>
+        {
+            if (currentWeapon != null) currentWeapon.Shoot();
+        };
+
+        input.Reload.started += ctx =>
+        {
+            if (currentWeapon != null) currentWeapon.Reload();
+        };
+
+        input.Interact.started += ctx =>
+        {
+            if (currentInteractable != null && currentInteractable.isInteractable)
+                currentInteractable.Interact();
+        };
+    }
 
     public void PlayAnimation(string newState)
     {
