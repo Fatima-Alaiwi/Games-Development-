@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Door : MonoBehaviour, IInteractable
 {
@@ -13,6 +14,10 @@ public class Door : MonoBehaviour, IInteractable
     public AudioClip openingDoorClip;
     private AudioSource audioSource;
 
+    [Header("Opening Settings")]
+    public float openAngle = 90f;
+    public float openSpeed = 2f;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -21,11 +26,27 @@ public class Door : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!isInteractable) return;
-
-        transform.Rotate(0, 90, 0);
         isInteractable = false;
 
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
+
+        StartCoroutine(OpenDoor());
+    }
+
+    IEnumerator OpenDoor()
+    {
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = startRotation * Quaternion.Euler(0, openAngle, 0);
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * openSpeed;
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            yield return null;
+        }
+
+        transform.rotation = endRotation;
     }
 }
