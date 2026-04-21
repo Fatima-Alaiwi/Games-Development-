@@ -45,8 +45,7 @@ public class LeverInteractable : MonoBehaviour, IInteractable
     IEnumerator PullLever()
     {
         Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, targetZRotation);
-
+        Quaternion endRotation = startRotation * Quaternion.Euler(targetZRotation, 0, 0);
         float t = 0f;
         while (t < 1f)
         {
