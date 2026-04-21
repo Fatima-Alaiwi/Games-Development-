@@ -3,40 +3,36 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    [Header("UI Panels")]
-    [Tooltip("The main menu panel with Start/Settings/Quit buttons")]
-    public GameObject mainPath; 
+    [Header("Menu Panels")]
+    public GameObject mainPanel;
+    public GameObject settingsPanel;
+    public GameObject instructionsPanel;
+    public GameObject creditsPanel;
+
     
-    [Tooltip("The settings panel you created with sliders")]
-    public GameObject settingsPath;
-
-
-    public void LoadScene(string sceneName)
+    //will add the game level after
+    public void StartGame()
     {
-        SceneManager.LoadScene(sceneName);
+        //SceneManager.LoadScene("GameLevel");
     }
 
     public void QuitGame()
     {
-        Debug.Log("Game is exiting...");
+        Debug.Log("Exiting Time Voyager...");
         Application.Quit();
     }
 
-    public void OpenSettings()
+    public void OpenPanel(GameObject panelToOpen)
     {
-        if (mainPath != null && settingsPath != null)
-        {
-            mainPath.SetActive(false);
-            settingsPath.SetActive(true);
-        }
-    }
+        mainPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        instructionsPanel.SetActive(false);
+        creditsPanel.SetActive(false);
 
-    public void CloseSettings()
+        panelToOpen.SetActive(true);
+    }
+    public void BackToMain()
     {
-        if (mainPath != null && settingsPath != null)
-        {
-            settingsPath.SetActive(false);
-            mainPath.SetActive(true);
-        }
+        OpenPanel(mainPanel);
     }
 }
