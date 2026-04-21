@@ -16,17 +16,24 @@ public class WiseMan : MonoBehaviour
     private bool hasGivenKey = false;
     private bool hasPlayedGreeting = false;
     private AudioSource audioSource;
+    private Animator animator;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+
+        animator = GetComponent<Animator>();
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
+
+        // Start talking animation
+        if (animator != null)
+            animator.SetBool("isTalking", true);
 
         int goldCount = GetGoldCount();
 
@@ -50,8 +57,13 @@ public class WiseMan : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-            hasPlayedGreeting = false;
+        if (!other.CompareTag("Player")) return;
+
+        // Stop talking animation
+        if (animator != null)
+            animator.SetBool("isTalking", false);
+
+        hasPlayedGreeting = false;
     }
 
     int GetGoldCount()
