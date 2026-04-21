@@ -6,12 +6,11 @@ public class InventorySlot : MonoBehaviour
 {
     public Image icon;
     public TextMeshProUGUI countText;
-
-    public Sprite defaultSprite; 
+    public Sprite defaultSprite;
 
     void Start()
     {
-        ClearSlot(); // initialize empty look
+        ClearSlot();
     }
 
     public void UpdateSlot(InventoryManager.InventoryItem item)
@@ -22,7 +21,7 @@ public class InventorySlot : MonoBehaviour
 
     public void ClearSlot()
     {
-        icon.sprite = defaultSprite; 
+        icon.sprite = defaultSprite;
         countText.text = "";
     }
 }
