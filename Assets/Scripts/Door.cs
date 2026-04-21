@@ -1,22 +1,52 @@
 using UnityEngine;
+using System.Collections;
 
 public class Door : MonoBehaviour, IInteractable
 {
-    // 1. This variable will now show up in the Unity Inspector
     [SerializeField] private string _interactionText = "Press E to Open Door";
-
-    // 2. The interface now pulls the value from that variable
     public string InteractionText => _interactionText;
 
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
+    [Header("Sound")]
+    public AudioClip openingDoorClip;
+    private AudioSource audioSource;
+
+    [Header("Opening Settings")]
+    public float openAngle = 90f;
+    public float openSpeed = 2f;
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
+
     public void Interact()
     {
         if (!isInteractable) return;
+        isInteractable = false;
 
-        transform.Rotate(0, 90, 0);
-        isInteractable = false;  
+        if (audioSource != null && openingDoorClip != null)
+            audioSource.PlayOneShot(openingDoorClip);
+
+        StartCoroutine(OpenDoor());
+    }
+
+    IEnumerator OpenDoor()
+    {
+        Quaternion startRotation = transform.rotation;
+        Quaternion endRotation = startRotation * Quaternion.Euler(0, openAngle, 0);
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * openSpeed;
+            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            yield return null;
+        }
+
+        transform.rotation = endRotation;
     }
 }
