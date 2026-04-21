@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         transform.Rotate(Vector3.up * (mouseX * Time.deltaTime * sensitivity));
     }
 
-    // ✅ ADDED: copied exactly from gun script
+    
     void HandleFootsteps()
     {
         if (footstepClip == null || audioSource == null)
