@@ -32,14 +32,10 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMove.cs",
               "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeToolTip": "Assets\\Scripts\\EnemyMove.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAIA7wBkAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAxwBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-21T10:36:05.734Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             },
             {
               "$type": "Document",
@@ -53,6 +49,10 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
               "WhenOpened": "2026-04-21T09:40:42.715Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
             }
           ]
         }
