@@ -15,6 +15,7 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
     [Header("Sound")]
     public AudioClip openingDoorClip;
+    public AudioClip magicianCallClip;
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
@@ -76,5 +77,9 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
         }
 
         transform.rotation = endRotation;
+
+        // Play magician call once after door opens
+        if (magicianCallClip != null)
+            AudioSource.PlayClipAtPoint(magicianCallClip, transform.position);
     }
 }
