@@ -32,33 +32,20 @@ public class InventorySlotSelector : MonoBehaviour
     }
  
     void HandleScrollSelection()
+{
+    float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+    if (scroll > 0f)
     {
-        // Mouse scroll wheel to navigate slots
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
- 
-        if (scroll > 0f)
-        {
-            selectedIndex--;
-            if (selectedIndex < 0) selectedIndex = slots.Length - 1;
-        }
-        else if (scroll < 0f)
-        {
-            selectedIndex++;
-            if (selectedIndex >= slots.Length) selectedIndex = 0;
-        }
- 
-        // Arrow keys as alternative
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-        {
-            selectedIndex++;
-            if (selectedIndex >= slots.Length) selectedIndex = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-        {
-            selectedIndex--;
-            if (selectedIndex < 0) selectedIndex = slots.Length - 1;
-        }
+        selectedIndex--;
+        if (selectedIndex < 0) selectedIndex = slots.Length - 1;
     }
+    else if (scroll < 0f)
+    {
+        selectedIndex++;
+        if (selectedIndex >= slots.Length) selectedIndex = 0;
+    }
+}
  
     void HandleUseItem()
     {
