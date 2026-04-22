@@ -19,51 +19,60 @@ public class InventoryManager : MonoBehaviour
     }
 
     public List<InventoryItem> items = new List<InventoryItem>();
-    public InventorySlot[] slots; // assign in inspector
+    public InventorySlot[] slots;
 
     public bool AddItem(string name, Sprite icon)
-{
-    // Check if item already exists (stacking does NOT take space)
-    foreach (var item in items)
     {
-        if (item.itemName == name)
+        foreach (var item in items)
         {
-            item.count++;
-            UpdateUI();
-            return true;
+            if (item.itemName == name)
+            {
+                item.count++;
+                UpdateUI();
+                return true;
+            }
         }
+
+        if (items.Count >= slots.Length)
+        {
+            Debug.Log("Inventory is full!");
+            return false;
+        }
+
+        InventoryItem newItem = new InventoryItem();
+        newItem.itemName = name;
+        newItem.icon = icon;
+        newItem.count = 1;
+
+        items.Add(newItem);
+        UpdateUI();
+        return true;
     }
 
-    // Check if inventory is full (only for NEW items)
-    if (items.Count >= slots.Length)
+    public bool RemoveItem(string name, int amount = 1)
     {
-        Debug.Log("Inventory is full!");
+        foreach (var item in items)
+        {
+            if (item.itemName == name)
+            {
+                item.count -= amount;
+                if (item.count <= 0)
+                    items.Remove(item);
+                UpdateUI();
+                return true;
+            }
+        }
         return false;
     }
-
-    // Add new item
-    InventoryItem newItem = new InventoryItem();
-    newItem.itemName = name;
-    newItem.icon = icon;
-    newItem.count = 1;
-
-    items.Add(newItem);
-    UpdateUI();
-    return true;
-}
 
     void UpdateUI()
     {
         for (int i = 0; i < slots.Length; i++)
         {
             if (i < items.Count)
-            {
                 slots[i].UpdateSlot(items[i]);
-            }
             else
-            {
                 slots[i].ClearSlot();
-            }
         }
     }
 }
