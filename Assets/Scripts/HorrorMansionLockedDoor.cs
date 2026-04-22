@@ -10,6 +10,9 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
+    [Header("Quest")]
+    public Quest doorQuest; // Drag your HuntedHouseKey quest asset here
+
     [Header("Key")]
     public string requiredKeyName = "HorrorKey";
 
@@ -22,6 +25,8 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public float openAngle = 90f;
     public float openSpeed = 2f;
 
+    private bool questGiven = false;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -31,6 +36,20 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     {
         if (!isInteractable) return;
 
+        // Step 1: First interaction — give the quest
+        if (!questGiven)
+        {
+            questGiven = true;
+
+            if (doorQuest != null)
+                QuestManager.Instance.AcceptQuest(doorQuest);
+
+            UIManager.Instance.ShowHoverText("Search for the key, then press E to open the door!", transform.position);
+            StartCoroutine(HideTextAfterDelay(2f));
+            return;
+        }
+
+        // Step 2: Quest given but no key yet
         if (!HasKey())
         {
             UIManager.Instance.ShowHoverText("Search for the key, then press E to open the door!", transform.position);
@@ -38,7 +57,13 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             return;
         }
 
+        // Step 3: Has key — open the door
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
+
+        // Mark quest complete via QuestManager
+        if (doorQuest != null)
+            QuestManager.Instance.UpdateProgress(doorQuest.goalItemName, 1);
+
         isInteractable = false;
 
         if (audioSource != null && openingDoorClip != null)
@@ -78,7 +103,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
         transform.rotation = endRotation;
 
-        // Play magician call once after door opens
         if (magicianCallClip != null)
             AudioSource.PlayClipAtPoint(magicianCallClip, transform.position);
     }
