@@ -1,5 +1,3 @@
-//changed the script
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,15 +9,22 @@ public class Actor : MonoBehaviour
     public bool isPlayer = false;
     public HealthBar healthBar;
 
+    private Animator animator;
+    private bool isDead = false;
+
     void Awake()
     {
         currentHealth = maxHealth;
+        animator = transform.root.GetComponentInChildren<Animator>();
+
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
     }
 
     public void TakeDamage(int amount)
     {
+        if (isDead) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -32,9 +37,18 @@ public class Actor : MonoBehaviour
 
     void Death()
     {
+        isDead = true;
+
         if (isPlayer)
+        {
             Debug.Log("Player is dead!");
+        }
         else
-            Destroy(gameObject);
+        {
+            if (animator != null)
+                animator.SetTrigger("Die");
+
+            Destroy(gameObject, 3f);
+        }
     }
 }
