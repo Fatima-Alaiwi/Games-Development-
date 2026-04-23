@@ -81,24 +81,8 @@ public class InventoryManager : MonoBehaviour
         foreach (var item in items)
         {
             if (item.itemName == name)
-            {
                 return true;
-            }
         }
         return false;
     }
-
-    public void RemoveItem(string name)
-    {
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (items[i].itemName == name)
-            {
-                items.RemoveAt(i);
-                UpdateUI();
-            }
-        }
-    }
-
 }
-
