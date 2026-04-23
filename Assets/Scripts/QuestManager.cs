@@ -9,13 +9,21 @@ public class QuestManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null) Instance = this;
+
+        //raghad added this!!!!!!
+        // Reset all quests when the game starts
+        // foreach (Quest q in activeQuests)
+        //     q.ResetQuest();
+        
+        // activeQuests.Clear();
+
     }
 
     public void AcceptQuest(Quest quest)
     {
         if (!activeQuests.Contains(quest))
         {
-            quest.ResetQuest();
+            quest.ResetQuest(); 
             activeQuests.Add(quest);
             Debug.Log("Quest Started: " + quest.questName);
         }
