@@ -34,18 +34,15 @@ public class DragonHealth : MonoBehaviour
     }
 }
  
-   void Die()
+  void Die()
 {
     Debug.Log("Dragon is dead!");
 
-    // Hide the dragon immediately
-    foreach (Renderer r in GetComponentsInChildren<Renderer>())
-        r.enabled = false;
-
-    // Disable colliders immediately
+    // Disable colliders so bombs don't hit it anymore
     foreach (Collider c in GetComponentsInChildren<Collider>())
         c.enabled = false;
 
+    // Play death sound
     if (deathSound != null)
     {
         audioSource.volume = 1f;
@@ -53,6 +50,12 @@ public class DragonHealth : MonoBehaviour
         audioSource.PlayOneShot(deathSound);
     }
 
-    Destroy(gameObject, deathSound != null ? deathSound.length : 0f);
+    // Trigger death animation
+    Animator anim = GetComponentInChildren<Animator>();
+    if (anim != null)
+        anim.SetTrigger("Die");
+
+    // Destroy after animation plays (adjust delay if needed)
+    Destroy(gameObject, 3f);
 }
 }
