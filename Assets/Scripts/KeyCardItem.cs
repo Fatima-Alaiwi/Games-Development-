@@ -28,7 +28,7 @@ public class KeycardItem : MonoBehaviour, IInteractable
             QuestManager.Instance.UpdateProgress(itemName, 1);
         
             // Update the description for the next step
-            QuestManager.Instance.UpdateDescription(questName, nextStepDescription);
+           // QuestManager.Instance.UpdateDescription(questName, nextStepDescription);
 
             if (collectSound != null) AudioSource.PlayClipAtPoint(collectSound, transform.position);
             UIManager.Instance.HideHoverText(); 
