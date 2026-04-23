@@ -1,138 +1,151 @@
 using UnityEngine;
 
-/// <summary>
-/// Replaces WiseMan.cs
-/// Attach this to your Wise Man NPC GameObject.
-///
-/// SETUP IN INSPECTOR:
-/// 1. Quest Settings  → drag in your "Find 3 Gold Ingots" Quest ScriptableObject
-///    Make sure the Quest asset has:
-///      goalItemName  = "DungeonGold"
-///      goalAmount    = 3
-/// 2. Key Item        → assign keyIcon sprite and collectSound clip
-/// 3. Dialogue        → assign greetingClip and thankYouClip
-/// 4. The GameObject needs a Collider with IsTrigger = true
-/// </summary>
 public class WiseManQuest : MonoBehaviour, IInteractable
 {
-    // ── IInteractable ────────────────────────────────────────────────────────
+    [Header("Key Item")]
+    public Sprite keyIcon;
+    public AudioClip collectSound;
+
+    [Header("Dialogue")]
+    public AudioClip greetingClip;
+    public AudioClip thankYouClip;
+
+    [Header("Quest")]
+    public Quest goldenIngotQuest;
+    public int requiredGoldCount = 3;
+
+    [Header("Interaction")]
     [field: SerializeField]
     public string InteractionText { get; set; } = "Talk to the Wise Man";
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
-    // ── Quest ────────────────────────────────────────────────────────────────
-    [Header("Quest")]
-    [Tooltip("Drag the 'Find 3 Gold Ingots' Quest ScriptableObject here.")]
-    public Quest goldQuest;
-
-    // ── Key Item ─────────────────────────────────────────────────────────────
-    [Header("Key Item")]
-    public Sprite  keyIcon;
-    public AudioClip collectSound;
-
-    // ── Dialogue ─────────────────────────────────────────────────────────────
-    [Header("Dialogue")]
-    public AudioClip greetingClip;   // "Bring me three golden ingots…"
-    public AudioClip thankYouClip;   // "Well done! Take this key."
-
-    // ── Internals ─────────────────────────────────────────────────────────────
-    private bool        hasGivenKey = false;
+    private bool hasGivenKey = false;
+    private bool questStarted = false;
+    private bool isCompletingQuest = false;
     private AudioSource audioSource;
-    private Animator    animator;
-
-    // ═════════════════════════════════════════════════════════════════════════
+    private Animator animator;
 
     void Start()
-    {
-        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
-        animator    = GetComponent<Animator>();
-    }
+{
+    audioSource = GetComponentInParent<AudioSource>();
+    if (audioSource == null)
+        audioSource = gameObject.AddComponent<AudioSource>();
+    animator = GetComponentInParent<Animator>();
 
-    // ── IInteractable entry point ─────────────────────────────────────────────
-    public void Interact()
-    {
-        if (hasGivenKey) return;               // nothing left to do
-
-        EnsureQuestStarted();                  // give the quest on first talk
-
-        if (QuestIsComplete())
-        {
-            RewardPlayer();
-        }
-        else
-        {
-            // Quest running but not yet complete – just remind the player
-            PlayClip(greetingClip);
-        }
-    }
-
-    // ── Trigger-based talking animation (proximity) ───────────────────────────
-    void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-        SetTalking(true);
-    }
+    if (goldenIngotQuest != null)
+        goldenIngotQuest.ResetQuest();
+}
 
     void OnTriggerExit(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        SetTalking(false);
+        if (animator != null)
+            animator.SetBool("isTalking", false);
     }
 
-    // ═════════════════════════════════════════════════════════════════════════
-    // Private helpers
-    // ═════════════════════════════════════════════════════════════════════════
-
-    /// <summary>
-    /// Registers the quest with QuestManager the first time the player talks
-    /// to the Wise Man (or re-enters trigger). Safe to call multiple times.
-    /// </summary>
-    void EnsureQuestStarted()
+    public void Interact()
     {
-        if (goldQuest == null) return;
+        if (hasGivenKey) return;
+        if (isCompletingQuest) return; // Prevent double pressing
 
-        // AcceptQuest already guards against duplicates
-        QuestManager.Instance.AcceptQuest(goldQuest);
+        int goldCount = GetGoldCount();
 
-        // Play greeting only once per "session" (quest not yet complete)
-        if (!QuestIsComplete())
-            PlayClip(greetingClip);
-
-        // Update the label so the player knows what to do
-        InteractionText = $"Find the {goldQuest.goalAmount} Golden Ingots";
+        if (questStarted && goldCount >= requiredGoldCount)
+        {
+            isCompletingQuest = true;
+            StartCoroutine(CompleteQuestAndGiveKey());
+        }
+        else if (!questStarted)
+        {
+            StartGoldenIngotQuest();
+        }
+        else
+        {
+            TriggerTalkingAnimation(greetingClip);
+        }
     }
 
-    bool QuestIsComplete()
+    void StartGoldenIngotQuest()
     {
-        return goldQuest != null && goldQuest.isCompleted;
+        questStarted = true;
+        TriggerTalkingAnimation(greetingClip);
+
+        if (goldenIngotQuest != null)
+        {
+            QuestManager.Instance.AcceptQuest(goldenIngotQuest);
+
+            // If player already has gold, sync the HUD count
+            int existing = GetGoldCount();
+            if (existing > 0)
+            {
+                int safeAmount = Mathf.Min(existing, goldenIngotQuest.goalAmount);
+                goldenIngotQuest.currentAmount = safeAmount;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("WiseManQuest: No Quest assigned in Inspector!");
+        }
     }
 
-    void RewardPlayer()
+    System.Collections.IEnumerator CompleteQuestAndGiveKey()
     {
-        hasGivenKey = true;
+        // Play thank you animation and audio FIRST
+        TriggerTalkingAnimation(thankYouClip);
 
-        // 1. Remove gold from inventory
-        InventoryManager.instance.RemoveItem(goldQuest.goalItemName, goldQuest.goalAmount);
+        // Wait for thank you clip to finish
+        float clipLength = thankYouClip != null ? thankYouClip.length : 1f;
+        yield return new WaitForSeconds(clipLength);
 
-        // 2. Give the key
+        // Stop talking animation
+        if (animator != null)
+            animator.SetBool("isTalking", false);
+
+        // Remove gold from inventory
+        InventoryManager.instance.RemoveItem("DungeonGold", requiredGoldCount);
+
+        // Complete the quest — this removes it from HUD after 2 seconds
+        if (goldenIngotQuest != null)
+            QuestManager.Instance.CompleteQuestPublic(goldenIngotQuest);
+
+        // Give the key
         bool added = InventoryManager.instance.AddItem("DungeonKey", keyIcon);
         if (added && collectSound != null)
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-        // 3. Play thank-you voice line
-        PlayClip(thankYouClip);
-
-        // 4. Update interaction label
-        InteractionText = "Safe travels, adventurer!";
-        isInteractable  = false;   // optional: disable further interaction
+        hasGivenKey = true;
+        InteractionText = "Thank you for your help!";
     }
 
-    void SetTalking(bool state)
+    void TriggerTalkingAnimation(AudioClip clip)
     {
         if (animator != null)
-            animator.SetBool("isTalking", state);
+            animator.SetBool("isTalking", true);
+
+        PlayClip(clip);
+
+        float duration = clip != null ? clip.length : 1f;
+        CancelInvoke("StopTalkingAnimation");
+        Invoke("StopTalkingAnimation", duration);
+    }
+
+    void StopTalkingAnimation()
+    {
+        if (animator != null)
+            animator.SetBool("isTalking", false);
+    }
+
+    int GetGoldCount()
+    {
+        if (InventoryManager.instance == null) return 0;
+        foreach (var item in InventoryManager.instance.items)
+        {
+            if (item.itemName == "DungeonGold")
+                return item.count;
+        }
+        return 0;
     }
 
     void PlayClip(AudioClip clip)

@@ -39,7 +39,30 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    void CompleteQuest(Quest q)
+        public void CompleteQuestPublic(Quest q)
+    {
+        if (!activeQuests.Contains(q)) return;
+        CompleteQuest(q);
+    }
+
+
+    // Updates HUD counter only, does NOT complete the quest
+    public void UpdateQuestCount(string goalName, int amount)
+    {
+        foreach (Quest q in activeQuests)
+        {
+            if (q == null) continue;
+            if (q.goalItemName == goalName && !q.isCompleted)
+            {
+                q.currentAmount += amount;
+                // Clamp so it never auto-completes
+                q.currentAmount = Mathf.Min(q.currentAmount, q.goalAmount);
+                Debug.Log($"Quest count updated: {q.questName} {q.currentAmount}/{q.goalAmount}");
+            }
+        }
+    }
+
+    public void CompleteQuest(Quest q)
     {
     q.isCompleted = true;
     Debug.Log("Quest Finished: " + q.questName);
