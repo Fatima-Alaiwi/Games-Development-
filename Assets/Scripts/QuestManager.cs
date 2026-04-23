@@ -27,6 +27,7 @@ public class QuestManager : MonoBehaviour
         Debug.Log("Active Quests Count: " + activeQuests.Count);
         foreach (Quest q in activeQuests)
         {
+            if (q == null) continue; // Safety check
             if (q.goalItemName == goalName && !q.isCompleted)
             {
                 q.currentAmount += amount;
@@ -44,4 +45,10 @@ public class QuestManager : MonoBehaviour
         Debug.Log("Quest Finished: " + q.questName);
         // You can add gold/exp rewards here
     }
+
+    public void UpdateDescription(string questName, string newDesc)
+{
+    Quest q = activeQuests.Find(x => x.questName == questName);
+    if (q != null) q.description = newDesc;
+}
 }
