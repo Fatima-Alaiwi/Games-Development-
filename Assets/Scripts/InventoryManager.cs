@@ -88,5 +88,17 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
+    public void RemoveItem(string name)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].itemName == name)
+            {
+                items.RemoveAt(i);
+                UpdateUI();
+            }
+        }
+    }
+
 }
 
