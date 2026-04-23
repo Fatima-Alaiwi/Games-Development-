@@ -110,10 +110,14 @@ public class WiseManQuest : MonoBehaviour, IInteractable
         if (goldenIngotQuest != null)
             QuestManager.Instance.CompleteQuestPublic(goldenIngotQuest);
 
-        // Give the key
-        bool added = InventoryManager.instance.AddItem("DungeonKey", keyIcon);
-        if (added && collectSound != null)
-            AudioSource.PlayClipAtPoint(collectSound, transform.position);
+       // Give the key
+        bool added = InventoryManager.instance.AddItem("GoldenKey", keyIcon);
+        if (added)
+        {
+            QuestManager.Instance.UpdateQuestCount("GoldenKey", 1);
+            if (collectSound != null)
+                AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        }
 
         hasGivenKey = true;
         InteractionText = "Thank you for your help!";
