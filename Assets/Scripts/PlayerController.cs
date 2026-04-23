@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
     Vector3 _PlayerVelocity;
     bool isGrounded;
 
+    [Header("State")]
+    public bool canMove = true;
+
     [Header("Camera")]
     public Camera cam;
     public float sensitivity;
@@ -73,7 +76,8 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
         moveDirection.x = input.x;
         moveDirection.z = input.y;
-
+        if (!canMove) return; // EXIT EARLY IF LOCKED
+        moveDirection = Vector3.zero;
         controller.Move(transform.TransformDirection(moveDirection) * moveSpeed * Time.deltaTime);
         _PlayerVelocity.y += gravity * Time.deltaTime;
         if(isGrounded && _PlayerVelocity.y < 0)
@@ -83,9 +87,9 @@ public class PlayerController : MonoBehaviour
 
     void LookInput(Vector3 input)
     {
+        if (!canMove) return;
         float mouseX = input.x;
         float mouseY = input.y;
-
         xRotation -= (mouseY * Time.deltaTime * sensitivity);
         xRotation = Mathf.Clamp(xRotation, -80, 80);
 
