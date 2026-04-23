@@ -3,11 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-//raghad try :)
 public class DungeonLockedDoor : MonoBehaviour, IInteractable
 {
-    [SerializeField] private string _interactionText = "Press E to Enter Code";
-    public string InteractionText => _interactionText;
+    [field: SerializeField]
+    public string InteractionText { get; set; } = "Press E to Enter Code";
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
@@ -28,29 +27,41 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
     public TMP_InputField codeInputField;
     public TextMeshProUGUI feedbackText;
 
+    [Header("Quest")]
+    public Quest doorQuest;
+
     private bool isOpen = false;
     private bool panelOpen = false;
+    private bool questStarted = false;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
 
-        // Hide panel at start
         if (codePanel != null)
             codePanel.SetActive(false);
+
+        if (doorQuest != null)
+            doorQuest.ResetQuest();
     }
 
     public void Interact()
     {
         if (!isInteractable || isOpen) return;
 
+        // Start quest on first E press
+        if (!questStarted)
+        {
+            questStarted = true;
+            if (doorQuest != null)
+                QuestManager.Instance.AcceptQuest(doorQuest);
+        }
+
         if (!panelOpen)
         {
-            // Show code panel
             panelOpen = true;
             codePanel.SetActive(true);
 
-            // Unlock cursor so player can type
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -65,30 +76,28 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
 
         if (enteredCode == correctCode)
         {
-            // Correct code!
             feedbackText.text = "Access Granted!";
             feedbackText.color = Color.green;
 
-            // Close panel
             codePanel.SetActive(false);
             panelOpen = false;
 
-            // Lock cursor again
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            // Open door
             isOpen = true;
             isInteractable = false;
 
             if (audioSource != null && openingDoorClip != null)
                 audioSource.PlayOneShot(openingDoorClip);
 
+            if (doorQuest != null)
+                QuestManager.Instance.CompleteQuestPublic(doorQuest);
+
             StartCoroutine(OpenDoor());
         }
         else
         {
-            // Wrong code!
             feedbackText.text = "Wrong Code. Try Again.";
             feedbackText.color = Color.red;
             codeInputField.text = "";
