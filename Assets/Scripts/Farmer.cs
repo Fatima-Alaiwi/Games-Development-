@@ -2,9 +2,27 @@ using UnityEngine;
 
 public class Farmer : MonoBehaviour, IInteractable
 {
-    [Header("Interaction")]
-    [field: SerializeField]
-    public string InteractionText { get; set; } = "Talk to Farmer";
+    [SerializeField] private string defaultText = "Talk to Farmer";
+
+public string InteractionText
+{
+    get
+    {
+        if (hasGivenKey)
+            return "Subarashii! Safe travels, stranger.";
+
+        int count = GetItemCount();
+
+        if (count >= requiredAmount)
+            return "Give items to Farmer";
+
+        if (count == 1)
+            return "You are almost there...";
+
+        return defaultText;
+    }
+}
+//    public string InteractionText { get; set; } = "Talk to Farmer";
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
@@ -44,41 +62,41 @@ public void Interact()
         animator.SetBool("isTalking", true);
 
     int count = GetItemCount();
+    Debug.Log("COUNT IS: " + count);
 
-    // ✅ Check for completion FIRST before anything else
     if (!hasGivenKey && count >= requiredAmount)
     {
-            Debug.Log("COUNT IS: " + count + " REQUIRED: " + requiredAmount);
-
+        // ✅ Has both items - give key
         hasGivenKey = true;
-        isInteractable = false;
+       // isInteractable = false;
         PlayClip(thankYouClip);
-        InteractionText = "Subarashii! Safe travels, stranger.";
+       // InteractionText = "Subarashii! Safe travels, stranger.";
         InventoryManager.instance.RemoveItem(requiredItemName, requiredAmount);
         bool added = InventoryManager.instance.AddItem("Key1", keyIcon);
         if (added && collectSound != null)
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
-        if (fruitQuest != null && QuestManager.Instance != null)
-            QuestManager.Instance.activeQuests.Remove(fruitQuest);
         Invoke(nameof(StopTalking), thankYouClip != null ? thankYouClip.length : 2f);
-        return; // ✅ EXIT immediately, don't fall through to other checks
+        return;
     }
-    
-    if (count == 1 && !hasGivenKey)
+
+    if (!hasGivenKey && count == 1)
     {
+        // ✅ Has 1 item
         PlayClip(oneItemClip);
-        InteractionText = "You are almost there...";
+        //InteractionText = "You are almost there...";
         Invoke(nameof(StopTalking), oneItemClip != null ? oneItemClip.length : 2f);
-        return; // ✅ EXIT
+        return;
     }
-    
-    if (!hasGivenKey)
+
+    if (!hasGivenKey && count == 0)
     {
+        // ✅ No items - start quest
         PlayClip(greetingClip);
-        InteractionText = "Check back once you're done!";
+        //InteractionText = "Check back once you're done!";
         if (fruitQuest != null && QuestManager.Instance != null)
             QuestManager.Instance.AcceptQuest(fruitQuest);
         Invoke(nameof(StopTalking), greetingClip != null ? greetingClip.length : 2f);
+        return;
     }
 }
 

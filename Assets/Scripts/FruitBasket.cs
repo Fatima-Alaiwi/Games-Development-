@@ -4,7 +4,9 @@ public class FruitBasket : MonoBehaviour, IInteractable
 {
     [field: SerializeField]
     public string InteractionText { get; set; } = "Pick up Fruit Basket";
+
     public bool isInteractable { get; set; } = true;
+
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
@@ -13,22 +15,30 @@ public class FruitBasket : MonoBehaviour, IInteractable
     public Sprite itemIcon;
     public AudioClip collectSound;
 
-  public void Interact()
-{
-    Debug.Log("FruitBasket Interact() called!"); // ✅ add this
-    
-    bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
-    Debug.Log("Item added: " + added); // ✅ add this
+    [Header("Quest Settings")]
+    public Quest fruitQuest;
 
-    if (added)
+    public void Interact()
     {
-        if (collectSound != null)
-            AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        Debug.Log("FruitBasket Interact() called!");
 
-        if (QuestManager.Instance != null)
-            QuestManager.Instance.UpdateProgress(itemName, 1);
+        bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
+        Debug.Log("Item added: " + added);
 
-        gameObject.SetActive(false);
+        if (added)
+        {
+            if (collectSound != null)
+                AudioSource.PlayClipAtPoint(collectSound, transform.position);
+
+            if (QuestManager.Instance != null && fruitQuest != null && QuestManager.Instance.activeQuests.Count == 0)
+            {
+                QuestManager.Instance.AcceptQuest(fruitQuest);
+            }
+
+            if (QuestManager.Instance != null)
+                QuestManager.Instance.UpdateProgress(itemName, 1);
+
+            gameObject.SetActive(false);
+        }
     }
-}
 }
