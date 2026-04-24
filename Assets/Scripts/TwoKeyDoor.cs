@@ -14,7 +14,8 @@ public class TwoKeyDoor : MonoBehaviour, IInteractable
     public int requiredKeyCount = 2;
 
     [Header("Quest")]
-    public Quest keyQuest; // Drag your Quest ScriptableObject here
+    public Quest keyQuest;
+    public Quest dragonQuest; // Drag KillDragonQuest here
 
     [Header("Sound")]
     public AudioClip openingDoorClip;
@@ -30,15 +31,14 @@ public class TwoKeyDoor : MonoBehaviour, IInteractable
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        if (keyQuest != null)
-            keyQuest.ResetQuest();
+        if (keyQuest != null) keyQuest.ResetQuest();
+        if (dragonQuest != null) dragonQuest.ResetQuest();
     }
 
     public void Interact()
     {
         if (isOpen) return;
 
-        // Start quest on first interaction
         if (!questStarted)
         {
             questStarted = true;
@@ -48,20 +48,15 @@ public class TwoKeyDoor : MonoBehaviour, IInteractable
 
         int keyCount = GetKeyCount();
 
-        // Sync quest current amount with actual key count
         if (keyQuest != null && !keyQuest.isCompleted)
-        {
             keyQuest.currentAmount = Mathf.Min(keyCount, keyQuest.goalAmount);
-        }
 
         if (keyCount >= requiredKeyCount)
         {
-            // Has enough keys — open door
             OpenDoor();
         }
         else
         {
-            // Not enough keys — update interaction text
             InteractionText = $"Door is Locked. Keys: {keyCount}/{requiredKeyCount}";
         }
     }
@@ -72,12 +67,14 @@ public class TwoKeyDoor : MonoBehaviour, IInteractable
         isInteractable = false;
         InteractionText = "";
 
-        // Remove keys from inventory
         InventoryManager.instance.RemoveItem(keyItemName, requiredKeyCount);
 
-        // Complete quest
         if (keyQuest != null)
             QuestManager.Instance.CompleteQuestPublic(keyQuest);
+
+        // Start dragon quest when door opens
+        if (dragonQuest != null)
+            QuestManager.Instance.AcceptQuest(dragonQuest);
 
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
