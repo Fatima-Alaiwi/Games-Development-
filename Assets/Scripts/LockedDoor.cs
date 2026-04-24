@@ -14,6 +14,7 @@ public class LockedDoor : MonoBehaviour, IInteractable
 
     [Header("Quest Requirement")]
     public Quest requiredQuest; // drag BottleQuest here
+    public Quest questToComplete; // drag FindLibraryQuest here
 
     [Header("Code Settings")]
     public string correctCode = "888";
@@ -90,6 +91,10 @@ public class LockedDoor : MonoBehaviour, IInteractable
             // Open door
             isOpen = true;
             isInteractable = false;
+
+            // Complete the find library quest — player found it!
+            if (questToComplete != null)
+                QuestManager.Instance.UpdatedCompleteQuest(questToComplete);
 
             if (audioSource != null && openingDoorClip != null)
                 audioSource.PlayOneShot(openingDoorClip);

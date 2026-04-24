@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Defeat all the enemies in the basement
   goalItemName: Enemy
   activeMessage: 'Enemies remaining:'
-  completeMessage: All enemies defeated!
+  completeMessage: 'All enemies defeated! Now find the Magician...    '
   goalAmount: 10
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 10
+  isCompleted: 1
