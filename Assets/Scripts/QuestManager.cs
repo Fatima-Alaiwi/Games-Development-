@@ -12,11 +12,7 @@ public class QuestManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null) Instance = this;
-      
-
     }
-
-  
 
     public void AcceptQuest(Quest quest)
     {
@@ -30,8 +26,6 @@ public class QuestManager : MonoBehaviour
 
     public void UpdateProgress(string goalName, int amount)
     {
-        Debug.Log("Updating progress for: " + goalName);
-        Debug.Log("Active Quests Count: " + activeQuests.Count);
         foreach (Quest q in activeQuests)
         {
             if (q.goalItemName == goalName && !q.isCompleted)
@@ -79,4 +73,39 @@ public class QuestManager : MonoBehaviour
         Debug.Log("Quest Finished: " + q.questName);
         // You can add gold/exp rewards here
     }
+
+    public void UpdateQuestDescription(string questName, string newDescription)
+    {
+        foreach (Quest q in activeQuests)
+        {
+            if (q != null && q.questName == questName)
+            {
+                // The HUD reads activeMessage every frame, 
+                // so changing it here updates the screen instantly.
+                q.activeMessage = newDescription; 
+                return;
+            }
+        }
+    }
+
+    public void UpdatedCompleteQuest(Quest q)
+    {
+        if (q == null) return;
+
+        q.isCompleted = true;
+        Debug.Log("Quest Finished: " + q.questName);
+
+        // 1. Add to the completed list (so the Computer UI success marks work)
+        if (!completedQuests.Contains(q))
+        {
+            completedQuests.Add(q);
+        }
+
+        // 2. REMOVE from the active list (this hides the HUD)
+        if (activeQuests.Contains(q))
+        {
+            activeQuests.Remove(q);
+        }
+    }
+
 }

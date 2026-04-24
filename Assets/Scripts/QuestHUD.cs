@@ -1,12 +1,11 @@
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(CanvasGroup))] // Automatically adds CanvasGroup if missing
+[RequireComponent(typeof(CanvasGroup))]
 public class QuestHUD : MonoBehaviour
 {
     public TextMeshProUGUI progressText;
     private CanvasGroup canvasGroup;
-
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -43,7 +42,7 @@ public class QuestHUD : MonoBehaviour
         }
     }
 
-    private void ShowUI(bool isVisible)
+    public void ShowUI(bool isVisible)
     {
         canvasGroup.alpha = isVisible ? 1 : 0;
         canvasGroup.interactable = isVisible;
