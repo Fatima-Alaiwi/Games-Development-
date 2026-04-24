@@ -11,9 +11,17 @@ public class SatellitePanel : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (!isInteractable) return;
+
         if (satelliteScript != null)
         {
             satelliteScript.StartControlling();
         }
+    }
+
+    public void SetPanelOffline()
+    {
+        isInteractable = false;
+        InteractionText = "System Offline - Alignment Complete";
     }
 }
