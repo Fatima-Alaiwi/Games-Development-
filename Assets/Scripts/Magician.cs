@@ -5,17 +5,19 @@ public class Magician : MonoBehaviour
     [Header("Dialogue")]
     public AudioClip greetingClip;
     public AudioClip rewardClip;
-    public AudioClip waitClip; // "Defeat the enemies first!" audio
+    public AudioClip waitClip;
 
     [Header("Bottle Requirement")]
     public int requiredBottleCount = 4;
 
     [Header("Quest Requirement")]
-    public Quest killQuest; // Drag KillEnemiesQuest here
+    public Quest killQuest;
+    public Quest findMagicianQuest; // drag FindMagicianQuest here
 
     private bool hasGivenCode = false;
     private bool hasPlayedGreeting = false;
     private bool hasPlayedWait = false;
+    private bool hasCompletedFindQuest = false;
     private AudioSource audioSource;
     private Animator animator;
 
@@ -28,42 +30,52 @@ public class Magician : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnTriggerEnter(Collider other)
+   void OnTriggerEnter(Collider other)
+{
+    if (!other.CompareTag("Player")) return;
+
+    if (animator != null)
+        animator.SetBool("isTalking", true);
+
+    // Check kill quest first
+    if (killQuest != null && !killQuest.isCompleted)
     {
-        if (!other.CompareTag("Player")) return;
-
-        if (animator != null)
-            animator.SetBool("isTalking", true);
-
-        // Check if kill quest is done first
-        if (killQuest != null && !killQuest.isCompleted)
+        if (!hasPlayedWait)
         {
-            // Enemies not defeated yet!
-            if (!hasPlayedWait)
-            {
-                hasPlayedWait = true;
-                PlayClip(waitClip); // Play "defeat enemies first" audio
-                Debug.Log("Magician: Defeat the enemies first!");
-            }
-            return;
+            hasPlayedWait = true;
+            PlayClip(waitClip);
+            Debug.Log("Magician: Defeat the enemies first!");
         }
-
-        int bottleCount = GetBottleCount();
-
-        if (!hasGivenCode && bottleCount >= requiredBottleCount)
-        {
-            hasGivenCode = true;
-            InventoryManager.instance.RemoveItem("Bottle", 4);
-            PlayClip(rewardClip);
-            Debug.Log("Magician gave the password: 927!");
-        }
-        else if (!hasPlayedGreeting && !hasGivenCode)
-        {
-            hasPlayedGreeting = true;
-            PlayClip(greetingClip);
-            Debug.Log("Magician: Find 4 bottles!");
-        }
+        return;
     }
+
+    // Complete find magician quest
+    if (!hasCompletedFindQuest)
+    {
+        hasCompletedFindQuest = true;
+        if (findMagicianQuest != null)
+            QuestManager.Instance.UpdatedCompleteQuest(findMagicianQuest);
+        Debug.Log("Find Magician quest completed! Bottles unlocked!");
+    }
+
+    int bottleCount = GetBottleCount();
+    Debug.Log("Bottle count: " + bottleCount); // so you can see in console
+
+    // CHECK BOTTLES EVERY TIME — not just first visit
+    if (!hasGivenCode && bottleCount >= requiredBottleCount)
+    {
+        hasGivenCode = true;
+        InventoryManager.instance.RemoveItem("Bottle", 4);
+        PlayClip(rewardClip);
+        Debug.Log("Magician gave the password: 927!");
+    }
+    else if (!hasGivenCode)
+    {
+        // Play greeting every time until bottles collected
+        PlayClip(greetingClip);
+        Debug.Log("Magician: Find 4 bottles! You have: " + bottleCount);
+    }
+}
 
     void OnTriggerExit(Collider other)
     {

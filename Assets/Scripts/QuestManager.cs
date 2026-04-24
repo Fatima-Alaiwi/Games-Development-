@@ -41,7 +41,7 @@ public class QuestManager : MonoBehaviour
 
 
 
-
+//raghad
     public void UpdateProgress(string goalName, int amount)
 {
     Quest questToComplete = null; // find first, complete after
@@ -148,4 +148,16 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+
+
+//raghad
+public bool IsQuestComplete(Quest quest)
+{
+    if (quest == null) return false;
+    foreach (Quest q in activeQuests)
+        if (q == quest && q.isCompleted) return true;
+    foreach (Quest q in completedQuests)
+        if (q == quest) return true;
+    return false;
+}
 }
