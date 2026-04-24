@@ -7,16 +7,22 @@ public class QuestManager : MonoBehaviour
     public List<Quest> activeQuests = new List<Quest>();
     public List<Quest> completedQuests = new List<Quest>();
 
+
+
     void Awake()
     {
         if (Instance == null) Instance = this;
+      
+
     }
+
+  
 
     public void AcceptQuest(Quest quest)
     {
         if (!activeQuests.Contains(quest))
         {
-            quest.ResetQuest();
+            quest.ResetQuest(); 
             activeQuests.Add(quest);
             Debug.Log("Quest Started: " + quest.questName);
         }
@@ -28,7 +34,6 @@ public class QuestManager : MonoBehaviour
         Debug.Log("Active Quests Count: " + activeQuests.Count);
         foreach (Quest q in activeQuests)
         {
-            if (q == null) continue; // Safety check
             if (q.goalItemName == goalName && !q.isCompleted)
             {
                 q.currentAmount += amount;
@@ -40,30 +45,26 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    void CompleteQuest(Quest q)
+        public void CompleteQuestPublic(Quest q)
     {
-    q.isCompleted = true;
-    Debug.Log("Quest Finished: " + q.questName);
-
-    // After a 2-second delay, remove the quest from the list
-    // so the UI stops showing it.
-    StartCoroutine(RemoveQuestAfterDelay(q, 2f));
+        if (!activeQuests.Contains(q)) return;
+        CompleteQuest(q);
     }
 
-    private System.Collections.IEnumerator RemoveQuestAfterDelay(Quest q, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        activeQuests.Remove(q);
-        // Trigger your UI refresh here!
-    }
 
-    public void UpdateDescription(string questName, string newDesc)
+    // Updates HUD counter only, does NOT complete the quest
+    public void UpdateQuestCount(string goalName, int amount)
     {
-        Quest q = activeQuests.Find(x => x != null && x.questName == questName);
-        if (q != null)
+        foreach (Quest q in activeQuests)
         {
-            q.description = newDesc;
-            Debug.Log($"Quest '{questName}' description updated to: {newDesc}");
+            if (q == null) continue;
+            if (q.goalItemName == goalName && !q.isCompleted)
+            {
+                q.currentAmount += amount;
+                // Clamp so it never auto-completes
+                q.currentAmount = Mathf.Min(q.currentAmount, q.goalAmount);
+                Debug.Log($"Quest count updated: {q.questName} {q.currentAmount}/{q.goalAmount}");
+            }
         }
     }
 
@@ -72,4 +73,10 @@ public class QuestManager : MonoBehaviour
     // Search the completed list specifically
     return completedQuests.Exists(x => x.questName == name);
 }
+    public void CompleteQuest(Quest q)
+    {
+        q.isCompleted = true;
+        Debug.Log("Quest Finished: " + q.questName);
+        // You can add gold/exp rewards here
+    }
 }
