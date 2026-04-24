@@ -24,20 +24,41 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // public void UpdateProgress(string goalName, int amount)
+    // {
+    //     foreach (Quest q in activeQuests)
+    //     {
+    //         if (q.goalItemName == goalName && !q.isCompleted)
+    //         {
+    //             q.currentAmount += amount;
+    //             if (q.currentAmount >= q.goalAmount)
+    //             {
+    //                 CompleteQuest(q);
+    //             }
+    //         }
+    //     }
+    // }
+
+
+
+
     public void UpdateProgress(string goalName, int amount)
+{
+    Quest questToComplete = null; // find first, complete after
+
+    foreach (Quest q in activeQuests)
     {
-        foreach (Quest q in activeQuests)
+        if (q.goalItemName == goalName && !q.isCompleted)
         {
-            if (q.goalItemName == goalName && !q.isCompleted)
-            {
-                q.currentAmount += amount;
-                if (q.currentAmount >= q.goalAmount)
-                {
-                    CompleteQuest(q);
-                }
-            }
+            q.currentAmount += amount;
+            if (q.currentAmount >= q.goalAmount)
+                questToComplete = q; // don't complete inside the loop!
         }
     }
+
+    if (questToComplete != null)
+        CompleteQuest(questToComplete); // safe — loop is finished
+}
 
         public void CompleteQuestPublic(Quest q)
     {
@@ -67,12 +88,31 @@ public class QuestManager : MonoBehaviour
     // Search the completed list specifically
     return completedQuests.Exists(x => x.questName == name);
 }
+
+
+
+    // public void CompleteQuest(Quest q)
+    // {
+    //     q.isCompleted = true;
+    //     Debug.Log("Quest Finished: " + q.questName);
+    //     // You can add gold/exp rewards here
+    // }
+    
+//raghad
     public void CompleteQuest(Quest q)
-    {
-        q.isCompleted = true;
-        Debug.Log("Quest Finished: " + q.questName);
-        // You can add gold/exp rewards here
-    }
+{
+    q.isCompleted = true;
+    Debug.Log("Quest Finished: " + q.questName);
+
+    if (!completedQuests.Contains(q))
+        completedQuests.Add(q);
+
+    if (activeQuests.Contains(q))
+        activeQuests.Remove(q);
+}
+
+
+
 
     public void UpdateQuestDescription(string questName, string newDescription)
     {

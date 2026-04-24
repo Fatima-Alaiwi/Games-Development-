@@ -18,5 +18,5 @@ MonoBehaviour:
   activeMessage: 'Enemies remaining:'
   completeMessage: All enemies defeated!
   goalAmount: 10
-  currentAmount: 7
+  currentAmount: 0
   isCompleted: 0
