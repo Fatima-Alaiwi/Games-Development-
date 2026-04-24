@@ -3,6 +3,10 @@ using System.Collections;
 
 public class TwoKeyDoor : MonoBehaviour, IInteractable
 {
+    [Header("Required Quests")]
+    public Quest requiredQuest1; // drag WiseMan quest here
+    public Quest requiredQuest2; // drag DungeonLocked quest here
+
     [field: SerializeField]
     public string InteractionText { get; set; } = "Door is Locked";
     public bool isInteractable { get; set; } = true;
@@ -38,6 +42,17 @@ public class TwoKeyDoor : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (isOpen) return;
+
+        if (requiredQuest1 != null && !requiredQuest1.isCompleted)
+        {
+            InteractionText = "You must complete other tasks first.";
+            return;
+        }
+        if (requiredQuest2 != null && !requiredQuest2.isCompleted)
+        {
+            InteractionText = "You must complete other tasks first.";
+            return;
+        }
 
         if (!questStarted)
         {
