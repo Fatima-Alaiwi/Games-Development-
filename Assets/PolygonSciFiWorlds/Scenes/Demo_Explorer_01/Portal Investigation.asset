@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: Portal Investigation
   m_EditorClassIdentifier: 
-  questName: 
+  questName: Portal Status
   description: 
-  goalItemName: 
-  activeMessage: The portal has no power. Check the maintenance computer.
+  goalItemName: ReadLogs
+  activeMessage: Investigate the portal's power failure.
   completeMessage: 
   goalAmount: 0
   currentAmount: 0

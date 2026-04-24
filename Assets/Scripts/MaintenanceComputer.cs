@@ -6,7 +6,7 @@ public class MaintenanceComputer : MonoBehaviour, IInteractable
     public string questGoalName = "ReadLogs";
     
     [Header("UI Panels")]
-    public GameObject computerScreenUI; // The UI with the maintenance messages
+    public GameObject computerScreenUI; 
 
     [Header("Interaction Settings")]
     [field: SerializeField] public string InteractionText { get; set; } = "Access Maintenance Logs";
@@ -16,23 +16,48 @@ public class MaintenanceComputer : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. Open the Computer UI
-        if (computerScreenUI != null)
+        // 1. Toggle Logic
+        if (computerScreenUI.activeSelf)
         {
-            computerScreenUI.SetActive(true);
-            
-            // Unlock mouse so they can read/click exit
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            
-            // If you have a PlayerMovement reference, freeze the player
-            PlayerControllerGun.instance.canMove = false; 
+            CloseComputer();
+        }
+        else
+        {
+            OpenComputer();
+        }
+    }
+
+    void OpenComputer()
+    {
+        computerScreenUI.SetActive(true);
+        InteractionText = "Press E to Exit Terminal";
+
+        computerScreenUI.GetComponent<ComputerUIController>().RefreshLogs();
+        
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // STOP player movement
+        if (PlayerControllerGun.instance != null) 
+        {
+            PlayerControllerGun.instance.canMove = false;
         }
 
-        // 2. Complete the investigation quest
-        // This tells the QuestManager that "ReadLogs" is done.
         QuestManager.Instance.UpdateProgress(questGoalName, 1);
+    }
+
+    void CloseComputer()
+    {
+        computerScreenUI.SetActive(false);
+        InteractionText = "Access Maintenance Logs";
         
-        Debug.Log("Quest Progress: Maintenance logs read.");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        // RESUME player movement
+        if (PlayerControllerGun.instance != null) 
+        {
+            PlayerControllerGun.instance.canMove = true;
+        }
     }
 }
