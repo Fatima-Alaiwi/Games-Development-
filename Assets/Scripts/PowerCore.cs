@@ -3,15 +3,15 @@ using UnityEngine;
 public class PowerCore : MonoBehaviour, IInteractable
 {
     public Quest powerQuest;
-    public Material activeMaterial; // Drag the "On" material here
-    public MeshRenderer coreRenderer; // The part of the core that changes color
+    public Material activeMaterial; 
+    public MeshRenderer coreRenderer; 
     
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip insertSound;
 
-    [field: SerializeField] public string InteractionText { get; set; } = "Insert Power Cell";
-    public bool isInteractable { get; set; } = false; // Start locked
+    [field: SerializeField] public string InteractionText { get; set; } = "Press [E] to Insert Power Cell";
+    public bool isInteractable { get; set; } = false;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
@@ -22,12 +22,21 @@ public class PowerCore : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. Check if player has the cell (Check your inventory system here)
+        // Only allow interaction if the Panel has activated it
+        if (!isInteractable) return;
+
+        // Check inventory for the specific item name
         if (InventoryManager.instance.HasItem("PowerCell")) 
         {
             InsertCell();
         }
-    }
+        else
+        {
+            // Tell the player they are missing the item
+            InteractionText = "Requires Power Cell";
+            Debug.Log("You don't have the Power Cell yet!");
+        }
+}
 
     void InsertCell()
     {
