@@ -1,7 +1,14 @@
 using UnityEngine;
 
-public class Magician : MonoBehaviour
+public class Magician : MonoBehaviour, IInteractable
 {
+    [field: SerializeField]
+    public string InteractionText { get; set; } = "Press E to talk to Magician";
+    public bool isInteractable { get; set; } = true;
+
+    public Transform labelAnchor;
+    public Transform LabelAnchor => labelAnchor;
+
     [Header("Dialogue")]
     public AudioClip greetingClip;
     public AudioClip rewardClip;
@@ -16,7 +23,6 @@ public class Magician : MonoBehaviour
     public Quest findLibraryQuest;  // drag FindLibraryQuest here
 
     private bool hasGivenCode = false;
-    private bool hasPlayedGreeting = false;
     private bool hasPlayedWait = false;
     private bool hasCompletedFindQuest = false;
     private AudioSource audioSource;
@@ -31,10 +37,9 @@ public class Magician : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void Interact()
     {
-        if (!other.CompareTag("Player")) return;
-
+        // Start talking animation
         if (animator != null)
             animator.SetBool("isTalking", true);
 
@@ -60,7 +65,7 @@ public class Magician : MonoBehaviour
         }
 
         int bottleCount = GetBottleCount();
-        Debug.Log("Bottle count: " + bottleCount); // so you can see in console
+        Debug.Log("Bottle count: " + bottleCount);
 
         // CHECK BOTTLES EVERY TIME — not just first visit
         if (!hasGivenCode && bottleCount >= requiredBottleCount)
@@ -82,17 +87,6 @@ public class Magician : MonoBehaviour
             PlayClip(greetingClip);
             Debug.Log("Magician: Find 4 bottles! You have: " + bottleCount);
         }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-
-        if (animator != null)
-            animator.SetBool("isTalking", false);
-
-        hasPlayedGreeting = false;
-        hasPlayedWait = false;
     }
 
     int GetBottleCount()
