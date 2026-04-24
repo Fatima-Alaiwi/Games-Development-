@@ -9,7 +9,6 @@ public class PowerCell : MonoBehaviour, IInteractable
 
     [Header("Quest Data")]
     public Quest powerQuest;
-    // Matching the KeycardItem's ability to update descriptions
     public string nextStepDescription = "Insert Power Cell into the Generator"; 
 
     [Header("Interaction Settings")]
@@ -25,22 +24,33 @@ public class PowerCell : MonoBehaviour, IInteractable
 
         if (added)
         {
-            if (QuestManager.Instance != null)
-            {
-                QuestManager.Instance.UpdateProgress(itemName, 1);
-                
-                QuestManager.Instance.UpdateQuestDescription(powerQuest.questName, nextStepDescription);
-            }
-
-            LockOtherCells();
+            HandleQuestLogic();
 
             if (collectSound != null) 
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
             UIManager.Instance.HideHoverText(); 
-            
+            LockOtherCells();
             Destroy(gameObject);
         }
+    }
+
+    private void HandleQuestLogic()
+    {
+        if (QuestManager.Instance == null || powerQuest == null) return;
+
+        bool questActive = QuestManager.Instance.activeQuests.Contains(powerQuest);
+
+        if (!questActive)
+        {
+            QuestManager.Instance.activeQuests.Add(powerQuest);
+            powerQuest.isCompleted = false;
+            powerQuest.currentAmount = 0;
+        }
+
+        QuestManager.Instance.UpdateQuestCount(itemName, 1);
+
+        QuestManager.Instance.UpdateQuestDescription(powerQuest.questName, nextStepDescription);
     }
 
     private void LockOtherCells()
