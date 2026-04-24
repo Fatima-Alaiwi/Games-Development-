@@ -20,21 +20,28 @@ public class DragonHealth : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-    public void TakeBombDamage()
-    {
-        currentHealth--;
-        Debug.Log("Dragon hit! Health remaining: " + currentHealth);
+   public void TakeBombDamage()
+{
+    currentHealth--;
+    Debug.Log("Dragon hit! Health remaining: " + currentHealth);
 
-        if (currentHealth <= 0)
+    if (currentHealth <= 0)
+    {
+        Die();
+    }
+    else
+    {
+        if (hitSound != null)
+            audioSource.PlayOneShot(hitSound);
+
+        Animator anim = GetComponentInChildren<Animator>();
+        if (anim != null)
         {
-            Die();
-        }
-        else
-        {
-            if (hitSound != null)
-                audioSource.PlayOneShot(hitSound);
+            anim.ResetTrigger("hurt");
+            anim.CrossFadeInFixedTime("Hurt", 0.15f, 0, 0f);
         }
     }
+}
 
     void Die()
     {
