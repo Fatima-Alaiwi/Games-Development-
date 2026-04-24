@@ -15,8 +15,16 @@ public class BottlePickup : MonoBehaviour, IInteractable
     [Header("Inventory Settings")]
     public Sprite bottleIcon; // Drag the bottle icon/sprite here
 
+    public Quest requiredQuest; // drag "Kill All Enemies" quest here in Inspector
+
     public void Interact()
     {
+        if (!QuestManager.Instance.IsQuestComplete(requiredQuest))
+    {
+        UIManager.Instance.ShowHoverText("I should look around first...", transform.position);
+        return;
+    }
+    
         // 1. Accept quest if not already active
         if (bottleQuest != null && !QuestManager.Instance.activeQuests.Contains(bottleQuest))
             QuestManager.Instance.AcceptQuest(bottleQuest);
