@@ -16,7 +16,6 @@ public class SatelliteController : MonoBehaviour
     public float targetHorizontal = 45f;
     public float targetVertical = 32f;
     public float tolerance = 2f;
-
     private bool isControlling = false;
     private float currentH = 0f;
     private float currentV = 0f;
@@ -91,8 +90,7 @@ public class SatelliteController : MonoBehaviour
         isControlling = false;
         satelliteViewCamera.enabled = false;
         mainPlayerCamera.enabled = true;
-        QuestManager.Instance.CompleteQuestPublic(satelliteQuest);
-
+        QuestManager.Instance.UpdatedCompleteQuest(satelliteQuest);
         if (controlPanel != null)
         {
         controlPanel.SetPanelOffline();
