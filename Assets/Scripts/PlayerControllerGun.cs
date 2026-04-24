@@ -126,7 +126,7 @@ public class PlayerControllerGun : MonoBehaviour
             footstepTimer -= Time.deltaTime;
             if (footstepTimer <= 0f)
             {
-                audioSource.PlayOneShot(footstepClip, 0.3f);
+                audioSource.PlayOneShot(footstepClip, 0.2f);
                 footstepTimer = footstepInterval;
             }
         }

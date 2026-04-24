@@ -15,7 +15,7 @@ MonoBehaviour:
   questName: TwoKeyQuest
   description: 
   goalItemName: GoldenKey
-  activeMessage: Door is Locked. Find the Golden Keys
+  activeMessage: 'Door is Locked. '
   completeMessage: Door Unlocked!
   goalAmount: 2
   currentAmount: 0
