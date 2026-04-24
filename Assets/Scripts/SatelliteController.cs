@@ -4,31 +4,46 @@ public class SatelliteController : MonoBehaviour
 {
     [Header("Quest Settings")]
     public Quest satelliteQuest;
-    public Camera satelliteViewCamera; // Camera showing the roof
-    public Camera mainPlayerCamera;    // Your standard FPS camera
-    
+    public Camera satelliteViewCamera; 
+    public Camera mainPlayerCamera;    
+    public SatellitePanel controlPanel;
+
     [Header("Movement Parts")]
-    public Transform satelliteBase;    // For Left/Right (Y-axis)
-    public Transform satelliteHead;    // For Up/Down (X-axis)
-    
+    public Transform satelliteBase;    
+    public Transform satelliteHead;
+
     [Header("Target Angles")]
     public float targetHorizontal = 45f;
     public float targetVertical = 32f;
-    public float tolerance = 2f; // How close they need to get
+    public float tolerance = 2f;
 
     private bool isControlling = false;
     private float currentH = 0f;
     private float currentV = 0f;
 
+    void Start()
+    {
+        if (satelliteViewCamera != null) satelliteViewCamera.enabled = false;
+        if (mainPlayerCamera != null) mainPlayerCamera.enabled = true;
+    
+        isControlling = false;
+    }
+
     public void StartControlling()
     {
         isControlling = true;
-        mainPlayerCamera.enabled = false;
+        controlPanel.InteractionText = "";
         satelliteViewCamera.enabled = true;
-        
-        // Lock player movement logic here
+
+        var satelliteData = satelliteViewCamera.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+        if (satelliteData != null)
+        {
+            satelliteData.renderType = UnityEngine.Rendering.Universal.CameraRenderType.Base;
+        }
+    
+        mainPlayerCamera.enabled = false;
+
         if(PlayerControllerGun.instance != null) PlayerControllerGun.instance.canMove = false;
-        
         QuestManager.Instance.AcceptQuest(satelliteQuest);
     }
 
@@ -57,9 +72,9 @@ public class SatelliteController : MonoBehaviour
 
     void UpdateQuestUI()
     {
-        // Update the quest description dynamically with current angles
-        string status = $"Horizontal: {Mathf.Round(currentH)}° / {targetHorizontal}°\nVertical: {Mathf.Round(currentV)}° / {targetVertical}°";
-        QuestManager.Instance.UpdateDescription(satelliteQuest.questName, status);
+    string status = $"Aligning... H: {Mathf.Round(currentH)}°/{targetHorizontal}° V: {Mathf.Round(currentV)}°/{targetVertical}° | ";
+    
+    QuestManager.Instance.UpdateQuestDescription(satelliteQuest.questName, status);
     }
 
     void CheckCompletion()
@@ -72,11 +87,19 @@ public class SatelliteController : MonoBehaviour
     }
 
     void FinishQuest()
-    {
+        {
         isControlling = false;
         satelliteViewCamera.enabled = false;
         mainPlayerCamera.enabled = true;
-        
+        QuestManager.Instance.CompleteQuestPublic(satelliteQuest);
+
+        if (controlPanel != null)
+        {
+        controlPanel.SetPanelOffline();
+        }
+
+        QuestManager.Instance.UpdateQuestDescription(satelliteQuest.questName, "Satellite Alignment");
+    
         if(PlayerControllerGun.instance != null) PlayerControllerGun.instance.canMove = true;
 
         QuestManager.Instance.UpdateProgress(satelliteQuest.goalItemName, 1);

@@ -12,11 +12,7 @@ public class QuestManager : MonoBehaviour
     void Awake()
     {
         if (Instance == null) Instance = this;
-      
-
     }
-
-  
 
     public void AcceptQuest(Quest quest)
     {
@@ -78,5 +74,19 @@ public class QuestManager : MonoBehaviour
         q.isCompleted = true;
         Debug.Log("Quest Finished: " + q.questName);
         // You can add gold/exp rewards here
+    }
+
+    public void UpdateQuestDescription(string questName, string newDescription)
+    {
+        foreach (Quest q in activeQuests)
+        {
+            if (q != null && q.questName == questName)
+            {
+                // The HUD reads activeMessage every frame, 
+                // so changing it here updates the screen instantly.
+                q.activeMessage = newDescription; 
+                return;
+            }
+        }
     }
 }

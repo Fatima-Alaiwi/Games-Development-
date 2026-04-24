@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: satelliteQuest
   description: 
-  goalItemName: SatellitePostioned
-  activeMessage: 'Position The Satellite '
-  completeMessage: satelite positined
+  goalItemName: SatellitePositioned
+  activeMessage: Satellite Alignment
+  completeMessage: Satellite Positioned
   goalAmount: 1
   currentAmount: 0
   isCompleted: 0
