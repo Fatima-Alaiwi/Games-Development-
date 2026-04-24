@@ -15,8 +15,8 @@ MonoBehaviour:
   questName: PowerCellQuest
   description: 
   goalItemName: PowerCell
-  activeMessage: Replace The power Cell in the stabilizer core
-  completeMessage: core cell replaced
+  activeMessage: Collect a Power Cell
+  completeMessage: Insert Power Cell into the Generator
   goalAmount: 1
   currentAmount: 1
-  isCompleted: 1
+  isCompleted: 0

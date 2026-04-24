@@ -120,8 +120,6 @@ public class QuestManager : MonoBehaviour
         {
             if (q != null && q.questName == questName)
             {
-                // The HUD reads activeMessage every frame, 
-                // so changing it here updates the screen instantly.
                 q.activeMessage = newDescription; 
                 return;
             }
