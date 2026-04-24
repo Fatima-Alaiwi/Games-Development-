@@ -5,6 +5,7 @@ public class QuestManager : MonoBehaviour
 {
     public static QuestManager Instance;
     public List<Quest> activeQuests = new List<Quest>();
+    public List<Quest> completedQuests = new List<Quest>();
 
 
 
@@ -67,6 +68,11 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public bool IsQuestCompleted(string name)
+{
+    // Search the completed list specifically
+    return completedQuests.Exists(x => x.questName == name);
+}
     public void CompleteQuest(Quest q)
     {
         q.isCompleted = true;
