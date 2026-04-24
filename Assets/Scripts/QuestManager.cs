@@ -71,7 +71,7 @@ public class QuestManager : MonoBehaviour
     {
         q.isCompleted = true;
         Debug.Log("Quest Finished: " + q.questName);
-        // You can add gold/exp rewards here
+        // You can add gold/exp  rewardshere
     }
 
     public void UpdateQuestDescription(string questName, string newDescription)
@@ -80,8 +80,6 @@ public class QuestManager : MonoBehaviour
         {
             if (q != null && q.questName == questName)
             {
-                // The HUD reads activeMessage every frame, 
-                // so changing it here updates the screen instantly.
                 q.activeMessage = newDescription; 
                 return;
             }
