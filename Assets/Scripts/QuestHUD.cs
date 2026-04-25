@@ -1,11 +1,12 @@
 using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(CanvasGroup))] // Automatically adds CanvasGroup if missing
 public class QuestHUD : MonoBehaviour
 {
     public TextMeshProUGUI progressText;
     private CanvasGroup canvasGroup;
+
     void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -14,7 +15,10 @@ public class QuestHUD : MonoBehaviour
     void Update()
     {
         // 1. Check if the Manager exists and has quests
-        if (QuestManager.Instance != null && QuestManager.Instance.activeQuests.Count > 0)
+        if (QuestManager.Instance == null) { ShowUI(false); return; } // Raghad: null check added
+
+        // 2. First check active quests
+        if (QuestManager.Instance.activeQuests.Count > 0)
         {
             Quest active = QuestManager.Instance.activeQuests[0];
 
@@ -23,26 +27,32 @@ public class QuestHUD : MonoBehaviour
                 // Show the UI
                 ShowUI(true);
 
-                // 2. Logic fix: Show Complete message if finished, Active if not
-                if (active.isCompleted)
-                {
-                    progressText.text = active.completeMessage;
-                }
-                else
-                {
-                    // You can also format this to show progress like: "Apples: 3/5"
-                    progressText.text = $"{active.activeMessage} {active.currentAmount}/{active.goalAmount}";
-                }
+                // You can also format this to show progress like: "Apples: 3/5"
+                progressText.text = $"{active.activeMessage} {active.currentAmount}/{active.goalAmount}";
+                return; // Raghad: return so we don't fall through to completed check
             }
         }
-        else
+
+        // Raghad: added completed quest check so complete message shows after quest finishes
+        if (QuestManager.Instance.completedQuests.Count > 0)
         {
-            // Hide the UI but keep the script running
-            ShowUI(false);
+            Quest lastCompleted = QuestManager.Instance.completedQuests
+                [QuestManager.Instance.completedQuests.Count - 1];
+
+            if (lastCompleted != null && lastCompleted.completeMessage != "")
+            {
+                // Show the complete message
+                ShowUI(true);
+                progressText.text = lastCompleted.completeMessage; // Raghad: shows complete message
+                return;
+            }
         }
+
+        // Hide the UI but keep the script running
+        ShowUI(false);
     }
 
-    public void ShowUI(bool isVisible)
+    private void ShowUI(bool isVisible)
     {
         canvasGroup.alpha = isVisible ? 1 : 0;
         canvasGroup.interactable = isVisible;
