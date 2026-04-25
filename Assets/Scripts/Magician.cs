@@ -43,8 +43,8 @@ public class Magician : MonoBehaviour, IInteractable
         if (animator != null)
             animator.SetBool("isTalking", true);
 
-        // Check kill quest first
-        if (killQuest != null && !killQuest.isCompleted)
+        // Raghad: check using IsQuestComplete so skipped quests are caught too
+        if (killQuest != null && !QuestManager.Instance.IsQuestComplete(killQuest))
         {
             if (!hasPlayedWait)
             {
