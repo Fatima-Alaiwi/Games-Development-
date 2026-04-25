@@ -15,6 +15,7 @@ public class LockedDoor : MonoBehaviour, IInteractable
     [Header("Quest Requirement")]
     public Quest requiredQuest; // drag BottleQuest here
     public Quest questToComplete; // drag FindLibraryQuest here
+    public Quest portalKeyQuest; // Raghad: drag FindPortalKeyQuest here
 
     [Header("Code Settings")]
     public string correctCode = "888";
@@ -95,6 +96,10 @@ public class LockedDoor : MonoBehaviour, IInteractable
             // Complete the find library quest — player found it!
             if (questToComplete != null)
                 QuestManager.Instance.UpdatedCompleteQuest(questToComplete);
+
+            // Raghad: start portal key quest so HUD shows "Find the key inside!"
+            if (portalKeyQuest != null)
+                QuestManager.Instance.AcceptQuest(portalKeyQuest);
 
             if (audioSource != null && openingDoorClip != null)
                 audioSource.PlayOneShot(openingDoorClip);
