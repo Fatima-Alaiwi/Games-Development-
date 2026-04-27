@@ -2,76 +2,60 @@ using UnityEngine;
 
 public class InfoBotNPC : MonoBehaviour, IInteractable
 {
-    [Header("Components")]
-    public AudioSource voiceSource;
-    public Animator anim;
+    [Header("Bot Settings")]
+    public Transform _labelAnchor;
+    public bool _isInteractable = true;
 
-    [Header("Voice Clips")]
-    public AudioClip firstMeetingClip;
-    public AudioClip guidanceClip;
-
-    [Header("Interface Settings")]
-    [SerializeField] private string _interactionText = "Talk to Info Bot";
-    [SerializeField] private bool _isInteractable = true;
-    [SerializeField] private Transform _labelAnchor;
-
-    [Header("Animation Settings")]
-    public int numberOfTalkAnimations = 3; // Set this to how many talk animations you have
-
-    private bool hasMetPlayer = false;
-
-    // --- IInteractable Implementation ---
-
-    public string InteractionText => _interactionText;
-
-    public bool isInteractable
-    { 
-        get => _isInteractable;
-        set => _isInteractable = value;
-    }
-
+    // Interface Requirements
+    public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
+    public string InteractionText => "Talk to Bot";
 
     public void Interact()
     {
-        if (!hasMetPlayer)
+        // 1. Get the first active quest object from your manager
+        if (QuestManager.Instance.activeQuests.Count > 0)
         {
-            StartGreeting();
+            Quest currentQuest = QuestManager.Instance.activeQuests[0];
+            
+            // 2. Pass the whole Quest object to the conversation logic
+            ExecuteConversation(currentQuest);
         }
         else
         {
-            ProvideGuidance();
+            Debug.Log("Robot: 'No active mission detected. Please check your log.'");
         }
     }
 
-    private void StartGreeting()
+    private void ExecuteConversation(Quest quest)
     {
-        hasMetPlayer = true;
-        _interactionText = "Ask for Guidance";
-
-        if (anim) anim.SetTrigger("Wave");
-        PlayVoice(firstMeetingClip);
-    }
-
-    private void ProvideGuidance()
-    {
-        if (anim) 
+        // We use the Quest's name (or Title) to determine the dialogue
+        // This keeps it abstract and lets you create "Small Quests" as states
+        switch (quest.questName) 
         {
-            // Pick a random animation index for variety
-            int randomIndex = Random.Range(0, numberOfTalkAnimations);
-            anim.SetInteger("TalkIndex", randomIndex);
-            anim.SetTrigger("Talk");
-        }
-        
-        PlayVoice(guidanceClip);
-    }
+            case "FindEnergyCell": // Make sure this matches your Quest asset name exactly
+                Debug.Log("Player: 'What is this place?'");
+                Debug.Log("Robot: 'Analyzing... This is the sector core. You need the pulse key.'");
+                break;
 
-    private void PlayVoice(AudioClip clip)
-    {
-        if (clip != null && voiceSource != null)
-        {
-            voiceSource.clip = clip;
-            voiceSource.Play();
+            case "RepairConsole":
+                Debug.Log("Player: 'I found the component.'");
+                Debug.Log("Robot: 'Excellent. Initiate the installation sequence at the console.'");
+                break;
+
+            case "ActivateGate":
+                Debug.Log("Player: 'The gate is opening!'");
+                Debug.Log("Robot: 'Move quickly, Voyager. The temporal window is closing.'");
+                break;
+
+            default:
+                Debug.Log("Player: 'I have a task for you.'");
+                Debug.Log($"Robot: 'Understood. Processing data for {quest.questName}.'");
+                break;
         }
+
+        // Trigger your Talk animation
+        Animator anim = GetComponent<Animator>();
+        if (anim != null) anim.SetTrigger("Talk");
     }
 }
