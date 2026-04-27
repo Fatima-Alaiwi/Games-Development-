@@ -75,4 +75,14 @@ public class InventoryManager : MonoBehaviour
                 slots[i].ClearSlot();
         }
     }
+
+    public bool HasItem(string name)
+    {
+        foreach (var item in items)
+        {
+            if (item.itemName == name)
+                return true;
+        }
+        return false;
+    }
 }

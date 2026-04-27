@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: HuntedHouseKey
   m_EditorClassIdentifier: 
   questName: firstKey
-  description: 
+  description: A strange key was spotted somewhere in the mansion. Find it to unlock
+    the door
   goalItemName: key_1
-  activeMessage: Find the key to open the door
-  completeMessage: open the door uning the key
+  activeMessage: 'Find the key:'
+  completeMessage: Key found!
   goalAmount: 1
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 1
+  isCompleted: 1

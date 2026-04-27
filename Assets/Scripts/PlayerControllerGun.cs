@@ -8,12 +8,8 @@ public class PlayerControllerGun : MonoBehaviour
     public static PlayerControllerGun instance;
     PlayerInput playerInput;
     PlayerInput.MainActions input;
-
-    [Header("Interaction")]
-    public float interactRange = 3f;
-    private IInteractable currentInteractable;
-
     CharacterController controller;
+    public bool canMove = true;
     [SerializeField] private Animator animator;
     AudioSource audioSource;
 
@@ -77,17 +73,26 @@ public class PlayerControllerGun : MonoBehaviour
         }
 
         HandleFootsteps();
-        CheckForInteractable();
     }
 
     void FixedUpdate()
     {
+        // If movement is locked, stop here
+        if (!canMove) 
+        {
+        currentMoveInput = Vector2.zero;
+        return; 
+        }
+
         currentMoveInput = input.Movement.ReadValue<Vector2>();
         MoveInput(currentMoveInput);
     }
 
     void LateUpdate()
     {
+        // If movement is locked, stop the camera from turning
+        if (!canMove) return;
+
         LookInput(input.Look.ReadValue<Vector2>());
     }
 
@@ -121,31 +126,11 @@ public class PlayerControllerGun : MonoBehaviour
             footstepTimer -= Time.deltaTime;
             if (footstepTimer <= 0f)
             {
-                audioSource.PlayOneShot(footstepClip, 0.3f);
+                audioSource.PlayOneShot(footstepClip, 0.2f);
                 footstepTimer = footstepInterval;
             }
         }
         else { footstepTimer = 0f; }
-    }
-
-    // ✅ FIXED: Now outside Update(), proper method
-    void CheckForInteractable()
-    {
-        Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, interactRange))
-        {
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-            if (interactable != null && interactable.isInteractable)
-            {
-                currentInteractable = interactable;
-                Debug.Log(interactable.InteractionText);
-                return;
-            }
-        }
-
-        currentInteractable = null;
     }
 
     void OnEnable() { input.Enable(); }
@@ -169,12 +154,6 @@ public class PlayerControllerGun : MonoBehaviour
         input.Reload.started += ctx =>
         {
             if (currentWeapon != null) currentWeapon.Reload();
-        };
-
-        input.Interact.started += ctx =>
-        {
-            if (currentInteractable != null && currentInteractable.isInteractable)
-                currentInteractable.Interact();
         };
     }
 

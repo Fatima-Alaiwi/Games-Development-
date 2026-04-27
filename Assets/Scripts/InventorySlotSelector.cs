@@ -60,7 +60,7 @@ public class InventorySlotSelector : MonoBehaviour
         if (selectedItem.itemName == "DungeonBomb")
         {
             ThrowBomb();
-            InventoryManager.instance.RemoveItem("DungeonBomb");
+            InventoryManager.instance.RemoveItem("DungeonBomb", 1);
         }
         else
         {
@@ -105,4 +105,3 @@ public class InventorySlotSelector : MonoBehaviour
         }
     }
 }
- 

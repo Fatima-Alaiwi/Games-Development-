@@ -3,15 +3,21 @@ using System.Collections;
 
 public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 {
-    [SerializeField] private string _interactionText = "Press E to Open Door";
-    public string InteractionText => _interactionText;
+    // TEXT STATES - edit these in the Inspector
+    [Header("Interaction Texts")]
+    [SerializeField] private string textBeforeQuest = "[E] The door is locked...";
+    [SerializeField] private string textNoKey       = "[E] You need a key to open this";
+    [SerializeField] private string textHasKey      = "[E] Open the door";
+
+    // This is what the interaction system reads every frame
+    public string InteractionText => GetInteractionText();
 
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
     [Header("Quest")]
-    public Quest doorQuest; // Drag your HuntedHouseKey quest asset here
+    public Quest doorQuest;
 
     [Header("Key")]
     public string requiredKeyName = "HorrorKey";
@@ -32,6 +38,18 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
         audioSource = GetComponent<AudioSource>();
     }
 
+    // Dynamically returns the correct label depending on state
+    private string GetInteractionText()
+    {
+        if (!questGiven)
+            return textBeforeQuest;
+
+        if (HasKey())
+            return textHasKey;
+
+        return textNoKey;
+    }
+
     public void Interact()
     {
         if (!isInteractable) return;
@@ -44,23 +62,22 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             if (doorQuest != null)
                 QuestManager.Instance.AcceptQuest(doorQuest);
 
-            UIManager.Instance.ShowHoverText("Search for the key, then press E to open the door!", transform.position);
+            UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
             StartCoroutine(HideTextAfterDelay(2f));
             return;
         }
 
-        // Step 2: Quest given but no key yet
+        // Step 2: No key yet
         if (!HasKey())
         {
-            UIManager.Instance.ShowHoverText("Search for the key, then press E to open the door!", transform.position);
+            UIManager.Instance.ShowHoverText("You don't have the key yet!", transform.position);
             StartCoroutine(HideTextAfterDelay(2f));
             return;
         }
 
-        // Step 3: Has key — open the door
+        // Step 3: Has key — open it!
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
 
-        // Mark quest complete via QuestManager
         if (doorQuest != null)
             QuestManager.Instance.UpdateProgress(doorQuest.goalItemName, 1);
 
