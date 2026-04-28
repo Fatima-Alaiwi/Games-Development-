@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: InvenstigateBuilding
   m_EditorClassIdentifier: 
-  questName: 
-  description: 
-  goalItemName: 
-  activeMessage: 
-  completeMessage: 
-  goalAmount: 0
+  questName: Investigate Building
+  description: 'interact with the building elevator '
+  goalItemName: elevator
+  activeMessage: Investigate The Building
+  completeMessage: Return to Info-bot
+  goalAmount: 1
   currentAmount: 0
   isCompleted: 0

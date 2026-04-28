@@ -6,56 +6,112 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     public Transform _labelAnchor;
     public bool _isInteractable = true;
 
+    [Header("Quest Assignment")]
+    public Quest investigateBuildingQuest; // Drag the "Investigate Building" asset here
+
+    public Quest restorePowerQuest;
+
     // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
-    public string InteractionText => "Talk to Bot";
+    public string InteractionText => "Communicate";
 
     public void Interact()
     {
-        // 1. Get the first active quest object from your manager
-        if (QuestManager.Instance.activeQuests.Count > 0)
+        if (QuestManager.Instance.activeQuests.Count == 0)
         {
-            Quest currentQuest = QuestManager.Instance.activeQuests[0];
-            
-            // 2. Pass the whole Quest object to the conversation logic
-            ExecuteConversation(currentQuest);
+            GiveFirstQuest();
+            return;
+        }
+
+        Quest current = QuestManager.Instance.activeQuests[0];
+
+        // Check if the current quest is finished but still in the list
+        if (current.isCompleted)
+        {
+            HandleQuestCompletion(current);
         }
         else
         {
-            Debug.Log("Robot: 'No active mission detected. Please check your log.'");
+            ExecuteConversation(current);
         }
+}
+
+    private void GiveFirstQuest()
+    {
+        Debug.Log("Robot: 'Welcome Voyager. The temporal rift is in the central tower. Go Investigate the Building.'");
+        
+        // This adds the quest to your manager's list
+        QuestManager.Instance.AcceptQuest(investigateBuildingQuest);
+        
+        PlayTalkAnimation();
     }
 
     private void ExecuteConversation(Quest quest)
     {
-        // We use the Quest's name (or Title) to determine the dialogue
-        // This keeps it abstract and lets you create "Small Quests" as states
-        switch (quest.questName) 
+        // Matching the names exactly to your uploaded images
+        switch (quest.questName)
         {
-            case "FindEnergyCell": // Make sure this matches your Quest asset name exactly
-                Debug.Log("Player: 'What is this place?'");
-                Debug.Log("Robot: 'Analyzing... This is the sector core. You need the pulse key.'");
+            case "Investigate Building":
+                Debug.Log("Player: 'The elevator is dead.'");
+                Debug.Log("Robot: 'The power grid is offline. You must Restore Power.'");
                 break;
 
-            case "RepairConsole":
-                Debug.Log("Player: 'I found the component.'");
-                Debug.Log("Robot: 'Excellent. Initiate the installation sequence at the console.'");
+            case "Restore Power":
+                Debug.Log("Player: 'How do I fix the grid?'");
+                Debug.Log("Robot: 'Go to the garage and use the car to Deliver the Cell.'");
                 break;
 
-            case "ActivateGate":
-                Debug.Log("Player: 'The gate is opening!'");
-                Debug.Log("Robot: 'Move quickly, Voyager. The temporal window is closing.'");
+            case "Repair Car":
+                Debug.Log("Player: 'The car has a flat tire.'");
+                Debug.Log("Robot: 'Find a replacement at the store so you can move the cell.'");
+                break;
+
+            case "Deliver Cell":
+                Debug.Log("Player: 'Cell is loaded.'");
+                Debug.Log("Robot: 'Security droids are active! You must Kill Robots to reach the lift.'");
+                break;
+
+            case "Kill Robots":
+                Debug.Log("Player: 'The path is blocked!'");
+                Debug.Log("Robot: 'Neutralize the threats and Enter the Portal.'");
+                break;
+
+            case "Enter Portal":
+                Debug.Log("Robot: 'Safe travels, Voyager. The timeline depends on you.'");
                 break;
 
             default:
-                Debug.Log("Player: 'I have a task for you.'");
-                Debug.Log($"Robot: 'Understood. Processing data for {quest.questName}.'");
+                Debug.Log($"Robot: 'Processing data for {quest.questName}...'");
                 break;
         }
 
-        // Trigger your Talk animation
+        PlayTalkAnimation();
+    }
+
+    private void PlayTalkAnimation()
+    {
         Animator anim = GetComponent<Animator>();
         if (anim != null) anim.SetTrigger("Talk");
+    }
+
+    private void HandleQuestCompletion(Quest completedQuest)
+    {
+        switch (completedQuest.questName)
+        {
+            case "Investigate Building":
+                Debug.Log("Robot: 'The elevator is dead? As I feared. You must Restore Power.'");
+            
+                // 1. Remove the old quest
+                QuestManager.Instance.activeQuests.Remove(completedQuest);
+            
+                // 2. Start the next one
+                // Make sure you have a variable for 'restorePowerQuest' assigned in the inspector
+                QuestManager.Instance.AcceptQuest(restorePowerQuest); 
+                break;
+            
+            // Add other completions here as you build the car/robot fights
+        }
+        PlayTalkAnimation();
     }
 }
