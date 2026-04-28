@@ -102,15 +102,11 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
             case "Investigate Building":
                 Debug.Log("Robot: 'The elevator is dead? As I feared. You must Restore Power.'");
             
-                // 1. Remove the old quest
                 QuestManager.Instance.activeQuests.Remove(completedQuest);
             
-                // 2. Start the next one
-                // Make sure you have a variable for 'restorePowerQuest' assigned in the inspector
                 QuestManager.Instance.AcceptQuest(restorePowerQuest); 
                 break;
             
-            // Add other completions here as you build the car/robot fights
         }
         PlayTalkAnimation();
     }

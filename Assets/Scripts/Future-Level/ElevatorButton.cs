@@ -18,12 +18,10 @@ public class ElevatorButton : MonoBehaviour, IInteractable
 
             if (active.questName == "Investigate Building")
             {
-                // 1. Mark as completed for the Manager
                 active.isCompleted = true;
                 active.currentAmount = 1;
 
-                // 2. Direct Access: Overwrite the message so the HUD script picks it up
-                // This ensures 'active.activeMessage' now says "Return to Info-bot"
+    
                 active.activeMessage = active.completeMessage;
 
                 Debug.Log("Elevator: Power Offline. HUD Updated to: " + active.activeMessage);
@@ -31,7 +29,6 @@ public class ElevatorButton : MonoBehaviour, IInteractable
             else if (active.questName == "Enter Portal")
             {
                 Debug.Log("Elevator: Power Restored. Moving...");
-                // Elevator movement logic here
             }
         }
     }
