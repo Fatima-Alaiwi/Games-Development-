@@ -2,76 +2,112 @@ using UnityEngine;
 
 public class InfoBotNPC : MonoBehaviour, IInteractable
 {
-    [Header("Components")]
-    public AudioSource voiceSource;
-    public Animator anim;
+    [Header("Bot Settings")]
+    public Transform _labelAnchor;
+    public bool _isInteractable = true;
 
-    [Header("Voice Clips")]
-    public AudioClip firstMeetingClip;
-    public AudioClip guidanceClip;
+    [Header("Quest Assignment")]
+    public Quest investigateBuildingQuest; // Drag the "Investigate Building" asset here
 
-    [Header("Interface Settings")]
-    [SerializeField] private string _interactionText = "Talk to Info Bot";
-    [SerializeField] private bool _isInteractable = true;
-    [SerializeField] private Transform _labelAnchor;
+    public Quest restorePowerQuest;
 
-    [Header("Animation Settings")]
-    public int numberOfTalkAnimations = 3; // Set this to how many talk animations you have
-
-    private bool hasMetPlayer = false;
-
-    // --- IInteractable Implementation ---
-
-    public string InteractionText => _interactionText;
-
-    public bool isInteractable
-    { 
-        get => _isInteractable;
-        set => _isInteractable = value;
-    }
-
+    // Interface Requirements
+    public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
+    public string InteractionText => "Communicate";
 
     public void Interact()
     {
-        if (!hasMetPlayer)
+        if (QuestManager.Instance.activeQuests.Count == 0)
         {
-            StartGreeting();
+            GiveFirstQuest();
+            return;
+        }
+
+        Quest current = QuestManager.Instance.activeQuests[0];
+
+        // Check if the current quest is finished but still in the list
+        if (current.isCompleted)
+        {
+            HandleQuestCompletion(current);
         }
         else
         {
-            ProvideGuidance();
+            ExecuteConversation(current);
         }
-    }
+}
 
-    private void StartGreeting()
+    private void GiveFirstQuest()
     {
-        hasMetPlayer = true;
-        _interactionText = "Ask for Guidance";
-
-        if (anim) anim.SetTrigger("Wave");
-        PlayVoice(firstMeetingClip);
-    }
-
-    private void ProvideGuidance()
-    {
-        if (anim) 
-        {
-            // Pick a random animation index for variety
-            int randomIndex = Random.Range(0, numberOfTalkAnimations);
-            anim.SetInteger("TalkIndex", randomIndex);
-            anim.SetTrigger("Talk");
-        }
+        Debug.Log("Robot: 'Welcome Voyager. The temporal rift is in the central tower. Go Investigate the Building.'");
         
-        PlayVoice(guidanceClip);
+        // This adds the quest to your manager's list
+        QuestManager.Instance.AcceptQuest(investigateBuildingQuest);
+        
+        PlayTalkAnimation();
     }
 
-    private void PlayVoice(AudioClip clip)
+    private void ExecuteConversation(Quest quest)
     {
-        if (clip != null && voiceSource != null)
+        // Matching the names exactly to your uploaded images
+        switch (quest.questName)
         {
-            voiceSource.clip = clip;
-            voiceSource.Play();
+            case "Investigate Building":
+                Debug.Log("Player: 'The elevator is dead.'");
+                Debug.Log("Robot: 'The power grid is offline. You must Restore Power.'");
+                break;
+
+            case "Restore Power":
+                Debug.Log("Player: 'How do I fix the grid?'");
+                Debug.Log("Robot: 'Go to the garage and use the car to Deliver the Cell.'");
+                break;
+
+            case "Repair Car":
+                Debug.Log("Player: 'The car has a flat tire.'");
+                Debug.Log("Robot: 'Find a replacement at the store so you can move the cell.'");
+                break;
+
+            case "Deliver Cell":
+                Debug.Log("Player: 'Cell is loaded.'");
+                Debug.Log("Robot: 'Security droids are active! You must Kill Robots to reach the lift.'");
+                break;
+
+            case "Kill Robots":
+                Debug.Log("Player: 'The path is blocked!'");
+                Debug.Log("Robot: 'Neutralize the threats and Enter the Portal.'");
+                break;
+
+            case "Enter Portal":
+                Debug.Log("Robot: 'Safe travels, Voyager. The timeline depends on you.'");
+                break;
+
+            default:
+                Debug.Log($"Robot: 'Processing data for {quest.questName}...'");
+                break;
         }
+
+        PlayTalkAnimation();
+    }
+
+    private void PlayTalkAnimation()
+    {
+        Animator anim = GetComponent<Animator>();
+        if (anim != null) anim.SetTrigger("Talk");
+    }
+
+    private void HandleQuestCompletion(Quest completedQuest)
+    {
+        switch (completedQuest.questName)
+        {
+            case "Investigate Building":
+                Debug.Log("Robot: 'The elevator is dead? As I feared. You must Restore Power.'");
+            
+                QuestManager.Instance.activeQuests.Remove(completedQuest);
+            
+                QuestManager.Instance.AcceptQuest(restorePowerQuest); 
+                break;
+            
+        }
+        PlayTalkAnimation();
     }
 }
