@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: RepairCar
   m_EditorClassIdentifier: 
-  questName: 
-  description: 
-  goalItemName: 
-  activeMessage: 
-  completeMessage: 
-  goalAmount: 0
+  questName: Repair Car
+  description: The player has to pick up the wheel and install it in the car
+  goalItemName: Wheel
+  activeMessage: Pick up the wheel
+  completeMessage: Install the wheel
+  goalAmount: 1
   currentAmount: 0
   isCompleted: 0

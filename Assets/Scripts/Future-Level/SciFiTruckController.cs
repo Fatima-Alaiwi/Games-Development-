@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class SciFiTruckController : MonoBehaviour, IInteractable
 {
     [Header("Interaction Settings")]
@@ -12,31 +13,45 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     public float turnSpeed = 40f;
     public float maxSteerAngle = 25f;
 
-    [Header("6-Wheel Configuration")]
-    public Transform frontLeft; public Transform frontRight;
-    public Transform midLeft;   public Transform midRight;
-    public Transform rearLeft;  public Transform rearRight;
+    [Header("6-Wheel Transforms")]
+    public Transform frontLeft; 
+    public Transform frontRight;
+    public Transform midLeft;   
+    public Transform midRight;
+    public Transform rearLeft;  
+    public Transform rearRight;
 
     [Header("Camera & Player Assignment")]
-    public Camera truckCamera;    
+    [Tooltip("The camera attached to the truck (Rear View)")]
+    public Camera truckCamera;      
+    [Tooltip("The player's main camera (First/Third Person)")]
     public Camera playerCamera;     
+    [Tooltip("The Player GameObject that has the movement script")]
     public MonoBehaviour playerScript; 
 
+    private Rigidbody _rb;
     private float _currentSteerAngle;
     private bool _isDriving = false;
 
-    // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
     public string InteractionText => _interactionText;
 
     void Start()
     {
+        _rb = GetComponent<Rigidbody>();
+        
         if (truckCamera != null) truckCamera.gameObject.SetActive(false);
     }
 
     public void Interact()
     {
+        if (frontLeft.gameObject.activeSelf == false) 
+        {
+            Debug.Log("The truck is missing a wheel. I can't drive this!");
+            return;
+        }
+
         if (_isDriving) return;
         EnterVehicle();
     }
@@ -49,14 +64,31 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         if (playerScript != null)
         {
             var field = playerScript.GetType().GetField("canMove");
-            if (field != null) field.SetValue(playerScript, false);
-            else Debug.LogError("Could not find 'canMove' variable on the assigned Player Script!");
+            if (field != null) 
+            {
+                field.SetValue(playerScript, false);
+            }
+            else 
+            {
+                Debug.LogWarning("Truck: 'canMove' field not found on assigned player script. Make sure it is PUBLIC.");
+            }
         }
 
         if (playerCamera != null) playerCamera.gameObject.SetActive(false);
         if (truckCamera != null) truckCamera.gameObject.SetActive(true);
 
-        Debug.Log("Truck: Control Active. Player movement locked.");
+        Debug.Log("Truck: Control Active. Physics Collisions Engaged.");
+    }
+
+    void FixedUpdate()
+    {
+        if (!_isDriving) return;
+
+        float moveInput = Input.GetAxis("Vertical");  
+        float steerInput = Input.GetAxis("Horizontal"); 
+
+        ApplyPhysicsMovement(moveInput);
+        ApplyPhysicsSteering(steerInput, moveInput);
     }
 
     void Update()
@@ -66,36 +98,45 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         float moveInput = Input.GetAxis("Vertical");
         float steerInput = Input.GetAxis("Horizontal");
 
-        HandleMovement(moveInput);
-        HandleSteering(steerInput, moveInput);
+        UpdateWheelVisuals(moveInput, steerInput);
     }
 
-    private void HandleMovement(float moveInput)
+    private void ApplyPhysicsMovement(float moveInput)
     {
-        transform.Translate(Vector3.forward * moveInput * moveSpeed * Time.deltaTime);
-
-        float spin = moveInput * moveSpeed * 100f * Time.deltaTime;
-        RotateWheel(frontLeft, spin); RotateWheel(frontRight, spin);
-        RotateWheel(midLeft, spin);   RotateWheel(midRight, spin);
-        RotateWheel(rearLeft, spin);  RotateWheel(rearRight, spin);
+        Vector3 moveDistance = transform.forward * moveInput * moveSpeed * Time.fixedDeltaTime;
+        _rb.MovePosition(_rb.position + moveDistance);
     }
 
-    private void HandleSteering(float steerInput, float moveInput)
+    private void ApplyPhysicsSteering(float steerInput, float moveInput)
     {
-        _currentSteerAngle = steerInput * maxSteerAngle;
-        
-        if (frontLeft) frontLeft.localEulerAngles = new Vector3(frontLeft.localEulerAngles.x, _currentSteerAngle, 0);
-        if (frontRight) frontRight.localEulerAngles = new Vector3(frontRight.localEulerAngles.x, _currentSteerAngle, 0);
-
-        if (Mathf.Abs(moveInput) > 0.1f)
+        if (Mathf.Abs(moveInput) > 0.05f)
         {
             float direction = moveInput > 0 ? 1 : -1;
-            transform.Rotate(Vector3.up * steerInput * turnSpeed * direction * Time.deltaTime);
+            float turnAmount = steerInput * turnSpeed * direction * Time.fixedDeltaTime;
+            
+            Quaternion turnRotation = Quaternion.Euler(0f, turnAmount, 0f);
+            _rb.MoveRotation(_rb.rotation * turnRotation);
         }
     }
 
-    private void RotateWheel(Transform wheel, float amount)
+    private void UpdateWheelVisuals(float moveInput, float steerInput)
     {
-        if (wheel != null) wheel.Rotate(Vector3.right * amount);
+        float spin = moveInput * moveSpeed * 100f * Time.deltaTime;
+
+        RotateWheelMesh(frontLeft, spin); RotateWheelMesh(frontRight, spin);
+        RotateWheelMesh(midLeft, spin);   RotateWheelMesh(midRight, spin);
+        RotateWheelMesh(rearLeft, spin);  RotateWheelMesh(rearRight, spin);
+
+        _currentSteerAngle = steerInput * maxSteerAngle;
+        if (frontLeft) frontLeft.localEulerAngles = new Vector3(frontLeft.localEulerAngles.x, _currentSteerAngle, 0);
+        if (frontRight) frontRight.localEulerAngles = new Vector3(frontRight.localEulerAngles.x, _currentSteerAngle, 0);
+    }
+
+    private void RotateWheelMesh(Transform wheel, float amount)
+    {
+        if (wheel != null) 
+        {
+            wheel.Rotate(Vector3.right * amount);
+        }
     }
 }
