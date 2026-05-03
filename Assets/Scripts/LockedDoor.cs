@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-
 //raghad try :)
 public class LockedDoor : MonoBehaviour, IInteractable
 {
@@ -12,6 +11,11 @@ public class LockedDoor : MonoBehaviour, IInteractable
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
+
+    [Header("Quest Requirement")]
+    public Quest requiredQuest; // drag BottleQuest here
+    public Quest questToComplete; // drag FindLibraryQuest here
+    public Quest portalKeyQuest; // Raghad: drag FindPortalKeyQuest here
 
     [Header("Code Settings")]
     public string correctCode = "888";
@@ -44,6 +48,13 @@ public class LockedDoor : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (!isInteractable || isOpen) return;
+
+        // Can't use door until bottles are delivered
+        if (requiredQuest != null && !QuestManager.Instance.IsQuestComplete(requiredQuest))
+        {
+            UIManager.Instance.ShowHoverText("I need to find something first...", transform.position);
+            return;
+        }
 
         if (!panelOpen)
         {
@@ -81,6 +92,14 @@ public class LockedDoor : MonoBehaviour, IInteractable
             // Open door
             isOpen = true;
             isInteractable = false;
+
+            // Complete the find library quest — player found it!
+            if (questToComplete != null)
+                QuestManager.Instance.UpdatedCompleteQuest(questToComplete);
+
+            // Raghad: start portal key quest so HUD shows "Find the key inside!"
+            if (portalKeyQuest != null)
+                QuestManager.Instance.AcceptQuest(portalKeyQuest);
 
             if (audioSource != null && openingDoorClip != null)
                 audioSource.PlayOneShot(openingDoorClip);
