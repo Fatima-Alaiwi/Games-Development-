@@ -8,7 +8,6 @@ public class EnemyPistolAI : MonoBehaviour
 
     void Update() 
     {
-        // Global Pause Check
         if (PauseMenuManager.isPaused) 
         {
             anim.speed = 0;
@@ -16,7 +15,6 @@ public class EnemyPistolAI : MonoBehaviour
         }
         anim.speed = 1;
 
-        // Simple Attack Logic using the Pistol Idle pose
         if (Time.time - lastAttackTime > attackCooldown)
         {
             PerformAttack();
@@ -26,8 +24,6 @@ public class EnemyPistolAI : MonoBehaviour
 
     void PerformAttack()
     {
-        // Trigger your muzzle flash/SFX here
         Debug.Log("Robot fired pistol!");
-        // The robot stays in 'Pistol Idle' so the aim remains steady
     }
 }
