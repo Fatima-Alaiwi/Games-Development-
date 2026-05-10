@@ -15,7 +15,8 @@ public class Actor : MonoBehaviour
     void Awake()
     {
         currentHealth = maxHealth;
-        animator = transform.root.GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
+        //animator = transform.root.GetComponentInChildren<Animator>();
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
