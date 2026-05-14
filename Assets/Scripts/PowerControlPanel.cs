@@ -17,14 +17,12 @@ public class PowerControlPanel : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. Start the Quest via the Manager
         if (QuestManager.Instance != null && powerQuest != null)
         {
             QuestManager.Instance.AcceptQuest(powerQuest);
             Debug.Log("Quest Started: " + powerQuest.questName);
         }
         
-        // 2. Find EVERY PowerCell in the map and unlock them globally
         PowerCell[] allCells = FindObjectsOfType<PowerCell>();
         
         if (allCells.Length > 0)
