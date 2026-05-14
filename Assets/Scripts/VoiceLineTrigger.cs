@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class VoiceLineTrigger : MonoBehaviour
 {
@@ -7,14 +8,14 @@ public class VoiceLineTrigger : MonoBehaviour
     public AudioClip voiceLine;
     
     [Header("Quest Requirements")]
-    [Tooltip("If empty, plays regardless. If assigned, only plays if this quest is FIRST in the active list.")]
-    public Quest requiredQuest; 
+    [Tooltip("If the list is empty, plays regardless. If quests are added, plays only if the CURRENT active quest (Index 0) is in this list.")]
+    public List<Quest> requiredQuests = new List<Quest>(); 
 
     [Header("Configuration")]
     public string playerTag = "Player";
     public bool playOnlyOnce = true;
 
-    private bool _hasPlayed = false;
+    protected bool _hasPlayed = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -31,30 +32,29 @@ public class VoiceLineTrigger : MonoBehaviour
 
     private bool CanPlayVoice()
     {
-        // If no quest is dragged, play regardless
-        if (requiredQuest == null) return true;
+        if (requiredQuests == null || requiredQuests.Count == 0) return true;
 
-        // Check if QuestManager exists and has active quests
         if (QuestManager.Instance != null && QuestManager.Instance.activeQuests.Count > 0)
         {
-            // Specifically check if the FIRST quest in the list matches our dragged quest
-            return QuestManager.Instance.activeQuests[0] == requiredQuest;
+            Quest currentActive = QuestManager.Instance.activeQuests[0];
+
+            return requiredQuests.Contains(currentActive);
         }
 
         return false;
     }
 
-    private void PlayVoice()
+    protected virtual void PlayVoice()
     {
         if (audioSource != null && voiceLine != null)
         {
             audioSource.PlayOneShot(voiceLine);
             _hasPlayed = true;
-            Debug.Log($"<color=cyan>VOICE:</color> Playing {voiceLine.name}");
+            Debug.Log($"<color=cyan>VOICE TRIGGERED:</color> {voiceLine.name}");
         }
         else
         {
-            Debug.LogWarning("VOICE TRIGGER: Missing AudioSource or AudioClip component!");
+            Debug.LogWarning("VOICE TRIGGER: Missing AudioSource or AudioClip!");
         }
     }
 }
