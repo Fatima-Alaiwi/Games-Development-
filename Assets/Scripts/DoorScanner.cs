@@ -3,7 +3,7 @@ using UnityEngine;
 public class DoorScanner : MonoBehaviour, IInteractable
 {
     [Header("Quest Assignment")]
-    public Quest portalQuest; // Drag your 'PortalAccessQuest' asset here in the Inspector
+    public Quest portalQuest; 
     
     [Header("Interactivity")]
     [field: SerializeField] public string InteractionText { get; set; } = "Scan Keycard";

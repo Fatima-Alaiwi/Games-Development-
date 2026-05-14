@@ -19,4 +19,4 @@ MonoBehaviour:
   completeMessage: Insert Power Cell into the Generator
   goalAmount: 1
   currentAmount: 0
-  isCompleted: 0
+  isCompleted: 1

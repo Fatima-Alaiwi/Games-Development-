@@ -15,8 +15,8 @@ MonoBehaviour:
   questName: satelliteQuest
   description: 
   goalItemName: SatellitePositioned
-  activeMessage: "Aligning... H: 45\xB0/45\xB0 V: 31\xB0/32\xB0 | "
+  activeMessage: "Aligning... H: 44\xB0/45\xB0 V: 32\xB0/32\xB0 | "
   completeMessage: Satellite Positioned
   goalAmount: 1
   currentAmount: 0
-  isCompleted: 0
+  isCompleted: 1
