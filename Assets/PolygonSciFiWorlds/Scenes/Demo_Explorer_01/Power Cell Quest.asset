@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   goalItemName: PowerCell
   activeMessage: Insert Power Cell into the Generator
-  completeMessage: Insert Power Cell into the Generator
+  completeMessage: Power Stabilized
   goalAmount: 1
-  currentAmount: 0
+  currentAmount: 1
   isCompleted: 1
