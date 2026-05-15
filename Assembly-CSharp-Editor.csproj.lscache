@@ -342,6 +342,10 @@ Library/ScriptAssemblies/
  Unity.Multiplayer.Center.Common.dll
  Unity.Multiplayer.Center.Editor.dll
  Unity.PlasticSCM.Editor.dll
+ Unity.ProBuilder.AddOns.Editor.dll
+ Unity.ProBuilder.AssetIdRemapUtility.dll
+ Unity.ProBuilder.dll
+ Unity.ProBuilder.Editor.dll
  Unity.Profiling.Core.dll
  Unity.Rendering.LightTransport.Editor.dll
  Unity.Rendering.LightTransport.Runtime.dll
@@ -360,6 +364,7 @@ Library/ScriptAssemblies/
  Unity.RenderPipelines.Universal.Shaders.dll
  Unity.Rider.Editor.dll
  Unity.Searcher.Editor.dll
+ Unity.Settings.Editor.dll
  Unity.ShaderGraph.Editor.dll
  Unity.TextMeshPro.dll
  Unity.TextMeshPro.Editor.dll

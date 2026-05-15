@@ -50,6 +50,10 @@ TemporaryDependencyNodeTargetIdentifier=netstandard2.1
 /warnaserror+:NU1605
 
 [sourceFiles]
+Assets/Custom Dropdown/Scripts/
+ AdvancedDropdown.cs
+ AutoSizeLayoutDropdown.cs
+ OptionScript.cs
 Assets/
  PlayerInput.cs
  PlayerWeapon/Scripts/
@@ -68,11 +72,22 @@ Assets/
   DoorScanner.cs
   DragonHealth.cs
   DungeonLockedDoor.cs
+  EnemyAI.cs
   EnemyMove.cs
   EnemyMoveGun.cs
   EnemySpawner.cs
   EnemySpawnerReporter.cs
+  EnemySpawnerTest.cs
   FollowSignTrigger.cs
+  Future-Level/
+   ElevatorButton.cs
+   InfoBotNpc.cs
+   LightTrailAnchor.cs
+   SciFiTruckController.cs
+   SweeperController.cs
+   TrafficSpawner.cs
+   TruckRepairSpot.cs
+   WheelPickup.cs
   GoldenKeyPickup.cs
   GoldIngot.cs
   HealthBar.cs
@@ -84,12 +99,20 @@ Assets/
   Item.cs
   KeyCardItem.cs
   KeyPickup.cs
+  Lab-Level/
+   GiveGunQuest.cs
+   PickUpGun.cs
+   PortalController.cs
   LavaRise.cs
   LeverInteractable.cs
   LockedDoor.cs
   Magician.cs
   MaintenanceComputer.cs
   MouseLook.cs
+  Pause-Screen/
+   PauseMenuManager.cs
+   ResolutionController.cs
+   SettingsManager.cs
   PhoneInteractable.cs
   PickupObject.cs
   PlayerController.cs
@@ -106,15 +129,25 @@ Assets/
   QuestItem.cs
   QuestLockedDoor.cs
   QuestManager.cs
+  Robot/
+   EnemyPistolAI.cs
+   EnemyPistolController.cs
+   EnemyShooting.cs
+   LaserBolt.cs
   Samurai/
+   Brazier.cs
+   BrazierDoor.cs
+   BrazierGate.cs
    Farmer.cs
    FruitBasket.cs
+   GasBottle.cs
   SatelliteController.cs
   SatellitePanel.cs
   SceneController.cs
   SlidingDoor.cs
   TwoKeyDoor.cs
   UIManager.cs
+  VoiceLineTrigger.cs
   WiseMan.cs
   WiseManQuest.cs
  TutorialInfo/Scripts/Readme.cs
@@ -391,6 +424,10 @@ Library/ScriptAssemblies/
  Unity.Multiplayer.Center.Common.dll
  Unity.Multiplayer.Center.Editor.dll
  Unity.PlasticSCM.Editor.dll
+ Unity.ProBuilder.AddOns.Editor.dll
+ Unity.ProBuilder.AssetIdRemapUtility.dll
+ Unity.ProBuilder.dll
+ Unity.ProBuilder.Editor.dll
  Unity.Profiling.Core.dll
  Unity.Rendering.LightTransport.Editor.dll
  Unity.Rendering.LightTransport.Runtime.dll
@@ -409,6 +446,7 @@ Library/ScriptAssemblies/
  Unity.RenderPipelines.Universal.Shaders.dll
  Unity.Rider.Editor.dll
  Unity.Searcher.Editor.dll
+ Unity.Settings.Editor.dll
  Unity.ShaderGraph.Editor.dll
  Unity.TextMeshPro.dll
  Unity.TextMeshPro.Editor.dll
