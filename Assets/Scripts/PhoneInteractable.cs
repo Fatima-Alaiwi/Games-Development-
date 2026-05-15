@@ -17,6 +17,9 @@ public class PhoneInteractable : MonoBehaviour, IInteractable
     [Header("Spawner")]
     public EnemySpawner enemySpawner; // Drag your EnemySpawner object here
 
+    [Header("Quest Settings")]
+    public Quest answerPhoneQuest; // Raghad: drag AnswerPhoneQuest here
+
     private bool hasBeenPickedUp = false;  // Makes sure this happens only ONCE
 
     // Called by BasementTrigger when Peter enters the basement
@@ -43,6 +46,10 @@ public class PhoneInteractable : MonoBehaviour, IInteractable
         hasBeenPickedUp = true;
         isInteractable = false;
         InteractionText = ""; // Remove interaction text
+
+        // Raghad: complete phone quest so HUD switches to enemy counter
+        if (answerPhoneQuest != null)
+            QuestManager.Instance.UpdatedCompleteQuest(answerPhoneQuest);
 
         // Stop ringing
         if (phoneAudioSource != null)

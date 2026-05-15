@@ -13,7 +13,6 @@ public class PowerCell : MonoBehaviour, IInteractable
 
     [Header("Interaction Settings")]
     [field: SerializeField] public string InteractionText { get; set; } = "Locked in Housing";
-    // CRITICAL: Set this to FALSE in the Inspector so it stays locked until the panel is touched
     public bool isInteractable { get; set; } = false; 
     
     [SerializeField] private Transform labelAnchor;
@@ -21,7 +20,6 @@ public class PowerCell : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Safety check in case the panel hasn't been used
         if (!isInteractable) return;
 
         bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
@@ -46,16 +44,13 @@ public class PowerCell : MonoBehaviour, IInteractable
     {
         if (QuestManager.Instance == null || powerQuest == null) return;
 
-        // Ensure quest is active (if they picked it up right after panel)
         if (!QuestManager.Instance.activeQuests.Contains(powerQuest))
         {
             QuestManager.Instance.activeQuests.Add(powerQuest);
         }
 
-        // Update the HUD counter (0/1 -> 1/1)
         QuestManager.Instance.UpdateQuestCount(itemName, 1);
 
-        // CHANGE THE HUD SENTENCE: This is what you requested
         QuestManager.Instance.UpdateQuestDescription(powerQuest.questName, nextStepDescription);
     }
 

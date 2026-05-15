@@ -48,11 +48,11 @@ public class Actor : MonoBehaviour
             if (animator != null)
                 animator.SetTrigger("Die");
 
-                  // Tell the spawner this enemy died  Raghaddddddddddddddddddddddddd
-            EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
-            if (reporter != null)
-                reporter.ReportDeath();
-                //raghad
+            //       // Tell the spawner this enemy died  Raghaddddddddddddddddddddddddd
+            // EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
+            // if (reporter != null)
+            //     reporter.ReportDeath();
+            //     //raghad
 
             Destroy(gameObject, 3f);
         }
