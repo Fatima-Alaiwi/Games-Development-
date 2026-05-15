@@ -54,7 +54,6 @@ public class LeverInteractable : MonoBehaviour, IInteractable
             yield return null;
         }
 
-        transform.rotation = endRotation;
 
         // Wait a moment then drop the fabric
         yield return new WaitForSeconds(0.5f);
@@ -62,12 +61,23 @@ public class LeverInteractable : MonoBehaviour, IInteractable
     }
 
     void DropFabric()
+{
+    if (fabric != null)
+        StartCoroutine(SlideFabricDown());
+}
+
+IEnumerator SlideFabricDown()
+{
+    Vector3 startPos = fabric.transform.position;
+    Vector3 endPos = startPos + new Vector3(-5f, 0, -1f); // moves left, change 5f to more or less
+    float duration = 1.5f;
+    float t = 0f;
+
+    while (t < 1f)
     {
-        if (fabric != null)
-        {
-            Rigidbody rb = fabric.AddComponent<Rigidbody>();
-            rb.mass = 1f;
-            rb.linearDamping = 0.5f;  // slight drag so it falls naturally
-        }
+        t += Time.deltaTime / duration;
+        fabric.transform.position = Vector3.Lerp(startPos, endPos, t);
+        yield return null;
     }
+}
 }
