@@ -3,13 +3,11 @@ using System.Collections;
 
 public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 {
-    // TEXT STATES - edit these in the Inspector
     [Header("Interaction Texts")]
     [SerializeField] private string textBeforeQuest = "[E] The door is locked...";
     [SerializeField] private string textNoKey       = "[E] You need a key to open this";
     [SerializeField] private string textHasKey      = "[E] Open the door";
 
-    // This is what the interaction system reads every frame
     public string InteractionText => GetInteractionText();
 
     public bool isInteractable { get; set; } = true;
@@ -25,6 +23,8 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     [Header("Sound")]
     public AudioClip openingDoorClip;
     public AudioClip magicianCallClip;
+    // Raghad: drag Peter_02 audio file here — plays when player presses E and door is locked
+    public AudioClip peterLockedDoorClip;
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
@@ -32,13 +32,14 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public float openSpeed = 2f;
 
     private bool questGiven = false;
+    // Raghad: makes sure Peter's line only plays once
+    private bool peterLineplayed = false;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Dynamically returns the correct label depending on state
     private string GetInteractionText()
     {
         if (!questGiven)
@@ -54,7 +55,7 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     {
         if (!isInteractable) return;
 
-        // Step 1: First interaction — give the quest
+        // Step 1: First interaction — door is locked, give quest, play Peter line
         if (!questGiven)
         {
             questGiven = true;
@@ -64,6 +65,14 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
             UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
             StartCoroutine(HideTextAfterDelay(2f));
+
+            // Raghad: play Peter's voice line — "Locked. I need to find a key."
+            if (!peterLineplayed && peterLockedDoorClip != null && audioSource != null)
+            {
+                peterLineplayed = true;
+                audioSource.PlayOneShot(peterLockedDoorClip);
+            }
+
             return;
         }
 
