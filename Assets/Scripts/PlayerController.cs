@@ -222,16 +222,22 @@ public class PlayerController : MonoBehaviour
         readyToAttack = true;
     }
 
-    void AttackRaycast()
+   void AttackRaycast()
     {
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out RaycastHit hit, attackDistance, attackLayer))
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, 
+        out RaycastHit hit, attackDistance, attackLayer))
         { 
             HitTarget(hit);
+
             if(hit.transform.TryGetComponent<Actor>(out Actor T))
-            { T.TakeDamage(attackDamage); }
+                T.TakeDamage(attackDamage);
+
+            // ADD THIS
+           ChoppableBamboo bamboo = hit.transform.GetComponentInParent<ChoppableBamboo>();
+            if(bamboo != null)
+                bamboo.GetChopped();
         } 
     }
-
     void HitTarget(RaycastHit hit)
     {
         audioSource.pitch = 1;
