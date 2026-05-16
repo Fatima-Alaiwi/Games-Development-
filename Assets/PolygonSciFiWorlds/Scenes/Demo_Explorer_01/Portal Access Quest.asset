@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Unlock the portal room
   goalItemName: Keycard
   activeMessage: Find the keycard to access the portal room.
-  completeMessage: Unlock the portal room.
+  completeMessage: Portal Room Unlocked
   goalAmount: 1
   currentAmount: 1
-  isCompleted: 1
+  isCompleted: 0
