@@ -162,4 +162,10 @@ public class PlayerControllerGun : MonoBehaviour
         Debug.Log("Playing animation: " + newState);
         animator.Play(newState);
     }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
+    }
 }
