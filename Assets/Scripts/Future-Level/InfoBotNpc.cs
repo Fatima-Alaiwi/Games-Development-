@@ -62,11 +62,6 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
                 Debug.Log("Robot: 'Go to the garage and use the car to Deliver the Cell.'");
                 break;
 
-            case "Repair Car":
-                Debug.Log("Player: 'The car has a flat tire.'");
-                Debug.Log("Robot: 'Find a replacement at the store so you can move the cell.'");
-                break;
-
             case "Deliver Cell":
                 Debug.Log("Player: 'Cell is loaded.'");
                 Debug.Log("Robot: 'Security droids are active! You must Kill Robots to reach the lift.'");
