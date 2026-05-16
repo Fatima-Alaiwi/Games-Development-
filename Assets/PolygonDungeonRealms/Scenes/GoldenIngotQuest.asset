@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Find three golden ingots and bring them to the Wise Man
   goalItemName: DungeonGold
   activeMessage: Find the three golden ingots
-  completeMessage: Return to the Wise Man!
+  completeMessage: Quest Completed!
   goalAmount: 3
   currentAmount: 3
   isCompleted: 1
