@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class InfoBotNPC : MonoBehaviour, IInteractable
@@ -23,11 +24,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     [Header("Voice Lines - Completion Transitions")]
     public List<AudioClip> investigateBuildingCompleteLines = new List<AudioClip>();
 
-    // Sequential Tracking Variables
-    private List<AudioClip> _currentConversationClips = new List<AudioClip>();
-    private int _currentLineIndex = 0;
-    private string _lastTrackedQuestName = "";
-    private bool _isHandlingCompletion = false;
+    private bool _isSpeakingSequence = false;
 
     // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
@@ -44,13 +41,19 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. If audio is actively playing, block interaction so lines don't overlap
-        if (audioSource != null && audioSource.isPlaying) return;
+        // 1. Block interaction if a sequence is already automatically running
+        if (_isSpeakingSequence) return;
 
         // 2. Give the initial setup quest if no active objective exists
         if (QuestManager.Instance.activeQuests.Count == 0)
         {
-            GiveFirstQuest();
+            StartCoroutine(PlayDialogueSequence(introLines, () => 
+            {
+                if (QuestManager.Instance != null && investigateBuildingQuest != null)
+                {
+                    QuestManager.Instance.AcceptQuest(investigateBuildingQuest);
+                }
+            }));
             return;
         }
 
@@ -59,92 +62,58 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         // 3. Handle quest hand-ins or standard progression
         if (current.isCompleted)
         {
-            HandleQuestCompletion(current);
+            StartCoroutine(PlayDialogueSequence(GetCompletionClips(current.questName), () =>
+            {
+                switch (current.questName)
+                {
+                    case "Investigate Building":
+                        if (QuestManager.Instance != null)
+                        {
+                            QuestManager.Instance.activeQuests.Remove(current);
+                            if (restorePowerQuest != null)
+                            {
+                                QuestManager.Instance.AcceptQuest(restorePowerQuest);
+                            }
+                        }
+                        break;
+                }
+            }));
         }
         else
         {
-            ExecuteConversation(current);
+            StartCoroutine(PlayDialogueSequence(GetTargetClips(current.questName), null));
         }
     }
 
-    private void GiveFirstQuest()
+    // This Coroutine handles the automatic "once-and-done" playback loop
+    private IEnumerator PlayDialogueSequence(List<AudioClip> clipList, System.Action onSequenceComplete)
     {
-        HandleSequencePlayback(introLines, "Intro", () => 
-        {
-            // Callback executed only when all intro voice lines finish playing sequentially
-            if (QuestManager.Instance != null && investigateBuildingQuest != null)
-            {
-                QuestManager.Instance.AcceptQuest(investigateBuildingQuest);
-            }
-        });
-    }
-
-    private void ExecuteConversation(Quest quest)
-    {
-        _isHandlingCompletion = false;
-        List<AudioClip> targetClips = GetTargetClips(quest.questName);
-        HandleSequencePlayback(targetClips, quest.questName, null);
-    }
-
-    private void HandleQuestCompletion(Quest completedQuest)
-    {
-        _isHandlingCompletion = true;
-        List<AudioClip> targetClips = GetCompletionClips(completedQuest.questName);
-
-        HandleSequencePlayback(targetClips, completedQuest.questName + "_Complete", () =>
-        {
-            // Callback executed when completion dialogue finishes processing sequentially
-            switch (completedQuest.questName)
-            {
-                case "Investigate Building":
-                    if (QuestManager.Instance != null)
-                    {
-                        QuestManager.Instance.activeQuests.Remove(completedQuest);
-                        if (restorePowerQuest != null)
-                        {
-                            QuestManager.Instance.AcceptQuest(restorePowerQuest);
-                        }
-                    }
-                    break;
-            }
-        });
-    }
-
-    private void HandleSequencePlayback(List<AudioClip> clipList, string conversationKey, System.Action onSequenceComplete)
-    {
-        // Reset line counters if moving to a completely different dialogue conversation
-        if (_lastTrackedQuestName != conversationKey)
-        {
-            _lastTrackedQuestName = conversationKey;
-            _currentLineIndex = 0;
-        }
-
         if (clipList == null || clipList.Count == 0)
         {
-            // Execute the backend mechanics immediately if audio files are unassigned
             onSequenceComplete?.Invoke();
-            return;
+            yield break;
         }
 
-        // Play the line corresponding to our index counter
-        if (_currentLineIndex < clipList.Count)
+        _isSpeakingSequence = true;
+
+        for (int i = 0; i < clipList.Count; i++)
         {
-            AudioClip clipToPlay = clipList[_currentLineIndex];
-            if (audioSource != null && clipToPlay != null)
+            AudioClip currentClip = clipList[i];
+
+            if (currentClip != null && audioSource != null)
             {
-                audioSource.PlayOneShot(clipToPlay);
+                audioSource.clip = currentClip;
+                audioSource.Play();
                 PlayTalkAnimation();
-            }
 
-            _currentLineIndex++;
-
-            // If that was the last line of the conversation block, execute transition states
-            if (_currentLineIndex >= clipList.Count)
-            {
-                onSequenceComplete?.Invoke();
-                _currentLineIndex = 0; // Loop conversation back to the beginning for subsequent interactions
+                // Wait right here until this specific clip finishes playing before moving to the next loop iteration
+                yield return new WaitForSeconds(currentClip.length);
             }
         }
+
+        // Run quest backend modifications after the entire audio track sequence is done
+        onSequenceComplete?.Invoke();
+        _isSpeakingSequence = false;
     }
 
     private List<AudioClip> GetTargetClips(string questName)
