@@ -22,6 +22,7 @@ public class LeverInteractable : MonoBehaviour, IInteractable
 
     private bool isActivated = false;
 
+    public AudioClip fabricSound;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -69,13 +70,23 @@ public class LeverInteractable : MonoBehaviour, IInteractable
 IEnumerator SlideFabricDown()
 {
     Vector3 startPos = fabric.transform.position;
-    Vector3 endPos = startPos + new Vector3(-5f, 0, -1f); // moves left, change 5f to more or less
+    Vector3 endPos = startPos + new Vector3(-5f, 0, -1f);
     float duration = 1.5f;
     float t = 0f;
+    bool soundPlayed = false;
 
     while (t < 1f)
     {
         t += Time.deltaTime / duration;
+
+        // Play sound after 1 second of sliding (when t passes 1/1.5 ≈ 0.667)
+        if (!soundPlayed && t >= (1f / duration))
+        {
+            soundPlayed = true;
+            if (fabricSound != null)
+                audioSource.PlayOneShot(fabricSound);
+        }
+
         fabric.transform.position = Vector3.Lerp(startPos, endPos, t);
         yield return null;
     }
