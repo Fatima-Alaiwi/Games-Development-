@@ -18,5 +18,5 @@ MonoBehaviour:
   activeMessage: Insert Power Cell into the Generator
   completeMessage: Power Stabilized
   goalAmount: 1
-  currentAmount: 1
-  isCompleted: 1
+  currentAmount: 0
+  isCompleted: 0
