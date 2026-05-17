@@ -19,23 +19,20 @@ public class EnemyMoveGun  : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+{
+    if (PlayerControllerGun.instance == null) return; // ADD THIS
+
+    target = PlayerControllerGun.instance.transform.position;
+
+    agent.destination = target;
+
+    if(Vector3.Distance(transform.position, target) > distanceToStop)
     {
-        target = PlayerControllerGun.instance.transform.position;
-        //target.y = transform.position.y;
-
-        agent.destination = target; 
-
-        //transform.LookAt(target);
-
-        //theRigidbody.linearVelocity = transform.forward * moveSpeed;
-
-        if(Vector3.Distance(transform.position, target) > distanceToStop)
-        {
-            agent.destination = target;
-        }
-        else
-        {
-            agent.destination = transform.position;
-        }
+        agent.destination = target;
     }
+    else
+    {
+        agent.destination = transform.position;
+    }
+}
 }

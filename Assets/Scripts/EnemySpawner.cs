@@ -65,17 +65,15 @@ public class EnemySpawner : MonoBehaviour
         Debug.Log("All enemies spawned!");
     }
 
-    public void OnEnemyKilled()
-    {
-        enemiesKilled++;
-        Debug.Log($"Enemies killed: {enemiesKilled}/{totalEnemiesToSpawn}");
+   public void OnEnemyKilled()
+{
+    enemiesKilled++;
+    Debug.Log($"Enemies killed: {enemiesKilled}/{totalEnemiesToSpawn}");
 
-        if (killQuest != null)
-            QuestManager.Instance.UpdateProgress(killQuest.goalItemName, 1);
+    if (killQuest != null)
+        QuestManager.Instance.UpdateProgress(killQuest.goalItemName, 1);
 
-        if (enemiesKilled >= totalEnemiesToSpawn)
-        {
-            Debug.Log("All enemies defeated! Quest complete!");
-        }
-    }
+    if (enemiesKilled >= totalEnemiesToSpawn)
+        Debug.Log("All enemies defeated! Quest complete!");
+}
 }

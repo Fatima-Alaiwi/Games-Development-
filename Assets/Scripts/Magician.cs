@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Magician : MonoBehaviour, IInteractable
 {
@@ -14,13 +15,17 @@ public class Magician : MonoBehaviour, IInteractable
     public AudioClip rewardClip;
     public AudioClip waitClip;
 
+    [Header("Peter Voice Lines")]
+    // Raghad: drag Peter_10 audio file here — plays after Magician gives the code
+    public AudioClip peterCodeClip;
+
     [Header("Bottle Requirement")]
     public int requiredBottleCount = 4;
 
     [Header("Quest Requirement")]
     public Quest killQuest;
-    public Quest findMagicianQuest; // drag FindMagicianQuest here
-    public Quest findLibraryQuest;  // drag FindLibraryQuest here
+    public Quest findMagicianQuest;
+    public Quest findLibraryQuest;
 
     private bool hasGivenCode = false;
     private bool hasPlayedWait = false;
@@ -39,11 +44,9 @@ public class Magician : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Start talking animation
         if (animator != null)
             animator.SetBool("isTalking", true);
 
-        // Raghad: check using IsQuestComplete so skipped quests are caught too
         if (killQuest != null && !QuestManager.Instance.IsQuestComplete(killQuest))
         {
             if (!hasPlayedWait)
@@ -55,7 +58,6 @@ public class Magician : MonoBehaviour, IInteractable
             return;
         }
 
-        // Complete find magician quest
         if (!hasCompletedFindQuest)
         {
             hasCompletedFindQuest = true;
@@ -67,26 +69,35 @@ public class Magician : MonoBehaviour, IInteractable
         int bottleCount = GetBottleCount();
         Debug.Log("Bottle count: " + bottleCount);
 
-        // CHECK BOTTLES EVERY TIME — not just first visit
         if (!hasGivenCode && bottleCount >= requiredBottleCount)
         {
             hasGivenCode = true;
             InventoryManager.instance.RemoveItem("Bottle", 4);
             PlayClip(rewardClip);
 
-            // Start library quest — player must find the library door
-            // Code is NOT shown on screen — player must remember what Magician said!
+            // Start library quest
             if (findLibraryQuest != null)
                 QuestManager.Instance.AcceptQuest(findLibraryQuest);
+
+            // Raghad: after Magician finishes giving the code, play Peter's reaction
+            // "A code. I need to remember this. The library... I have to find the library."
+            StartCoroutine(PlayPeterCodeLineAfterDelay(6f));
 
             Debug.Log("Magician gave the password: 927!");
         }
         else if (!hasGivenCode)
         {
-            // Play greeting every time until bottles collected
             PlayClip(greetingClip);
             Debug.Log("Magician: Find 4 bottles! You have: " + bottleCount);
         }
+    }
+
+    IEnumerator PlayPeterCodeLineAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        // Raghad: plays Peter's line after Magician finishes talking — no overlap
+        if (peterCodeClip != null && audioSource != null)
+            audioSource.PlayOneShot(peterCodeClip);
     }
 
     int GetBottleCount()
