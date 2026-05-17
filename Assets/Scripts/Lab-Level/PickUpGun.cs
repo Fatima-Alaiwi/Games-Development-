@@ -35,11 +35,18 @@ public class PickUpGun : MonoBehaviour, IInteractable
 
     private void CompleteTheQuest()
     {
+        // 1. Safe backend completion through the manager
         QuestManager.Instance.CompleteQuestPublic(gunQuest);
         
         Debug.Log($"<color=orange>INTERACTED:</color> {gunQuest.questName} is now complete.");
 
-        // Hide the gun model
+        // 2. NEW: Tell the level-aware script to make the gun appear in the player's hands
+        if (PlayerControllerGun.instance != null)
+        {
+            PlayerControllerGun.instance.UnlockAndEquipGun();
+        }
+
+        // 3. Hide the gun model from the floor
         if (visualModel != null)
             visualModel.SetActive(false);
         else

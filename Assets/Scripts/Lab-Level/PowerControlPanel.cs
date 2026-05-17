@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class PowerControlPanel : MonoBehaviour, IInteractable
 {
+    [Header("Quest Requirements")]
+    public Quest requiredPortalRoomQuest;
+
     [Header("Quest Assignment")]
     public Quest powerQuest;
     
@@ -9,14 +12,47 @@ public class PowerControlPanel : MonoBehaviour, IInteractable
     public PowerCore targetCore;
 
     [Header("Interaction Settings")]
-    [field: SerializeField] public string InteractionText { get; set; } = "Initialize Power Sequence";
+    [SerializeField] private string _defaultInteractionText = "Initialize Power Sequence";
+    private bool _sequenceActive = false;
     public bool isInteractable { get; set; } = true;
     
     [SerializeField] private Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
+    public string InteractionText
+    {
+        get
+        {
+            if (_sequenceActive) return "Sequence Active";
+            
+            // If the prerequisite quest isn't done yet, display "Come back later"
+            if (requiredPortalRoomQuest != null && QuestManager.Instance != null)
+            {
+                if (!QuestManager.Instance.IsQuestCompleted(requiredPortalRoomQuest.questName))
+                {
+                    return "Come back later";
+                }
+            }
+
+            return _defaultInteractionText;
+        }
+        set => _defaultInteractionText = value;
+    }
+
     public void Interact()
     {
+        if (!isInteractable) return;
+
+        // Double check requirement condition inside interaction execution
+        if (requiredPortalRoomQuest != null && QuestManager.Instance != null)
+        {
+            if (!QuestManager.Instance.IsQuestCompleted(requiredPortalRoomQuest.questName))
+            {
+                Debug.Log("<color=yellow>PANEL LOCKED:</color> Prerequisite objective incomplete.");
+                return; 
+            }
+        }
+
         if (QuestManager.Instance != null && powerQuest != null)
         {
             QuestManager.Instance.AcceptQuest(powerQuest);
@@ -44,7 +80,7 @@ public class PowerControlPanel : MonoBehaviour, IInteractable
         }
 
         isInteractable = false; 
-        InteractionText = "Sequence Active";
+        _sequenceActive = true;
         
         UIManager.Instance.HideHoverText();
     }
