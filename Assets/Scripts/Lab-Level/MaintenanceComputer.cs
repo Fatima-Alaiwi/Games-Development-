@@ -1,6 +1,5 @@
 using UnityEngine;
-
-public class MaintenanceComputer : MonoBehaviour, IInteractable
+public class MaintenanceComputer : VoiceLineTrigger, IInteractable
 {
     [Header("Quest Settings")]
     public string questGoalName = "ReadLogs";
@@ -16,7 +15,6 @@ public class MaintenanceComputer : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. Toggle Logic
         if (computerScreenUI.activeSelf)
         {
             CloseComputer();
@@ -37,10 +35,21 @@ public class MaintenanceComputer : MonoBehaviour, IInteractable
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // STOP player movement
         if (PlayerControllerGun.instance != null) 
         {
             PlayerControllerGun.instance.canMove = false;
+        }
+
+        if (playOnlyOnce)
+        {
+            if (!_hasPlayed)
+            {
+                base.PlayVoice();
+            }
+        }
+        else
+        {
+            base.PlayVoice();
         }
 
         QuestManager.Instance.UpdateProgress(questGoalName, 1);
@@ -54,7 +63,6 @@ public class MaintenanceComputer : MonoBehaviour, IInteractable
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        // RESUME player movement
         if (PlayerControllerGun.instance != null) 
         {
             PlayerControllerGun.instance.canMove = true;
