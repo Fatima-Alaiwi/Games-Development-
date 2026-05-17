@@ -33,6 +33,7 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
     private bool isOpen = false;
     private bool panelOpen = false;
     private bool questStarted = false;
+    public AudioClip doorLockedClip;
 
     void Awake()
     {
@@ -46,29 +47,32 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
     }
 
     public void Interact()
+{
+    if (!isInteractable || isOpen) return;
+
+    if (!questStarted)
     {
-        if (!isInteractable || isOpen) return;
-
-        // Start quest on first E press
-        if (!questStarted)
-        {
-            questStarted = true;
-            if (doorQuest != null)
-                QuestManager.Instance.AcceptQuest(doorQuest);
-        }
-
-        if (!panelOpen)
-        {
-            panelOpen = true;
-            codePanel.SetActive(true);
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-
-            if (feedbackText != null)
-                feedbackText.text = "";
-        }
+        questStarted = true;
+        if (doorQuest != null)
+            QuestManager.Instance.AcceptQuest(doorQuest);
     }
+
+    if (!panelOpen)
+    {
+        panelOpen = true;
+        codePanel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (feedbackText != null)
+            feedbackText.text = "";
+
+        // Play "door is locked" voice line
+        if (audioSource != null && doorLockedClip != null)
+            audioSource.PlayOneShot(doorLockedClip);
+    }
+}
 
     public void SubmitCode()
     {

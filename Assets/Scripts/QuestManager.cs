@@ -10,9 +10,16 @@ public class QuestManager : MonoBehaviour
 
 
     void Awake()
+{
+    if (Instance == null)
     {
-        if (Instance == null) Instance = this;
+        Instance = this;
     }
+    else
+    {
+        Destroy(gameObject);
+    }
+}
 
     public void AcceptQuest(Quest quest)
     {

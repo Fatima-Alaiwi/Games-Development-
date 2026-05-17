@@ -15,9 +15,14 @@ public class PlayerControllerGun : MonoBehaviour
 
     WeaponController currentWeapon;
 
-    [Header("Weapon")]
+    [Header("Weapon Settings")]
     public Transform weaponHolderPosition;
     public WeaponData defaultWeapon;
+    
+    [Tooltip("Check this box ONLY in the Lab level to hide the gun until it's picked up.")]
+    public bool hideGunOnStart = false; 
+    
+    private bool hasPickedUpGun = false;
 
     [Header("Controller")]
     public float moveSpeed = 5;
@@ -49,8 +54,28 @@ public class PlayerControllerGun : MonoBehaviour
         input = playerInput.Main;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        SetWeapon(defaultWeapon);
+        
+        if (hideGunOnStart)
+        {
+            hasPickedUpGun = false;
+            Debug.Log("<color=yellow>PLAYER:</color> Level configured to hide gun on start.");
+        }
+        else
+        {
+            hasPickedUpGun = true;
+            SetWeapon(defaultWeapon);
+        }
+
         AssignInputs();
+    }
+
+    public void UnlockAndEquipGun()
+    {
+        if (hasPickedUpGun) return;
+
+        hasPickedUpGun = true;
+        SetWeapon(defaultWeapon);
+        Debug.Log("<color=cyan>PLAYER:</color> Gun unlocked and equipped!");
     }
 
     public void SetWeapon(WeaponData newWeapon)
@@ -66,7 +91,7 @@ public class PlayerControllerGun : MonoBehaviour
     {
         isGrounded = controller.isGrounded;
 
-        if (currentWeapon != null && currentWeapon.weaponData != null)
+        if (hasPickedUpGun && currentWeapon != null && currentWeapon.weaponData != null)
         {
             if(input.Attack.IsPressed() && currentWeapon.weaponData.automatic)
                 currentWeapon.Shoot();
@@ -77,11 +102,10 @@ public class PlayerControllerGun : MonoBehaviour
 
     void FixedUpdate()
     {
-        // If movement is locked, stop here
-        if (!canMove) 
+        if (!canMove)
         {
-        currentMoveInput = Vector2.zero;
-        return; 
+            currentMoveInput = Vector2.zero;
+            return; 
         }
 
         currentMoveInput = input.Movement.ReadValue<Vector2>();
@@ -90,9 +114,7 @@ public class PlayerControllerGun : MonoBehaviour
 
     void LateUpdate()
     {
-        // If movement is locked, stop the camera from turning
         if (!canMove) return;
-
         LookInput(input.Look.ReadValue<Vector2>());
     }
 
@@ -148,12 +170,14 @@ public class PlayerControllerGun : MonoBehaviour
 
         input.Attack.started += ctx =>
         {
-            if (currentWeapon != null) currentWeapon.Shoot();
+            if (hasPickedUpGun && currentWeapon != null)
+                currentWeapon.Shoot();
         };
 
         input.Reload.started += ctx =>
         {
-            if (currentWeapon != null) currentWeapon.Reload();
+            if (hasPickedUpGun && currentWeapon != null)
+                currentWeapon.Reload();
         };
     }
 
@@ -161,5 +185,11 @@ public class PlayerControllerGun : MonoBehaviour
     {
         Debug.Log("Playing animation: " + newState);
         animator.Play(newState);
+    }
+
+    void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 }

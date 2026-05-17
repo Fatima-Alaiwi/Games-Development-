@@ -11,11 +11,12 @@ public class FollowSignTrigger : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
+{
+    if (other.CompareTag("Player") && !hasPlayed)
     {
-        if (other.CompareTag("Player") && !hasPlayed)
-        {
-            audioSource.Play();
-            hasPlayed = true; // so it only plays once
-        }
+        audioSource.volume = 0.3f; // change this value (0 = silent, 1 = full)
+        audioSource.Play();
+        hasPlayed = true;
     }
+}
 }
