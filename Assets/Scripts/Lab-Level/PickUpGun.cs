@@ -20,10 +20,8 @@ public class PickUpGun : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // 1. Check if the QuestManager exists and has active quests
         if (QuestManager.Instance != null && QuestManager.Instance.activeQuests.Count > 0)
         {
-            // 2. Only allow interaction if the gun quest is the FIRST active quest
             if (QuestManager.Instance.activeQuests[0] == gunQuest)
             {
                 CompleteTheQuest();
@@ -37,18 +35,23 @@ public class PickUpGun : MonoBehaviour, IInteractable
 
     private void CompleteTheQuest()
     {
-        // Complete the quest using your QuestManager method
+        // 1. Safe backend completion through the manager
         QuestManager.Instance.CompleteQuestPublic(gunQuest);
         
         Debug.Log($"<color=orange>INTERACTED:</color> {gunQuest.questName} is now complete.");
 
-        // Hide the gun model
+        // 2. NEW: Tell the level-aware script to make the gun appear in the player's hands
+        if (PlayerControllerGun.instance != null)
+        {
+            PlayerControllerGun.instance.UnlockAndEquipGun();
+        }
+
+        // 3. Hide the gun model from the floor
         if (visualModel != null)
             visualModel.SetActive(false);
         else
             gameObject.SetActive(false);
 
-        // Turn off interactability so the hover text disappears
         isInteractable = false;
     }
 }

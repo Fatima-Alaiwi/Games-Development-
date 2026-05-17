@@ -15,7 +15,7 @@ public class Actor : MonoBehaviour
     void Awake()
     {
         currentHealth = maxHealth;
-        animator = transform.root.GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -37,22 +37,23 @@ public class Actor : MonoBehaviour
 
     void Death()
     {
+        if (isDead) return; // Extra guard — prevents Death() from firing twice
         isDead = true;
 
         if (isPlayer)
         {
-            Debug.Log("Player is dead!");
+            Debug.Log("Actor: Player is dead!");
         }
         else
         {
+            // Play death animation if available
             if (animator != null)
                 animator.SetTrigger("Die");
 
-            //       // Tell the spawner this enemy died  Raghaddddddddddddddddddddddddd
-            // EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
-            // if (reporter != null)
-            //     reporter.ReportDeath();
-            //     //raghad
+            // Report death to the spawner system (only if this enemy was spawned by an EnemySpawner)
+            EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
+            if (reporter != null)
+                reporter.ReportDeath();
 
             Destroy(gameObject, 3f);
         }
