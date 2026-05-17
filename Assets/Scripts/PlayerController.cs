@@ -232,10 +232,14 @@ public class PlayerController : MonoBehaviour
             if(hit.transform.TryGetComponent<Actor>(out Actor T))
                 T.TakeDamage(attackDamage);
 
-            // ADD THIS
+            // Fatima bamboo quest
            ChoppableBamboo bamboo = hit.transform.GetComponentInParent<ChoppableBamboo>();
             if(bamboo != null)
                 bamboo.GetChopped();
+            // Fatima gong quest 
+            GongInteractable gong = hit.transform.GetComponentInParent<GongInteractable>();
+            if (gong != null)
+                gong.GetStruck();
         } 
     }
     void HitTarget(RaycastHit hit)

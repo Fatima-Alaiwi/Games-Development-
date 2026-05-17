@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GongInteractable : MonoBehaviour, IInteractable
 {
+    // Keep IInteractable only for the REPAIR step
     [field: SerializeField]
     public string InteractionText { get; set; } = "The gong stand is damaged...";
     public bool isInteractable { get; set; } = true;
@@ -49,20 +50,23 @@ public class GongInteractable : MonoBehaviour, IInteractable
         }
         else
         {
-            InteractionText = "Strike the Gong [E]";
+            // Repaired — hide E prompt, waiting for melee hit
+            InteractionText = "Strike the gong with your sword!";
+            isInteractable = false;
         }
     }
 
+    // E key — only used for repair step
     public void Interact()
     {
-        if (hasBeenStruck) return;
+        if (hasBeenStruck || isRepaired) return;
+        TryRepair();
+    }
 
-        if (!isRepaired)
-        {
-            TryRepair();
-            return;
-        }
-
+    // Called by PlayerController AttackRaycast when melee hits gong
+    public void GetStruck()
+    {
+        if (!isRepaired || hasBeenStruck) return;
         StrikeGong();
     }
 
@@ -85,6 +89,7 @@ public class GongInteractable : MonoBehaviour, IInteractable
     {
         hasBeenStruck = true;
         isInteractable = false;
+        InteractionText = "";
 
         if (gongStrikeSound != null)
             audioSource.PlayOneShot(gongStrikeSound);
