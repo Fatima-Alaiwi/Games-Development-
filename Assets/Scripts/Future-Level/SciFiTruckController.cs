@@ -6,7 +6,17 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     [Header("Interaction Settings")]
     [SerializeField] private bool _isInteractable = true;
     [SerializeField] private Transform _labelAnchor;
-    [SerializeField] private string _interactionText = "Drive Truck";
+    [SerializeField] private string _defaultInteractionText = "Drive Truck";
+
+    [Header("Quest Assignment")]
+    public Quest deliverCellQuest; // Drag your "Deliver Cell" quest asset here
+
+    [Header("Cell Placement Setup")]
+    [Tooltip("The visual cube model on the back of the truck bed (Set hidden by default)")]
+    public GameObject truckBackCubeVisual;
+    [Tooltip("The exact string identifier used in your player inventory for the power cell")]
+    public string powerCellItemName = "PowerCell"; 
+    private bool _hasPlacedCube = false;
 
     [Header("Movement Settings")]
     public float moveSpeed = 15f;
@@ -33,15 +43,35 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     private float _currentSteerAngle;
     private bool _isDriving = false;
 
+    // Interface Implementation
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
-    public string InteractionText => _interactionText;
+
+    // Dynamically update context text based on state
+    public string InteractionText
+    {
+        get
+        {
+            if (!_hasPlacedCube)
+            {
+                return "Not Now";
+            }
+            return _defaultInteractionText;
+        }
+        set => _defaultInteractionText = value;
+    }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         
         if (truckCamera != null) truckCamera.gameObject.SetActive(false);
+
+        // Ensure the back visual starts hidden
+        if (truckBackCubeVisual != null)
+        {
+            truckBackCubeVisual.SetActive(false);
+        }
     }
 
     public void Interact()
@@ -52,8 +82,49 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
             return;
         }
 
+        // STEP 1: Handle Cube placement first if it hasn't been done yet
+        if (!_hasPlacedCube)
+        {
+            TryPlacePowerCube();
+            return;
+        }
+
+        // STEP 2: Handle regular driving if cube is placed
         if (_isDriving) return;
         EnterVehicle();
+    }
+
+    private void TryPlacePowerCube()
+    {
+        // Replace 'Inventory.Instance' with your exact inventory manager script instance structure
+        if (InventoryManager.instance != null && InventoryManager.instance.HasItem(powerCellItemName))
+        {
+            // Remove item from custom player inventory bag
+            InventoryManager.instance.RemoveItem(powerCellItemName);
+
+            // Show the second cube visual sitting inside the back truck bed
+            if (truckBackCubeVisual != null)
+            {
+                truckBackCubeVisual.SetActive(true);
+            }
+
+            _hasPlacedCube = true;
+            Debug.Log("<color=green>TRUCK LOADED:</color> Power cell secured to truck bed.");
+
+            // Give the user their new quest step directly out in the world
+            if (QuestManager.Instance != null && deliverCellQuest != null)
+            {
+                QuestManager.Instance.AcceptQuest(deliverCellQuest);
+                Debug.Log("Quest Started: " + deliverCellQuest.questName);
+            }
+
+            // Force visual UI text refreshing
+            UIManager.Instance.HideHoverText();
+        }
+        else
+        {
+            Debug.Log("<color=yellow>INTERACTION LOCKED:</color> I need to find the missing power cell first.");
+        }
     }
 
     private void EnterVehicle()

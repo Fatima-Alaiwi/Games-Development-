@@ -10,13 +10,14 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     public AudioSource audioSource;
 
     [Header("Quest Assignment")]
-    public Quest investigateBuildingQuest; 
-    public Quest deliverCellQuest; // Rename or drag your Truck/Garage quest here!
+    public Quest investigateBuildingQuest;
+    public Quest loadTruckQuest;           // Drag your "LoadTruck" quest asset here!
 
     [Header("Voice Lines - Dialogue Clips")]
     public List<AudioClip> introLines = new List<AudioClip>();
     public List<AudioClip> investigateBuildingLines = new List<AudioClip>();
-    public List<AudioClip> restorePowerLines = new List<AudioClip>(); // Put your Player & Bot Line here!
+    public List<AudioClip> loadTruckLines = new List<AudioClip>();           // Lines tracking when player is loading the truck
+    public List<AudioClip> restorePowerLines = new List<AudioClip>(); //
     public List<AudioClip> deliverCellLines = new List<AudioClip>();
     public List<AudioClip> killRobotsLines = new List<AudioClip>();
     public List<AudioClip> enterPortalLines = new List<AudioClip>();
@@ -45,7 +46,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
         if (QuestManager.Instance.activeQuests.Count == 0)
         {
-            StartCoroutine(PlayDialogueSequence(introLines, () => 
+            StartCoroutine(PlayDialogueSequence(introLines, () =>
             {
                 if (QuestManager.Instance != null && investigateBuildingQuest != null)
                 {
@@ -59,7 +60,6 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
         if (current.isCompleted)
         {
-            // When the quest is complete, play the transition dialogue first, then swap the quests!
             StartCoroutine(PlayDialogueSequence(GetCompletionClips(current.questName), () =>
             {
                 HandleQuestChainTransitions(current);
@@ -78,14 +78,14 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         switch (completedQuest.questName)
         {
             case "Investigate Building":
-                // 1. Safely hand in and clean up the building quest
+                // Hand in "Investigate Building"
                 QuestManager.Instance.CompleteQuestPublic(completedQuest);
                 
-                // 2. Accept the next step: The Truck / Garage power cube assignment!
-                if (deliverCellQuest != null)
+                // Immediately grant "LoadTruck" quest
+                if (loadTruckQuest != null)
                 {
-                    QuestManager.Instance.AcceptQuest(deliverCellQuest);
-                    Debug.Log("InfoBot: 'Investigate Building' handed in. 'Deliver Power Cube' quest started!");
+                    QuestManager.Instance.AcceptQuest(loadTruckQuest);
+                    Debug.Log("InfoBot: 'Investigate Building' handed in. 'LoadTruck' quest started!");
                 }
                 break;
         }
@@ -124,6 +124,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         switch (questName)
         {
             case "Investigate Building": return investigateBuildingLines;
+            case "LoadTruck":            return loadTruckLines;        // Plays if player talks to bot while trying to load the truck
             case "Restore Power":       return restorePowerLines;
             case "Deliver Cell":         return deliverCellLines;
             case "Kill Robots":          return killRobotsLines;
@@ -136,7 +137,6 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     {
         switch (questName)
         {
-            // This is where the player reports the dead elevator and the bot gives the truck explanation
             case "Investigate Building": return restorePowerLines; 
             default:                     return new List<AudioClip>();
         }
