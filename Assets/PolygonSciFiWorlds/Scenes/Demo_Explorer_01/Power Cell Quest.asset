@@ -15,8 +15,8 @@ MonoBehaviour:
   questName: PowerCellQuest
   description: 
   goalItemName: PowerCell
-  activeMessage: Collect a Power Cell
-  completeMessage: Insert Power Cell into the Generator
+  activeMessage: Insert Power Cell into the Generator
+  completeMessage: Power Stabilized
   goalAmount: 1
-  currentAmount: 1
+  currentAmount: 0
   isCompleted: 0

@@ -4,8 +4,7 @@ public class BrazierGate : MonoBehaviour
 {
     [Header("Settings")]
     public int braziersRequired = 2;
-    public BrazierDoor door; // ✅ changed from Door to BrazierDoor
-    public AudioClip gateOpenSound;
+    public AudioClip gateOpenSound; // keep for when door actually opens
 
     private int braziersLit = 0;
     private AudioSource audioSource;
@@ -26,14 +25,12 @@ public class BrazierGate : MonoBehaviour
     {
         braziersLit++;
         Debug.Log("Braziers lit: " + braziersLit + "/" + braziersRequired);
+        // No auto-open anymore — player must go interact with door using key
+    }
 
-        if (braziersLit >= braziersRequired)
-        {
-            if (gateOpenSound != null && audioSource != null)
-                audioSource.PlayOneShot(gateOpenSound);
-
-            if (door != null)
-                door.OpenFromBrazier();
-        }
+    public void PlayOpenSound()
+    {
+        if (gateOpenSound != null && audioSource != null)
+            audioSource.PlayOneShot(gateOpenSound);
     }
 }
