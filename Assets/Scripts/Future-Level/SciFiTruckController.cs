@@ -9,12 +9,10 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     [SerializeField] private string _defaultInteractionText = "Drive Truck";
 
     [Header("Quest Assignment")]
-    public Quest deliverCellQuest; // Drag your "Deliver Cell" quest asset here
+    public Quest deliverCellQuest; 
 
     [Header("Cell Placement Setup")]
-    [Tooltip("The visual cube model on the back of the truck bed (Set hidden by default)")]
     public GameObject truckBackCubeVisual;
-    [Tooltip("The exact string identifier used in your player inventory for the power cell")]
     public string powerCellItemName = "PowerCell"; 
     private bool _hasPlacedCube = false;
 
@@ -32,98 +30,100 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     public Transform rearRight;
 
     [Header("Camera & Player Assignment")]
-    [Tooltip("The camera attached to the truck (Rear View)")]
     public Camera truckCamera;      
-    [Tooltip("The player's main camera (First/Third Person)")]
     public Camera playerCamera;     
-    [Tooltip("The Player GameObject that has the movement script")]
     public MonoBehaviour playerScript; 
+
+    [Header("Reset / Respawn Settings")]
+    [Tooltip("The exact string name of the layer that triggers a reset (e.g., 'Obstacle' or 'Water')")]
+    public string resetLayerName = "Obstacle";
+    [Tooltip("Drag a Transform here to act as the respawn point. If empty, it uses its initial position from Start.")]
+    
+    private Vector3 _initialPosition;
+    private Quaternion _initialRotation;
 
     private Rigidbody _rb;
     private float _currentSteerAngle;
     private bool _isDriving = false;
 
-    // Interface Implementation
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
 
-    // Dynamically update context text based on state
     public string InteractionText
     {
-        get
-        {
-            if (!_hasPlacedCube)
-            {
-                return "Not Now";
-            }
-            return _defaultInteractionText;
-        }
+        get => !_hasPlacedCube ? "Not Now" : _defaultInteractionText;
         set => _defaultInteractionText = value;
     }
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        
         if (truckCamera != null) truckCamera.gameObject.SetActive(false);
 
-        // Ensure the back visual starts hidden
         if (truckBackCubeVisual != null)
         {
             truckBackCubeVisual.SetActive(false);
         }
+
+        _initialPosition = transform.position;
+        _initialRotation = transform.rotation;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer(resetLayerName))
+        {
+            ResetTruckPosition();
+        }
+    }
+
+    private void ResetTruckPosition()
+    {
+
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
+        transform.position = _initialPosition;
+        transform.rotation = _initialRotation;
+
     }
 
     public void Interact()
     {
-        if (frontLeft.gameObject.activeSelf == false) 
+        if (frontLeft.gameObject.activeSelf == false)  
         {
-            Debug.Log("The truck is missing a wheel. I can't drive this!");
             return;
         }
 
-        // STEP 1: Handle Cube placement first if it hasn't been done yet
         if (!_hasPlacedCube)
         {
             TryPlacePowerCube();
             return;
         }
 
-        // STEP 2: Handle regular driving if cube is placed
         if (_isDriving) return;
         EnterVehicle();
     }
 
     private void TryPlacePowerCube()
     {
-        // Replace 'Inventory.Instance' with your exact inventory manager script instance structure
-        if (InventoryManager.instance != null && InventoryManager.instance.HasItem(powerCellItemName))
+        if (InventoryManager.instance != null)
         {
-            // Remove item from custom player inventory bag
-            InventoryManager.instance.RemoveItem(powerCellItemName);
-
-            // Show the second cube visual sitting inside the back truck bed
             if (truckBackCubeVisual != null)
             {
                 truckBackCubeVisual.SetActive(true);
             }
 
             _hasPlacedCube = true;
-            Debug.Log("<color=green>TRUCK LOADED:</color> Power cell secured to truck bed.");
 
-            // Give the user their new quest step directly out in the world
             if (QuestManager.Instance != null && deliverCellQuest != null)
             {
                 QuestManager.Instance.AcceptQuest(deliverCellQuest);
-                Debug.Log("Quest Started: " + deliverCellQuest.questName);
             }
 
-            // Force visual UI text refreshing
-            UIManager.Instance.HideHoverText();
-        }
-        else
-        {
-            Debug.Log("<color=yellow>INTERACTION LOCKED:</color> I need to find the missing power cell first.");
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.HideHoverText();
+            }
         }
     }
 
@@ -135,29 +135,21 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         if (playerScript != null)
         {
             var field = playerScript.GetType().GetField("canMove");
-            if (field != null) 
+            if (field != null)  
             {
                 field.SetValue(playerScript, false);
-            }
-            else 
-            {
-                Debug.LogWarning("Truck: 'canMove' field not found on assigned player script. Make sure it is PUBLIC.");
             }
         }
 
         if (playerCamera != null) playerCamera.gameObject.SetActive(false);
         if (truckCamera != null) truckCamera.gameObject.SetActive(true);
-
-        Debug.Log("Truck: Control Active. Physics Collisions Engaged.");
     }
 
     void FixedUpdate()
     {
         if (!_isDriving) return;
-
-        float moveInput = Input.GetAxis("Vertical");  
-        float steerInput = Input.GetAxis("Horizontal"); 
-
+        float moveInput = Input.GetAxis("Vertical");
+        float steerInput = Input.GetAxis("Horizontal");
         ApplyPhysicsMovement(moveInput);
         ApplyPhysicsSteering(steerInput, moveInput);
     }
@@ -165,10 +157,8 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     void Update()
     {
         if (!_isDriving) return;
-
         float moveInput = Input.GetAxis("Vertical");
         float steerInput = Input.GetAxis("Horizontal");
-
         UpdateWheelVisuals(moveInput, steerInput);
     }
 
@@ -184,7 +174,6 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         {
             float direction = moveInput > 0 ? 1 : -1;
             float turnAmount = steerInput * turnSpeed * direction * Time.fixedDeltaTime;
-            
             Quaternion turnRotation = Quaternion.Euler(0f, turnAmount, 0f);
             _rb.MoveRotation(_rb.rotation * turnRotation);
         }
@@ -193,7 +182,6 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     private void UpdateWheelVisuals(float moveInput, float steerInput)
     {
         float spin = moveInput * moveSpeed * 100f * Time.deltaTime;
-
         RotateWheelMesh(frontLeft, spin); RotateWheelMesh(frontRight, spin);
         RotateWheelMesh(midLeft, spin);   RotateWheelMesh(midRight, spin);
         RotateWheelMesh(rearLeft, spin);  RotateWheelMesh(rearRight, spin);
@@ -205,9 +193,6 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     private void RotateWheelMesh(Transform wheel, float amount)
     {
-        if (wheel != null) 
-        {
-            wheel.Rotate(Vector3.right * amount);
-        }
+        if (wheel != null) wheel.Rotate(Vector3.right * amount);
     }
 }

@@ -11,13 +11,13 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
     [Header("Quest Assignment")]
     public Quest investigateBuildingQuest;
-    public Quest loadTruckQuest;           // Drag your "LoadTruck" quest asset here!
+    public Quest loadTruckQuest;      
 
     [Header("Voice Lines - Dialogue Clips")]
     public List<AudioClip> introLines = new List<AudioClip>();
     public List<AudioClip> investigateBuildingLines = new List<AudioClip>();
-    public List<AudioClip> loadTruckLines = new List<AudioClip>();           // Lines tracking when player is loading the truck
-    public List<AudioClip> restorePowerLines = new List<AudioClip>(); //
+    public List<AudioClip> loadTruckLines = new List<AudioClip>();         
+    public List<AudioClip> restorePowerLines = new List<AudioClip>(); 
     public List<AudioClip> deliverCellLines = new List<AudioClip>();
     public List<AudioClip> killRobotsLines = new List<AudioClip>();
     public List<AudioClip> enterPortalLines = new List<AudioClip>();
@@ -27,7 +27,6 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
     private bool _isSpeakingSequence = false;
 
-    // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
     public string InteractionText => "Communicate";
@@ -78,10 +77,8 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         switch (completedQuest.questName)
         {
             case "Investigate Building":
-                // Hand in "Investigate Building"
                 QuestManager.Instance.CompleteQuestPublic(completedQuest);
                 
-                // Immediately grant "LoadTruck" quest
                 if (loadTruckQuest != null)
                 {
                     QuestManager.Instance.AcceptQuest(loadTruckQuest);
@@ -124,7 +121,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         switch (questName)
         {
             case "Investigate Building": return investigateBuildingLines;
-            case "LoadTruck":            return loadTruckLines;        // Plays if player talks to bot while trying to load the truck
+            case "LoadTruck":            return loadTruckLines;        
             case "Restore Power":       return restorePowerLines;
             case "Deliver Cell":         return deliverCellLines;
             case "Kill Robots":          return killRobotsLines;
