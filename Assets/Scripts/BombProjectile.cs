@@ -13,10 +13,9 @@ public class BombProjectile : MonoBehaviour
     if (rb != null)
     {
         rb.useGravity = false;
-        rb.isKinematic = false;
+        rb.isKinematic = true; // ← change to true since you move it manually in Update
     }
 }
-
     public void Launch(Vector3 dir)
     {
         direction = dir.normalized;
