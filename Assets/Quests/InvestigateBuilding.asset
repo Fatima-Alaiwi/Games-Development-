@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
-  m_Name: RepairCar
+  m_Name: InvestigateBuilding
   m_EditorClassIdentifier: 
-  questName: Repair Car
-  description: The player has to pick up the wheel and install it in the car
-  goalItemName: Wheel
-  activeMessage: Pick up the wheel
-  completeMessage: Install the wheel
+  questName: Investigate Building
+  description: 'interact with the building elevator '
+  goalItemName: elevator
+  activeMessage: Investigate The Building
+  completeMessage: Return to Info-bot
   goalAmount: 1
   currentAmount: 0
   isCompleted: 0

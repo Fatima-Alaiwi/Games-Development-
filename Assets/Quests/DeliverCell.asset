@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: DeliverCell
   m_EditorClassIdentifier: 
-  questName: 
-  description: 
-  goalItemName: 
-  activeMessage: 
-  completeMessage: 
-  goalAmount: 0
+  questName: Deliver Cell
+  description: 'Player needs to drive the truck and reach the building '
+  goalItemName: Truck
+  activeMessage: Deliver The Power Cell (avoid Cleaning vehicle )
+  completeMessage: Power Cell Delivered
+  goalAmount: 1
   currentAmount: 0
   isCompleted: 0
