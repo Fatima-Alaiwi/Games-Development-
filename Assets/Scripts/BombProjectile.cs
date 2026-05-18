@@ -6,6 +6,7 @@ public class BombProjectile : MonoBehaviour
     public AudioClip throwSound;
  
     private Vector3 direction;
+    private bool _hasHit = false;
  
     void Start()
 {
@@ -32,21 +33,21 @@ public class BombProjectile : MonoBehaviour
     }
  
     void OnTriggerEnter(Collider other)
+{
+    if (_hasHit) return;
+
+    DragonHealth dragon = other.GetComponent<DragonHealth>();
+    if (dragon != null)
     {
-        // Hit the Dragon
-        DragonHealth dragon = other.GetComponent<DragonHealth>();
-        if (dragon != null)
-        {
-            dragon.TakeBombDamage();
-            Destroy(gameObject);
-            return;
-        }
- 
-        // Hit anything else (walls, floor) - also destroy
-        // Ignore the player itself
-        if (!other.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
+        _hasHit = true; // ← add this!
+        dragon.TakeBombDamage();
+        Destroy(gameObject);
+        return;
     }
+
+    if (!other.CompareTag("Player"))
+        Destroy(gameObject);
+}
+
+    
 }
