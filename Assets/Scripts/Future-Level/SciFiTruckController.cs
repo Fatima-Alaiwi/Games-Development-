@@ -214,25 +214,15 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         if (wheel != null) wheel.Rotate(Vector3.right * amount);
     }
 
-    // ==========================================
-    // 🎬 NEW HELPER HOOK FOR THE CUTSCENE 
-    // ==========================================
-    /// <summary>
-    /// Safely forces the player out of driving state, passes player references back to the 
-    /// cutscene manager sequence, and re-enables the primary gameplay camera.
-    /// </summary>
     public void ExitVehicleForCutscene(out MonoBehaviour outPlayerScript, out Camera outPlayerCamera)
     {
         _isDriving = false;
         
-        // Disable vehicle perspective camera view
         if (truckCamera != null) truckCamera.gameObject.SetActive(false);
         
-        // Safely map the references inside the out-parameters
         outPlayerScript = playerScript;
         outPlayerCamera = playerCamera;
 
-        // Restore player camera tracking layer state
         if (playerCamera != null) 
         {
             playerCamera.gameObject.SetActive(true);

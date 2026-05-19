@@ -3,35 +3,45 @@ using UnityEngine;
 
 public class TruckCutsceneManager : MonoBehaviour
 {
-    [Header("Cameras")]
-    [Tooltip("The cinematic camera set up to watch the drone heist scene unfold.")]
     public Camera cutsceneCamera;
-
-    [Header("Actors & Assets")]
-    [Tooltip("The Drone GameObject parent that will move along the waypoints.")]
     public Transform drone;
-    [Tooltip("The visual Power Cell model currently resting on the truck bed.")]
     public GameObject powerCellOnTruck;
-    [Tooltip("Reference to the truck instance component in the scene.")]
-    public SciFiTruckController truckController;
+    public GameObject powerCellOnDrone;
 
-    [Header("Player Teleportation Target")]
-    [Tooltip("An empty 3D GameObject indicating where the player should stand to look on safely.")]
+    public string powerCellItemName = "PowerCell";
+    public string completionStepDescription = "Quest Complete: Power cell stolen by drone.";
+
     public Transform playerCutsceneStandingPoint;
-
-    [Header("Drone Path Flight Waypoints")]
-    [Tooltip("Spawn/Entry coordinate for the incoming drone.")]
     public Transform pointA; 
-    [Tooltip("The exact alignment point over the truck bed to secure the cargo.")]
     public Transform pointB; 
-    [Tooltip("The exit trajectory point out of the operational area.")]
     public Transform pointC; 
 
-    [Header("Drone Speed Adjustments")]
     public float moveSpeed = 5f;
     public float rotationSpeed = 180f;
 
     private bool _isCutscenePlaying = false;
+    private MonoBehaviour _savedPlayerScript;
+    private Camera _savedPlayerCamera;
+    private Quest _questToComplete;
+
+    void Start()
+    {
+        if (powerCellOnDrone != null)
+        {
+            powerCellOnDrone.SetActive(false);
+        }
+    }
+
+    public void SetupPlayerReferences(MonoBehaviour playerScript, Camera playerCamera)
+    {
+        _savedPlayerScript = playerScript;
+        _savedPlayerCamera = playerCamera;
+    }
+
+    public void SetQuestToComplete(Quest associatedQuest)
+    {
+        _questToComplete = associatedQuest;
+    }
 
     public void StartCutscene()
     {
@@ -43,67 +53,53 @@ public class TruckCutsceneManager : MonoBehaviour
     {
         _isCutscenePlaying = true;
 
-        if (truckController != null)
+        if (_savedPlayerScript != null && playerCutsceneStandingPoint != null)
         {
-            // 1. Lock down interaction parameters instantly so player can't re-enter mid-scene
-            truckController.isInteractable = false;
-            
-            // 2. Clear driving states, turn off vehicle camera, and extract active player references
-            truckController.ExitVehicleForCutscene(out MonoBehaviour playerScript, out Camera playerCamera);
+            CharacterController charController = _savedPlayerScript.GetComponent<CharacterController>();
+            if (charController != null) charController.enabled = false;
 
-            // 3. Teleport player character to your empty spot so they can view the event natively
-            if (playerScript != null && playerCutsceneStandingPoint != null)
+            _savedPlayerScript.transform.position = playerCutsceneStandingPoint.position;
+            _savedPlayerScript.transform.rotation = playerCutsceneStandingPoint.rotation;
+
+            if (charController != null) charController.enabled = true;
+
+            var field = _savedPlayerScript.GetType().GetField("canMove");
+            if (field != null)
             {
-                playerScript.transform.position = playerCutsceneStandingPoint.position;
-                playerScript.transform.rotation = playerCutsceneStandingPoint.rotation;
-
-                // 4. Safely reactivate player locomotion loops immediately
-                var field = playerScript.GetType().GetField("canMove");
-                if (field != null)
-                {
-                    field.SetValue(playerScript, true);
-                }
-            }
-
-            // 5. Shift perspective from player's view over to the cinematic framing layout
-            if (cutsceneCamera != null)
-            {
-                if (playerCamera != null) playerCamera.gameObject.SetActive(false);
-                cutsceneCamera.gameObject.SetActive(true);
+                field.SetValue(_savedPlayerScript, true);
             }
         }
 
-        // Initialize drone orientation state at Point A
+        if (cutsceneCamera != null)
+        {
+            if (_savedPlayerCamera != null) _savedPlayerCamera.gameObject.SetActive(false);
+            cutsceneCamera.gameObject.SetActive(true);
+        }
+
         if (drone != null && pointA != null)
         {
             drone.position = pointA.position;
             drone.rotation = pointA.rotation;
         }
 
-        yield return new WaitForSeconds(0.5f); // Brief buffer frame for visual transition matching
+        yield return new WaitForSeconds(0.5f); 
 
-        // STEP I: Fly from high/away space down to the flat truck bed alignment
         if (pointB != null)
         {
             yield return StartCoroutine(MoveAndRotateDrone(pointB.position, pointB.rotation));
         }
 
-        // STEP II: Hide the cell visual attached to the truck to simulate the drone detaching it
-        if (powerCellOnTruck != null)
-        {
-            powerCellOnTruck.SetActive(false); 
-        }
+        if (powerCellOnTruck != null) powerCellOnTruck.SetActive(false);
+        if (powerCellOnDrone != null) powerCellOnDrone.SetActive(true);
         
-        yield return new WaitForSeconds(0.6f); // Short structural hold for kinematic weight feedback
+        yield return new WaitForSeconds(0.6f); 
 
-        // STEP III: Execute a crisp 180-degree pivot orientation update facing out towards Point C
         if (pointC != null && drone != null)
         {
             Quaternion targetTurnRotation = Quaternion.LookRotation(pointC.position - drone.position);
             yield return StartCoroutine(RotateDroneOnly(targetTurnRotation));
         }
 
-        // STEP IV: Accelerate away out of the sky vector track bounds
         if (pointC != null)
         {
             yield return StartCoroutine(MoveAndRotateDrone(pointC.position, pointC.rotation));
@@ -137,22 +133,33 @@ public class TruckCutsceneManager : MonoBehaviour
     {
         _isCutscenePlaying = false;
         
-        // Return view field targeting straight back to player camera setup 
         if (cutsceneCamera != null && cutsceneCamera.gameObject.activeSelf)
         {
             cutsceneCamera.gameObject.SetActive(false);
-            if (truckController != null && truckController.playerCamera != null)
+            if (_savedPlayerCamera != null)
             {
-                truckController.playerCamera.gameObject.SetActive(true);
+                _savedPlayerCamera.gameObject.SetActive(true);
             }
         }
 
-        // Hide or clear out the drone reference so it doesn't linger static in the sky matrix
         if (drone != null)
         {
             drone.gameObject.SetActive(false);
         }
 
-        Debug.Log("Sequence Complete: Power cell stolen. Control entirely restored to default loops.");
+        if (QuestManager.Instance != null && _questToComplete != null)
+        {
+            if (!QuestManager.Instance.activeQuests.Contains(_questToComplete))
+            {
+                QuestManager.Instance.activeQuests.Add(_questToComplete);
+            }
+
+            QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
+            QuestManager.Instance.UpdateQuestDescription(_questToComplete.questName, completionStepDescription);
+        }
+        else if (QuestManager.Instance != null)
+        {
+            QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
+        }
     }
 }
