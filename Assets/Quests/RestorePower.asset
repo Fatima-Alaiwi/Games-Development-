@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: 
   description: 
-  goalItemName: 
-  activeMessage: 
-  completeMessage: 
-  goalAmount: 0
+  goalItemName: Power cube
+  activeMessage: Load the power cube in the truck
+  completeMessage: deliver the power cube to the building
+  goalAmount: 1
   currentAmount: 0
   isCompleted: 0

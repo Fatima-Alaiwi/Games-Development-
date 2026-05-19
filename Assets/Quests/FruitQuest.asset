@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   goalItemName: Fruit
   activeMessage: 'Fruit baskets collected:'
-  completeMessage: Return to the farmer!
+  completeMessage: Back to the farmer!
   goalAmount: 2
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 2
+  isCompleted: 1

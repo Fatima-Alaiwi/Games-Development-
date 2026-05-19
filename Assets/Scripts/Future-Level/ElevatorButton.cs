@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class ElevatorButton : MonoBehaviour, IInteractable
 {
@@ -6,12 +8,21 @@ public class ElevatorButton : MonoBehaviour, IInteractable
     [SerializeField] private bool _isInteractable = true;
     [SerializeField] private Transform _labelAnchor;
 
+    [Header("Audio Setup")]
+    public AudioSource playerAudioSource; // Drag the Player's AudioSource component here
+    public List<AudioClip> elevatorInvestigationLines = new List<AudioClip>();
+
+    private bool _isSpeaking = false;
+
+    // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
     public string InteractionText => "Check Elevator";
 
     public void Interact()
     {
+        if (_isSpeaking) return;
+
         if (QuestManager.Instance.activeQuests.Count > 0)
         {
             Quest active = QuestManager.Instance.activeQuests[0];
@@ -20,16 +31,38 @@ public class ElevatorButton : MonoBehaviour, IInteractable
             {
                 active.isCompleted = true;
                 active.currentAmount = 1;
-
-    
                 active.activeMessage = active.completeMessage;
 
                 Debug.Log("Elevator: Power Offline. HUD Updated to: " + active.activeMessage);
+
+                StartCoroutine(PlayVoiceLinesSequence());
             }
             else if (active.questName == "Enter Portal")
             {
                 Debug.Log("Elevator: Power Restored. Moving...");
             }
         }
+    }
+
+    private IEnumerator PlayVoiceLinesSequence()
+    {
+        if (elevatorInvestigationLines == null || elevatorInvestigationLines.Count == 0) yield break;
+
+        _isSpeaking = true;
+
+        for (int i = 0; i < elevatorInvestigationLines.Count; i++)
+        {
+            AudioClip currentClip = elevatorInvestigationLines[i];
+
+            if (currentClip != null && playerAudioSource != null)
+            {
+                playerAudioSource.clip = currentClip;
+                playerAudioSource.Play();
+
+                yield return new WaitForSeconds(currentClip.length);
+            }
+        }
+
+        _isSpeaking = false;
     }
 }

@@ -6,8 +6,8 @@ public class TrafficSpawner : MonoBehaviour
     [Header("Spawn Settings")]
     public List<GameObject> carPrefabs; 
     public float spawnInterval = 2f;    
-    public float baseSpeed = 20f;        // Renamed for clarity
-    public float speedVariation = 5f;    // The +/- range (e.g., 5 means speed can be 15-25)
+    public float baseSpeed = 20f;        
+    public float speedVariation = 5f;   
     public float despawnDistance = 100f; 
 
     private float timer;
@@ -53,10 +53,8 @@ public class FlyingCarMovement : MonoBehaviour
         maxDistance = distance;
         startPos = transform.position;
 
-        // Find all light anchors attached to this car prefab
         trailAnchors = GetComponentsInChildren<LightTrailAnchor>();
         
-        // Turn them on immediately as the car starts moving
         foreach (var anchor in trailAnchors)
         {
             anchor.SetEmitting(true);
