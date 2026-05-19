@@ -1,14 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Actor : MonoBehaviour
 {
     int currentHealth;
-    public int maxHealth;
+    public int maxHealth = 10;
     public bool isPlayer = false;
     public HealthBar healthBar;
 
+    public AudioClip hurtSound; // drag your hurt sound here in Inspector
+
+    private AudioSource audioSource;
     private Animator animator;
     private bool isDead = false;
 
@@ -16,6 +19,10 @@ public class Actor : MonoBehaviour
     {
         currentHealth = maxHealth;
         animator = transform.root.GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        // Auto-add AudioSource if missing
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -27,6 +34,10 @@ public class Actor : MonoBehaviour
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        // Play hurt sound
+        if (hurtSound != null && audioSource != null)
+            audioSource.PlayOneShot(hurtSound);
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -42,17 +53,14 @@ public class Actor : MonoBehaviour
         if (isPlayer)
         {
             Debug.Log("Player is dead!");
+            // Reload scene — works in any scene
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.name);
         }
         else
         {
             if (animator != null)
                 animator.SetTrigger("Die");
-
-            //       // Tell the spawner this enemy died  Raghaddddddddddddddddddddddddd
-            // EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
-            // if (reporter != null)
-            //     reporter.ReportDeath();
-            //     //raghad
 
             Destroy(gameObject, 3f);
         }

@@ -110,6 +110,9 @@ public class WeaponController : MonoBehaviour
 
     void HitTarget(RaycastHit hit)
 {
+    // Ignore trigger colliders so bullets only hit the physical collider
+    if (hit.collider.isTrigger) return;
+
     Actor target = hit.transform.GetComponentInParent<Actor>();
 
     if (target != null)
