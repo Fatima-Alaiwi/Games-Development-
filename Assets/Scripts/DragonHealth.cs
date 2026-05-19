@@ -68,4 +68,9 @@ public class DragonHealth : MonoBehaviour
 
         Destroy(gameObject, 3f);
     }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
+    }
 }
