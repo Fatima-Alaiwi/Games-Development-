@@ -1,21 +1,27 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Actor : MonoBehaviour
 {
     int currentHealth;
-    public int maxHealth;
+    public int maxHealth = 10;
     public bool isPlayer = false;
     public HealthBar healthBar;
 
+    public AudioClip hurtSound;
+
+    private AudioSource audioSource;
     private Animator animator;
     private bool isDead = false;
 
     void Awake()
     {
         currentHealth = maxHealth;
-        animator = GetComponentInChildren<Animator>();
+        animator = transform.root.GetComponentInChildren<Animator>();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -24,9 +30,15 @@ public class Actor : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (isDead) return;
+        Debug.Log(gameObject.name + " took " + amount + " damage. Health: " + currentHealth);
+
+        if (isDead) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (hurtSound != null && audioSource != null)
+            audioSource.PlayOneShot(hurtSound);
 
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
@@ -36,26 +48,31 @@ public class Actor : MonoBehaviour
     }
 
     void Death()
+{
+    if (isDead) return;
+    isDead = true;
+
+    if (isPlayer)
     {
-        if (isDead) return; // Extra guard — prevents Death() from firing twice
-        isDead = true;
-
-        if (isPlayer)
-        {
-            Debug.Log("Actor: Player is dead!");
-        }
-        else
-        {
-            // Play death animation if available
-            if (animator != null)
-                animator.SetTrigger("Die");
-
-            // Report death to the spawner system (only if this enemy was spawned by an EnemySpawner)
-            EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
-            if (reporter != null)
-                reporter.ReportDeath();
-
-            Destroy(gameObject, 3f);
-        }
+        Debug.Log("Player is dead!");
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
+    else
+    {
+        if (animator != null)
+            animator.SetTrigger("Die");
+
+        // Disable the EnemyMoveGun so it stops attacking immediately
+        EnemyMoveGun enemy = GetComponent<EnemyMoveGun>();
+        if (enemy != null)
+            enemy.enabled = false;
+
+        EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
+        if (reporter != null)
+            reporter.ReportDeath();
+
+        Destroy(gameObject, 3f);
+    }
+}
 }
