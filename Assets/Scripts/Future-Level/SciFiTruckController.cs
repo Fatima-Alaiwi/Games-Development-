@@ -37,7 +37,8 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     [Header("Reset / Respawn Settings")]
     [Tooltip("The exact string name of the layer that triggers a reset (e.g., 'Obstacle' or 'Water')")]
     public string resetLayerName = "Obstacle";
-    [Tooltip("Drag a Transform here to act as the respawn point. If empty, it uses its initial position from Start.")]
+    [Tooltip("Drag a Transform here to act as a respawn point. If empty, uses starting coordinates.")]
+    public Transform respawnPoint;
     
     private Vector3 _initialPosition;
     private Quaternion _initialRotation;
@@ -51,7 +52,14 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     public string InteractionText
     {
-        get => !_hasPlacedCube ? "Not Now" : _defaultInteractionText;
+        get
+        {
+            if (!_hasPlacedCube)
+            {
+                return "Not Now";
+            }
+            return _defaultInteractionText;
+        }
         set => _defaultInteractionText = value;
     }
 
@@ -79,18 +87,28 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     private void ResetTruckPosition()
     {
+        Debug.Log($"Truck Reset: Hit object on layer '{resetLayerName}'. Resetting position.");
 
         _rb.linearVelocity = Vector3.zero;
         _rb.angularVelocity = Vector3.zero;
-        transform.position = _initialPosition;
-        transform.rotation = _initialRotation;
 
+        if (respawnPoint != null)
+        {
+            transform.position = respawnPoint.position;
+            transform.rotation = respawnPoint.rotation;
+        }
+        else
+        {
+            transform.position = _initialPosition;
+            transform.rotation = _initialRotation;
+        }
     }
 
     public void Interact()
     {
         if (frontLeft.gameObject.activeSelf == false)  
         {
+            Debug.Log("The truck is missing a wheel. I can't drive this!");
             return;
         }
 
@@ -194,5 +212,30 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     private void RotateWheelMesh(Transform wheel, float amount)
     {
         if (wheel != null) wheel.Rotate(Vector3.right * amount);
+    }
+
+    // ==========================================
+    // 🎬 NEW HELPER HOOK FOR THE CUTSCENE 
+    // ==========================================
+    /// <summary>
+    /// Safely forces the player out of driving state, passes player references back to the 
+    /// cutscene manager sequence, and re-enables the primary gameplay camera.
+    /// </summary>
+    public void ExitVehicleForCutscene(out MonoBehaviour outPlayerScript, out Camera outPlayerCamera)
+    {
+        _isDriving = false;
+        
+        // Disable vehicle perspective camera view
+        if (truckCamera != null) truckCamera.gameObject.SetActive(false);
+        
+        // Safely map the references inside the out-parameters
+        outPlayerScript = playerScript;
+        outPlayerCamera = playerCamera;
+
+        // Restore player camera tracking layer state
+        if (playerCamera != null) 
+        {
+            playerCamera.gameObject.SetActive(true);
+        }
     }
 }
