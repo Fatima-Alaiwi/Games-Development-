@@ -68,7 +68,6 @@ public class PortalController : MonoBehaviour, IInteractable
         if (isInteractable)
         {
             Debug.Log("<color=purple>PORTAL:</color> Conditions met. Transitioning level...");
-            // Add your scene loading logic here
         }
     }
 }

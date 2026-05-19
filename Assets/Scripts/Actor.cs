@@ -9,7 +9,7 @@ public class Actor : MonoBehaviour
     public bool isPlayer = false;
     public HealthBar healthBar;
 
-    public AudioClip hurtSound; // drag your hurt sound here in Inspector
+    public AudioClip hurtSound;
 
     private AudioSource audioSource;
     private Animator animator;
@@ -20,7 +20,6 @@ public class Actor : MonoBehaviour
         currentHealth = maxHealth;
         animator = transform.root.GetComponentInChildren<Animator>();
         audioSource = GetComponent<AudioSource>();
-        // Auto-add AudioSource if missing
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
 
@@ -35,7 +34,6 @@ public class Actor : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        // Play hurt sound
         if (hurtSound != null && audioSource != null)
             audioSource.PlayOneShot(hurtSound);
 
@@ -45,24 +43,3 @@ public class Actor : MonoBehaviour
         if (currentHealth <= 0)
             Death();
     }
-
-    void Death()
-    {
-        isDead = true;
-
-        if (isPlayer)
-        {
-            Debug.Log("Player is dead!");
-            // Reload scene — works in any scene
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.name);
-        }
-        else
-        {
-            if (animator != null)
-                animator.SetTrigger("Die");
-
-            Destroy(gameObject, 3f);
-        }
-    }
-}

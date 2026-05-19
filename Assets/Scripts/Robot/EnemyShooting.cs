@@ -7,6 +7,10 @@ public class EnemyShooting : MonoBehaviour {
     public float fireRate = 2.0f;
     private float nextFire;
 
+    void Start() {
+        this.enabled = false;
+    }
+
     void Update() {
         if (PauseMenuManager.isPaused) return;
 

@@ -19,4 +19,4 @@ MonoBehaviour:
   completeMessage: Satellite Positioned
   goalAmount: 1
   currentAmount: 0
-  isCompleted: 1
+  isCompleted: 0
