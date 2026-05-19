@@ -86,39 +86,40 @@ public class WeaponController : MonoBehaviour
     }
 
     void AttackRaycast()
+{
+    RaycastHit hit;
+    RaycastHit[] hits;
+    Vector3 rayOrigin = myController.cam.transform.position + myController.cam.transform.forward * 0.5f;
+
+    switch (weaponData.type)
     {
-        RaycastHit hit;
-        RaycastHit[] hits;
+        case WeaponType.Bullet:
+            if(Physics.Raycast(rayOrigin, myController.cam.transform.forward, out hit, weaponData.weaponRange))
+            { HitTarget(hit); }
+            break;
+        case WeaponType.Piercing:
+            hits = Physics.RaycastAll(rayOrigin, myController.cam.transform.forward, weaponData.weaponRange);
 
-        switch (weaponData.type)
-        {
-            case WeaponType.Bullet:
-                if(Physics.Raycast(myController.cam.transform.position, myController.cam.transform.forward, out hit, weaponData.weaponRange))
-                { HitTarget(hit); }
-                break;
-            case WeaponType.Piercing:
-                hits = Physics.RaycastAll(myController.cam.transform.position, myController.cam.transform.forward, weaponData.weaponRange);
-
-                if(hits.Length > 0)
-                {
-                    for (int i = 0; i < hits.Length; i++)
-                    { HitTarget(hits[i]); }
-                }
-                break;
-        }
+            if(hits.Length > 0)
+            {
+                for (int i = 0; i < hits.Length; i++)
+                { HitTarget(hits[i]); }
+            }
+            break;
     }
+}
 
     void HitTarget(RaycastHit hit)
 {
-    // Ignore trigger colliders so bullets only hit the physical collider
     if (hit.collider.isTrigger) return;
-
+    
+    Debug.Log("Hit: " + hit.transform.name); // add this
+    
     Actor target = hit.transform.GetComponentInParent<Actor>();
+    Debug.Log("Actor found: " + (target != null ? target.gameObject.name : "NULL")); // add this
 
     if (target != null)
-    {
         target.TakeDamage(weaponData.attackDamage);
-    }
 
     if (weaponData.hitEffect != null)
     {

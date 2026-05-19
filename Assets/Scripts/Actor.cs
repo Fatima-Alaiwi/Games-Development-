@@ -30,6 +30,9 @@ public class Actor : MonoBehaviour
     public void TakeDamage(int amount)
     {
         if (isDead) return;
+        Debug.Log(gameObject.name + " took " + amount + " damage. Health: " + currentHealth);
+
+        if (isDead) return;
 
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
@@ -43,3 +46,33 @@ public class Actor : MonoBehaviour
         if (currentHealth <= 0)
             Death();
     }
+
+    void Death()
+{
+    if (isDead) return;
+    isDead = true;
+
+    if (isPlayer)
+    {
+        Debug.Log("Player is dead!");
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
+    else
+    {
+        if (animator != null)
+            animator.SetTrigger("Die");
+
+        // Disable the EnemyMoveGun so it stops attacking immediately
+        EnemyMoveGun enemy = GetComponent<EnemyMoveGun>();
+        if (enemy != null)
+            enemy.enabled = false;
+
+        EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
+        if (reporter != null)
+            reporter.ReportDeath();
+
+        Destroy(gameObject, 3f);
+    }
+}
+}
