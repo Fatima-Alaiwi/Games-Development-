@@ -21,7 +21,6 @@ public class ElevatorButton : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        // Block overlapping audio interaction if the lines are already playing
         if (_isSpeaking) return;
 
         if (QuestManager.Instance.activeQuests.Count > 0)
@@ -36,7 +35,6 @@ public class ElevatorButton : MonoBehaviour, IInteractable
 
                 Debug.Log("Elevator: Power Offline. HUD Updated to: " + active.activeMessage);
 
-                // Automatically kick off the player's voice lines sequence
                 StartCoroutine(PlayVoiceLinesSequence());
             }
             else if (active.questName == "Enter Portal")
@@ -61,7 +59,6 @@ public class ElevatorButton : MonoBehaviour, IInteractable
                 playerAudioSource.clip = currentClip;
                 playerAudioSource.Play();
 
-                // Wait until the line finishes completely before moving to the next one
                 yield return new WaitForSeconds(currentClip.length);
             }
         }
