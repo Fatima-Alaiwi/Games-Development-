@@ -56,7 +56,8 @@ public class Actor : MonoBehaviour
     {
         Debug.Log("Player is dead!");
         Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        //SceneManager.LoadScene(currentScene.name); //raghad commented this for the health Bar
+        StartCoroutine(DelayedRestart());
     }
     else
     {
@@ -74,5 +75,13 @@ public class Actor : MonoBehaviour
 
         Destroy(gameObject, 3f);
     }
+}
+
+IEnumerator DelayedRestart()
+{
+    // Raghad: wait for health bar to reach empty before restarting
+    yield return new WaitForSeconds(2f);
+    Scene currentScene = SceneManager.GetActiveScene();
+    SceneManager.LoadScene(currentScene.name);
 }
 }
