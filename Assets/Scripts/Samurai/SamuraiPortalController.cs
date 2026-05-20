@@ -1,83 +1,125 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using UnityEngine.UI;
 
 public class SamuraiPortalController : MonoBehaviour, IInteractable
 {
-    [Header("Required Quests")]
+    [Header("Required Quest")]
     public Quest bambooQuest;
 
-    [Header("Portal Components")]
-    public GameObject probe;
-    public GameObject warpSphere;
-    public Animation spinningPiece;
+    [Header("Scene")]
+    public string targetScene;
 
-    [Header("IInteractable Settings")]
-    [SerializeField] private string _readyText = "Press E to Enter Portal";
-    [SerializeField] private string _notReadyText = "Strike the gong first...";
-    [SerializeField] private bool _isInteractable = false;
-    [SerializeField] private Transform _labelAnchor;
+    [Header("Sound")]
+    public AudioClip teleportSound;
+    private AudioSource audioSource;
 
-    [Header("Next Scene")]
-    [SerializeField] private string _nextSceneName;
+    [Header("Interaction Text")]
+    [SerializeField] private string _lockedText = "Strike the gong first...";
+    [SerializeField] private string _questText = "Complete your quests first...";
+    [SerializeField] private string _unlockedText = "Press E to Enter Portal";
 
-    // Interface Properties
-    public string InteractionText => _isInteractable ? _readyText : _notReadyText;
-    public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
-    public Transform LabelAnchor => _labelAnchor;
+    // IInteractable
+    public string InteractionText => GetInteractionText();
+    public bool isInteractable { get; set; } = true;
+    public Transform labelAnchor;
+    public Transform LabelAnchor => labelAnchor;
 
     private bool _gongStruck = false;
+    private bool _isTeleporting = false;
+    private CanvasGroup fadeCanvasGroup;
+    private float fadeDuration = 1.2f;
 
     void Start()
     {
-        SetPortalState(false);
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        CreateFadeCanvas();
     }
 
     void Update()
     {
-        if (_gongStruck)
-        {
-            SetPortalState(true);
-            isInteractable = bambooQuest != null && bambooQuest.isCompleted;
-        }
-        else
-        {
-            SetPortalState(false);
-            isInteractable = false;
-        }
+        if (!_isTeleporting)
+            isInteractable = true;
     }
 
-    // Called by GongInteractable when gong is struck
+    string GetInteractionText()
+    {
+        if (!_gongStruck) return _lockedText;
+        if (!IsQuestComplete()) return _questText;
+        return _unlockedText;
+    }
+
+    bool IsQuestComplete()
+    {
+        if (bambooQuest == null) return false;
+        return QuestManager.Instance.IsQuestCompleted(bambooQuest.questName);
+    }
+
+    // Called by GongInteractable
     public void ActivatePortal()
     {
         _gongStruck = true;
-        Debug.Log("<color=green>SAMURAI PORTAL:</color> Gong struck. Portal activated!");
-    }
-
-    private void SetPortalState(bool active)
-    {
-        if (probe != null) probe.SetActive(active);
-        if (warpSphere != null) warpSphere.SetActive(active);
-
-        if (spinningPiece != null)
-        {
-            if (active)
-            {
-                if (!spinningPiece.isPlaying) spinningPiece.Play();
-            }
-            else
-            {
-                spinningPiece.Stop();
-            }
-        }
+        Debug.Log("<color=green>SAMURAI PORTAL:</color> Gong struck!");
     }
 
     public void Interact()
     {
-        if (isInteractable)
+        if (!isInteractable) return;
+        if (!_gongStruck) return;
+        if (!IsQuestComplete()) return;
+
+        _isTeleporting = true;
+        isInteractable = false;
+        StartCoroutine(TeleportSequence());
+    }
+
+    IEnumerator TeleportSequence()
+    {
+        if (teleportSound != null)
+            audioSource.PlayOneShot(teleportSound);
+
+        float t = 0f;
+        fadeCanvasGroup.blocksRaycasts = true;
+        while (t < 1f)
         {
-            Debug.Log("<color=green>SAMURAI PORTAL:</color> Conditions met. Transitioning level...");
-            if (!string.IsNullOrEmpty(_nextSceneName))
-                SceneManager.LoadScene(_nextSceneName);
+            t += Time.deltaTime / fadeDuration;
+            fadeCanvasGroup.alpha = Mathf.Clamp01(t);
+            yield return null;
         }
+
+        SceneManager.LoadScene(targetScene);
+    }
+
+    void CreateFadeCanvas()
+    {
+        GameObject canvasGO = new GameObject("PortalFadeCanvas");
+        Canvas canvas = canvasGO.AddComponent<Canvas>();
+        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        canvas.sortingOrder = 999;
+        canvasGO.AddComponent<CanvasScaler>();
+        canvasGO.AddComponent<GraphicRaycaster>();
+
+        GameObject panelGO = new GameObject("FadePanel");
+        panelGO.transform.SetParent(canvasGO.transform, false);
+        Image img = panelGO.AddComponent<Image>();
+        img.color = Color.black;
+        RectTransform rect = panelGO.GetComponent<RectTransform>();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.sizeDelta = Vector2.zero;
+
+        fadeCanvasGroup = canvasGO.AddComponent<CanvasGroup>();
+        fadeCanvasGroup.alpha = 0f;
+        fadeCanvasGroup.blocksRaycasts = false;
+
+        FadeOutOnLoad fadeHelper = canvasGO.AddComponent<FadeOutOnLoad>();
+        fadeHelper.canvasGroup = fadeCanvasGroup;
+        fadeHelper.fadeDuration = fadeDuration;
+
+        DontDestroyOnLoad(canvasGO);
     }
 }
