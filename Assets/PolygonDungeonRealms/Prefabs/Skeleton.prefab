@@ -3222,7 +3222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8230034c3f402f6499ae84e68dbdc4e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 0.5
   distanceToStop: 1
   theRigidbody: {fileID: 8933786296782389251}
   agent: {fileID: 936476924313233097}
