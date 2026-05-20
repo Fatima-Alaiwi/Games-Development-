@@ -17,6 +17,9 @@ public class InventorySlotSelector : MonoBehaviour
     public Transform throwOrigin;       // leave empty = uses Camera
     public AudioClip throwSound;
 
+    [Header("Medicine")]
+    public AudioClip medicineSound;
+
     private int selectedIndex = 0;
 
     void Awake()
@@ -94,6 +97,14 @@ public class InventorySlotSelector : MonoBehaviour
         }
 
         playerActor.Heal(healAmount);
+
+        // Play medicine sound
+        if (medicineSound != null)
+        {
+            AudioSource playerAudio = playerActor.GetComponent<AudioSource>();
+            if (playerAudio != null) playerAudio.PlayOneShot(medicineSound);
+        }
+
         InventoryManager.instance.RemoveItem(selectedItem.itemName, 1);
         Debug.Log("Used " + selectedItem.itemName + " and healed " + healAmount + " HP.");
     }

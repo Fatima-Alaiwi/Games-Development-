@@ -57,7 +57,7 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     {
         if (!isInteractable) return;
 
-        // Step 1: First interaction — door is locked, give quest, play Peter line
+        // Step 1: First interaction — if player already has the key, skip locked dialogue and open directly
         if (!questGiven)
         {
             questGiven = true;
@@ -65,16 +65,20 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             if (doorQuest != null)
                 QuestManager.Instance.AcceptQuest(doorQuest);
 
-            UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
-            StartCoroutine(HideTextAfterDelay(2f));
-
-            if (!peterLineplayed && peterLockedDoorClip != null && audioSource != null)
+            // Only play locked sound and show locked message if player does NOT have the key
+            if (!HasKey())
             {
-                peterLineplayed = true;
-                audioSource.PlayOneShot(peterLockedDoorClip);
-            }
+                UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
+                StartCoroutine(HideTextAfterDelay(2f));
 
-            return;
+                if (!peterLineplayed && peterLockedDoorClip != null && audioSource != null)
+                {
+                    peterLineplayed = true;
+                    audioSource.PlayOneShot(peterLockedDoorClip);
+                }
+
+                return;
+            }
         }
 
         // Step 2: No key yet
