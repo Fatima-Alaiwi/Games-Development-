@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: Deliver Cell
   description: 'Player needs to drive the truck and reach the building '
-  goalItemName: Truck
-  activeMessage: Deliver The Power Cell (avoid Cleaning vehicle )
+  goalItemName: PowerCell
+  activeMessage: Power Restored
   completeMessage: Power Cell Delivered
   goalAmount: 1
   currentAmount: 0
