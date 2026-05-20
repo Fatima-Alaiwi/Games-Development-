@@ -9,10 +9,15 @@ public class EnemyMove : MonoBehaviour
     public Rigidbody theRigidbody;
     private Vector3 target;
     public NavMeshAgent agent;
+    private Animator animator;
 
     void Start()
     {
-
+        animator = GetComponentInChildren<Animator>(true);
+        if (animator == null)
+            Debug.LogError("EnemyMove: Animator not found on " + gameObject.name);
+        else
+            Debug.Log("EnemyMove: Animator found on " + animator.gameObject.name);
     }
 
     void Update()
@@ -28,5 +33,8 @@ public class EnemyMove : MonoBehaviour
         {
             agent.destination = transform.position;
         }
+
+        if (animator != null)
+            animator.SetFloat("Speed", agent.desiredVelocity.magnitude);
     }
 }

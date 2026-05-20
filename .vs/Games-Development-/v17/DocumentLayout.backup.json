@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\enemymovegun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\enemymove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemymove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\enemymovegun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemymovegun.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\enemymove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemymove.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\enemyattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\enemyattack.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\actor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,11 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Actor.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Actor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Actor.cs",
@@ -63,7 +67,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "EnemyAttack.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyAttack.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAttack.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyAttack.cs",
+              "RelativeToolTip": "Assets\\Scripts\\EnemyAttack.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAA+wBcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-17T18:08:59.853Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "ZoneTrigger.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\ZoneTrigger.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ZoneTrigger.cs",
@@ -75,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "EnemySpawnerReporter.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerReporter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerReporter.cs",
@@ -87,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EnemySpawner.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawner.cs",
@@ -99,7 +115,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "EnemySpawnerTest.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerTest.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerTest.cs",
@@ -111,7 +127,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "EnemyMoveGun.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMoveGun.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMoveGun.cs",
@@ -119,24 +135,24 @@
               "RelativeToolTip": "Assets\\Scripts\\EnemyMoveGun.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAiwCYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T03:19:33.87Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-22T03:19:33.87Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "EnemyMove.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMove.cs",
               "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeToolTip": "Assets\\Scripts\\EnemyMove.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAiwCIAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAuwCQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T10:36:05.734Z"
+              "WhenOpened": "2026-04-21T10:36:05.734Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "SimpleLit.shader",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
@@ -144,8 +160,7 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-04-21T09:40:42.715Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-21T09:40:42.715Z"
             }
           ]
         }
