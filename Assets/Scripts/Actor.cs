@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class Actor : MonoBehaviour
 {
-    int currentHealth;
+    public int currentHealth;
     public int maxHealth = 10;
     public bool isPlayer = false;
     public HealthBar healthBar;
@@ -47,41 +47,54 @@ public class Actor : MonoBehaviour
             Death();
     }
 
+    public void Heal(int amount)
+    {
+        if (isDead) return;
+
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
+        if (isPlayer && healthBar != null)
+            healthBar.SetHealth(currentHealth);
+
+        Debug.Log(gameObject.name + " healed " + amount + ". Health now: " + currentHealth);
+    }
+
     void Death()
-{
-    if (isDead) return;
-    isDead = true;
-
-    if (isPlayer)
     {
-        Debug.Log("Player is dead!");
+        if (isDead) return;
+        isDead = true;
+
+        if (isPlayer)
+        {
+            Debug.Log("Player is dead!");
+            Scene currentScene = SceneManager.GetActiveScene();
+            //SceneManager.LoadScene(currentScene.name); //raghad commented this for the health Bar
+            StartCoroutine(DelayedRestart());
+        }
+        else
+        {
+            if (animator != null)
+                animator.SetTrigger("Die");
+
+            // Disable the EnemyMoveGun so it stops attacking immediately
+            EnemyMoveGun enemy = GetComponent<EnemyMoveGun>();
+            if (enemy != null)
+                enemy.enabled = false;
+
+            EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
+            if (reporter != null)
+                reporter.ReportDeath();
+
+            Destroy(gameObject, 3f);
+        }
+    }
+
+    IEnumerator DelayedRestart()
+    {
+        // Raghad: wait for health bar to reach empty before restarting
+        yield return new WaitForSeconds(2f);
         Scene currentScene = SceneManager.GetActiveScene();
-        //SceneManager.LoadScene(currentScene.name); //raghad commented this for the health Bar
-        StartCoroutine(DelayedRestart());
+        SceneManager.LoadScene(currentScene.name);
     }
-    else
-    {
-        if (animator != null)
-            animator.SetTrigger("Die");
-
-        // Disable the EnemyMoveGun so it stops attacking immediately
-        EnemyMoveGun enemy = GetComponent<EnemyMoveGun>();
-        if (enemy != null)
-            enemy.enabled = false;
-
-        EnemySpawnerReporter reporter = GetComponent<EnemySpawnerReporter>();
-        if (reporter != null)
-            reporter.ReportDeath();
-
-        Destroy(gameObject, 3f);
-    }
-}
-
-IEnumerator DelayedRestart()
-{
-    // Raghad: wait for health bar to reach empty before restarting
-    yield return new WaitForSeconds(2f);
-    Scene currentScene = SceneManager.GetActiveScene();
-    SceneManager.LoadScene(currentScene.name);
-}
 }
