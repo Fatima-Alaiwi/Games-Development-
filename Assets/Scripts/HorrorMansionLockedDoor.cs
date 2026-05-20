@@ -23,7 +23,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     [Header("Sound")]
     public AudioClip openingDoorClip;
     public AudioClip magicianCallClip;
-    // Raghad: drag Peter_02 audio file here — plays when player presses E and door is locked
     public AudioClip peterLockedDoorClip;
     private AudioSource audioSource;
 
@@ -31,8 +30,11 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public float openAngle = 90f;
     public float openSpeed = 2f;
 
+    // Raghad: drag the EnemySpawner object here — spawns Yokai when player enters mansion
+    [Header("Yokai Spawner")]
+    public EnemySpawner yokaiSpawner;
+
     private bool questGiven = false;
-    // Raghad: makes sure Peter's line only plays once
     private bool peterLineplayed = false;
 
     void Awake()
@@ -66,7 +68,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
             StartCoroutine(HideTextAfterDelay(2f));
 
-            // Raghad: play Peter's voice line — "Locked. I need to find a key."
             if (!peterLineplayed && peterLockedDoorClip != null && audioSource != null)
             {
                 peterLineplayed = true;
@@ -94,6 +95,10 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
+
+        // Raghad: start spawning Yokai when player opens the mansion door
+        if (yokaiSpawner != null)
+            yokaiSpawner.StartSpawning();
 
         StartCoroutine(OpenDoor());
     }
