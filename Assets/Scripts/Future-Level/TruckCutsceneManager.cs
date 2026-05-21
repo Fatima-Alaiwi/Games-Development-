@@ -149,13 +149,13 @@ public class TruckCutsceneManager : MonoBehaviour
 
         if (QuestManager.Instance != null && _questToComplete != null)
         {
-            if (!QuestManager.Instance.activeQuests.Contains(_questToComplete))
-            {
-                QuestManager.Instance.activeQuests.Add(_questToComplete);
-            }
+            QuestManager.Instance.UpdateQuestDescription(_questToComplete.questName, completionStepDescription);
+
+            _questToComplete.currentAmount = _questToComplete.goalAmount;
+
+            QuestManager.Instance.CompleteQuestPublic(_questToComplete);
 
             QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
-            QuestManager.Instance.UpdateQuestDescription(_questToComplete.questName, completionStepDescription);
         }
         else if (QuestManager.Instance != null)
         {
