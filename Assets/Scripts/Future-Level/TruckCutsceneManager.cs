@@ -11,6 +11,9 @@ public class TruckCutsceneManager : MonoBehaviour
     public string powerCellItemName = "PowerCell";
     public string completionStepDescription = "Quest Complete: Power cell stolen by drone.";
 
+    [Header("Post-Cutscene Quest Trigger")]
+    public ZoneTrigger killRobotsZoneTrigger;
+
     public Transform playerCutsceneStandingPoint;
     public Transform pointA; 
     public Transform pointB; 
@@ -63,11 +66,7 @@ public class TruckCutsceneManager : MonoBehaviour
 
             if (charController != null) charController.enabled = true;
 
-            var field = _savedPlayerScript.GetType().GetField("canMove");
-            if (field != null)
-            {
-                field.SetValue(_savedPlayerScript, true);
-            }
+            SetPlayerCanMove(false);
         }
 
         if (cutsceneCamera != null)
@@ -147,6 +146,8 @@ public class TruckCutsceneManager : MonoBehaviour
             drone.gameObject.SetActive(false);
         }
 
+        SetPlayerCanMove(true);
+
         if (QuestManager.Instance != null && _questToComplete != null)
         {
             QuestManager.Instance.UpdateQuestDescription(_questToComplete.questName, completionStepDescription);
@@ -154,12 +155,31 @@ public class TruckCutsceneManager : MonoBehaviour
             _questToComplete.currentAmount = _questToComplete.goalAmount;
 
             QuestManager.Instance.CompleteQuestPublic(_questToComplete);
-
-            QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
         }
         else if (QuestManager.Instance != null)
         {
             QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
         }
+
+        EnableKillRobotsZoneTrigger();
+    }
+
+    private void SetPlayerCanMove(bool canMove)
+    {
+        if (_savedPlayerScript == null) return;
+
+        var field = _savedPlayerScript.GetType().GetField("canMove");
+        if (field != null)
+        {
+            field.SetValue(_savedPlayerScript, canMove);
+        }
+    }
+
+    private void EnableKillRobotsZoneTrigger()
+    {
+        if (killRobotsZoneTrigger == null) return;
+
+        killRobotsZoneTrigger.gameObject.SetActive(true);
+        killRobotsZoneTrigger.enabled = true;
     }
 }

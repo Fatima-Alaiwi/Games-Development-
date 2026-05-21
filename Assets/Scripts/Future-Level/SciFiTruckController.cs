@@ -106,7 +106,7 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (frontLeft.gameObject.activeSelf == false)  
+        if (frontLeft == null || frontLeft.gameObject.activeSelf == false)  
         {
             Debug.Log("The truck is missing a wheel. I can't drive this!");
             return;
@@ -124,24 +124,39 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     private void TryPlacePowerCube()
     {
-        if (InventoryManager.instance != null)
+        if (InventoryManager.instance == null)
         {
-            if (truckBackCubeVisual != null)
-            {
-                truckBackCubeVisual.SetActive(true);
-            }
+            Debug.LogWarning("Cannot place power cell: InventoryManager is missing.");
+            return;
+        }
 
-            _hasPlacedCube = true;
+        if (!InventoryManager.instance.HasItem(powerCellItemName))
+        {
+            Debug.Log($"Cannot load truck: player does not have {powerCellItemName}.");
+            return;
+        }
 
-            if (QuestManager.Instance != null && deliverCellQuest != null)
-            {
-                QuestManager.Instance.AcceptQuest(deliverCellQuest);
-            }
+        if (!InventoryManager.instance.RemoveItem(powerCellItemName))
+        {
+            Debug.LogWarning($"Cannot load truck: failed to remove {powerCellItemName} from inventory.");
+            return;
+        }
 
-            if (UIManager.Instance != null)
-            {
-                UIManager.Instance.HideHoverText();
-            }
+        if (truckBackCubeVisual != null)
+        {
+            truckBackCubeVisual.SetActive(true);
+        }
+
+        _hasPlacedCube = true;
+
+        if (QuestManager.Instance != null && deliverCellQuest != null)
+        {
+            QuestManager.Instance.AcceptQuest(deliverCellQuest);
+        }
+
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.HideHoverText();
         }
     }
 

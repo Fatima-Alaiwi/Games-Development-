@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: KillRobots
   m_EditorClassIdentifier: 
-  questName: 
-  description: 
-  goalItemName: 
-  activeMessage: 
-  completeMessage: 
-  goalAmount: 0
+  questName: KillRobots
+  description: Eliminate All roobts in the area
+  goalItemName: enemy_kill
+  activeMessage: 'Robots remaining:'
+  completeMessage: All enemies defeated
+  goalAmount: 10
   currentAmount: 0
   isCompleted: 0
