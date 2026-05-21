@@ -26,6 +26,7 @@ public class Magician : MonoBehaviour, IInteractable
     public Quest killQuest;
     public Quest findMagicianQuest;
     public Quest findLibraryQuest;
+    public Quest bottleQuest; // Drag BottleQuest here in Inspector
 
     private bool hasGivenCode = false;
     private bool hasPlayedWait = false;
@@ -61,8 +62,22 @@ public class Magician : MonoBehaviour, IInteractable
         if (!hasCompletedFindQuest)
         {
             hasCompletedFindQuest = true;
+
             if (findMagicianQuest != null)
                 QuestManager.Instance.UpdatedCompleteQuest(findMagicianQuest);
+
+            // Start bottle quest
+            if (bottleQuest != null)
+                QuestManager.Instance.AcceptQuest(bottleQuest);
+
+            // Count bottles already in inventory and update quest progress immediately
+            int alreadyCollected = GetBottleCount();
+            if (alreadyCollected > 0 && bottleQuest != null)
+            {
+                QuestManager.Instance.UpdateProgress("Bottle", alreadyCollected);
+                Debug.Log("Player already had " + alreadyCollected + " bottles — quest updated!");
+            }
+
             Debug.Log("Find Magician quest completed! Bottles unlocked!");
         }
 
@@ -81,7 +96,7 @@ public class Magician : MonoBehaviour, IInteractable
 
             // Raghad: after Magician finishes giving the code, play Peter's reaction
             // "A code. I need to remember this. The library... I have to find the library."
-            StartCoroutine(PlayPeterCodeLineAfterDelay(12f));//change this number 
+            StartCoroutine(PlayPeterCodeLineAfterDelay(10f)); // change this number
 
             Debug.Log("Magician gave the password: 927!");
         }
