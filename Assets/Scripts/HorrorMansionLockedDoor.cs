@@ -24,6 +24,7 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public AudioClip openingDoorClip;
     public AudioClip magicianCallClip;
     public AudioClip peterLockedDoorClip;
+    public AudioClip peterEnteringClip; // Assign "Entering the mansion" here
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
@@ -138,6 +139,13 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
         transform.rotation = endRotation;
 
+        // Wait 1 second then play Peter's "Hello? Is anyone here?"
+        yield return new WaitForSeconds(1f);
+        if (peterEnteringClip != null && audioSource != null)
+            audioSource.PlayOneShot(peterEnteringClip);
+
+        // Wait 2 more seconds then play Magician's "Down here... come down"
+        yield return new WaitForSeconds(2f);
         if (magicianCallClip != null)
             AudioSource.PlayClipAtPoint(magicianCallClip, transform.position);
     }
