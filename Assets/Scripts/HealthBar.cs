@@ -5,8 +5,8 @@ using System.Collections;
 public class HealthBar : MonoBehaviour
 {
     [Header("Health Bar UI Components")]
-    public Image healthBarFill;       // Assign 'RedBar' here
-    public RectTransform containerContainer; // Assign 'GreyBar' here to shake the whole HUD unit!
+    public Image healthBarFill;
+    public RectTransform containerContainer;
 
     [Header("Health Settings")]
     public float maxHealth = 10f;
@@ -33,7 +33,6 @@ public class HealthBar : MonoBehaviour
         currentHealth = maxHealth;
         targetFill = 1f;
 
-        // If you didn't manually assign the parent in inspector, auto-grab GreyBar
         if (containerContainer == null && healthBarFill != null)
         {
             containerContainer = healthBarFill.rectTransform.parent as RectTransform;
@@ -46,10 +45,9 @@ public class HealthBar : MonoBehaviour
 
         if (healthBarFill != null)
         {
-            // Enforce left-alignment pivot programmatically so it scales smoothly left-to-right
             healthBarFill.rectTransform.pivot = new Vector2(0f, 0.5f);
             healthBarFill.rectTransform.localScale = new Vector3(1f, 1f, 1f);
-            healthBarFill.color = Color.green;
+            healthBarFill.color = new Color(0.357f, 0.773f, 0.071f); // #5BC512
         }
     }
 
@@ -57,27 +55,23 @@ public class HealthBar : MonoBehaviour
     {
         if (healthBarFill == null) return;
 
-        // RESTORED LOGIC: Smooth sliding toward target using localScale x dimension
         float currentScaleX = healthBarFill.rectTransform.localScale.x;
         float newFill = Mathf.Lerp(currentScaleX, targetFill, Time.deltaTime * smoothSpeed);
         healthBarFill.rectTransform.localScale = new Vector3(newFill, 1f, 1f);
 
-        // Smooth color progression — green → yellow → red
         Color targetColor;
         if (newFill > 0.6f)
-            targetColor = Color.green;
+            targetColor = new Color(0.357f, 0.773f, 0.071f); // #5BC512
         else if (newFill > 0.3f)
             targetColor = Color.yellow;
         else
             targetColor = Color.red;
 
-        // Only apply standard color lerping if it's not currently pulsing critically
         if (!isPulsing)
         {
             healthBarFill.color = Color.Lerp(healthBarFill.color, targetColor, Time.deltaTime * smoothSpeed);
         }
 
-        // Start pulsing when critical
         if (newFill <= criticalThreshold && !isPulsing)
         {
             isPulsing = true;
@@ -103,7 +97,7 @@ public class HealthBar : MonoBehaviour
     IEnumerator ShakeEffect()
     {
         if (containerContainer == null) yield break;
-        
+
         isShaking = true;
         float elapsed = 0f;
 
@@ -111,10 +105,7 @@ public class HealthBar : MonoBehaviour
         {
             float offsetX = Random.Range(-shakeMagnitude, shakeMagnitude);
             float offsetY = Random.Range(-shakeMagnitude, shakeMagnitude);
-            
-            // Shake the parent context container instead of the nested fill bar
             containerContainer.anchoredPosition = containerOriginalPosition + new Vector2(offsetX, offsetY);
-            
             elapsed += Time.deltaTime;
             yield return null;
         }
