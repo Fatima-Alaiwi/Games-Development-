@@ -96,7 +96,7 @@ public class Magician : MonoBehaviour, IInteractable
 
             // Raghad: after Magician finishes giving the code, play Peter's reaction
             // "A code. I need to remember this. The library... I have to find the library."
-            StartCoroutine(PlayPeterCodeLineAfterDelay(12f)); // change this number
+            StartCoroutine(PlayPeterCodeLineAfterDelay(10f)); // change this number
 
             Debug.Log("Magician gave the password: 927!");
         }
