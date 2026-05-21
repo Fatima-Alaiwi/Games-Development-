@@ -22,6 +22,7 @@ public class DragonHealth : MonoBehaviour
 
    public void TakeBombDamage()
 {
+    if (currentHealth <= 0) return; 
     currentHealth--;
     Debug.Log("Dragon hit! Health remaining: " + currentHealth);
 
@@ -66,5 +67,10 @@ public class DragonHealth : MonoBehaviour
             QuestManager.Instance.CompleteQuestPublic(dragonQuest);
 
         Destroy(gameObject, 3f);
+    }
+
+    public bool IsDead()
+    {
+        return currentHealth <= 0;
     }
 }

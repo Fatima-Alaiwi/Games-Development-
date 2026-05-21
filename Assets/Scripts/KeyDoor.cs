@@ -16,6 +16,8 @@ public class KeyDoor : MonoBehaviour, IInteractable
     public AudioClip openingDoorClip;
     // Raghad: drag Peter_09 audio file here — plays when player tries to open door without key
     public AudioClip peterLockedClip;
+    // Raghad: drag Peter_12 audio file here — plays after door opens and player sees the portal
+    public AudioClip peterPortalClip;
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
@@ -26,7 +28,7 @@ public class KeyDoor : MonoBehaviour, IInteractable
     // Raghad: drag FindPortalKeyQuest here in Inspector
     public Quest findPortalQuest;
 
-    // Raghad: makes sure Peter's line only plays once
+    // Raghad: makes sure Peter's lines only play once
     private bool peterLinePlayed = false;
 
     void Awake()
@@ -82,5 +84,11 @@ public class KeyDoor : MonoBehaviour, IInteractable
         }
 
         transform.rotation = endRotation;
+
+        // Raghad: wait 1 second after door opens then play Peter's portal line
+        // "I don't know where this leads. But anywhere is better than here."
+        yield return new WaitForSeconds(1f);
+        if (peterPortalClip != null && audioSource != null)
+            audioSource.PlayOneShot(peterPortalClip);
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// Attached to spawned enemies at runtime. Reports death back to the EnemySpawner.
-/// Do NOT put this on the prefab directly — EnemySpawner adds it automatically.
+/// Do NOT put this on the prefab directly ï¿½ EnemySpawner adds it automatically.
 
 public class EnemySpawnerReporter : MonoBehaviour
 {
@@ -23,7 +23,7 @@ public class EnemySpawnerReporter : MonoBehaviour
             Debug.LogWarning("EnemySpawnerReporter: mySpawner is null, death not reported.");
     }
 
-    // Removed OnDisable() — it was causing double-reports because
+    // Removed OnDisable() ï¿½ it was causing double-reports because
     // OnDisable fires on both Destroy AND simple deactivation.
     // Death is now reported ONLY via the explicit ReportDeath() call in Actor.cs.
 }
