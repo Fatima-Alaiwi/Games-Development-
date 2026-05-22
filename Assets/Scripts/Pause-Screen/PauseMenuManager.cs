@@ -15,11 +15,12 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject restartConfirmPanel;
     public GameObject quitConfirmationPanel;
 
-
     void Start()
     {
         EnsureEventSystemExists();
+
         HideAllPanels();
+
         isPaused = false;
         Time.timeScale = 1f;
 
@@ -31,8 +32,10 @@ public class PauseMenuManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused) Resume();
-            else Pause();
+            if (isPaused)
+                Resume();
+            else
+                Pause();
         }
     }
 
@@ -79,8 +82,11 @@ public class PauseMenuManager : MonoBehaviour
     public void Resume()
     {
         isPaused = false;
+
         HideAllPanels();
+
         Time.timeScale = 1f;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -88,8 +94,11 @@ public class PauseMenuManager : MonoBehaviour
     void Pause()
     {
         isPaused = true;
+
         Time.timeScale = 0f;
-        OpenPausePanel(); 
+
+        OpenPausePanel();
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -127,7 +136,7 @@ public class PauseMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
-    
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -145,11 +154,20 @@ public class PauseMenuManager : MonoBehaviour
 
     private void EnsureEventSystemExists()
     {
+        EventSystem existingEventSystem = FindFirstObjectByType<EventSystem>();
+
+        if (existingEventSystem != null)
+        {
+            return;
+        }
 
         GameObject eventSystemObject = new GameObject("EventSystem");
+
         eventSystemObject.AddComponent<EventSystem>();
 
-        InputSystemUIInputModule inputModule = eventSystemObject.AddComponent<InputSystemUIInputModule>();
+        InputSystemUIInputModule inputModule =
+            eventSystemObject.AddComponent<InputSystemUIInputModule>();
+
         inputModule.AssignDefaultActions();
     }
 }

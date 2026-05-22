@@ -5,8 +5,8 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 {
     [Header("Interaction Texts")]
     [SerializeField] private string textBeforeQuest = "[E] The door is locked...";
-    [SerializeField] private string textNoKey       = "[E] You need a key to open this";
-    [SerializeField] private string textHasKey      = "[E] Open the door";
+    [SerializeField] private string textNoKey = "[E] You need a key to open this";
+    [SerializeField] private string textHasKey = "[E] Open the door";
 
     public string InteractionText => GetInteractionText();
 
@@ -24,14 +24,16 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     public AudioClip openingDoorClip;
     public AudioClip magicianCallClip;
     public AudioClip peterLockedDoorClip;
-    public AudioClip peterEnteringClip; // Assign "Entering the mansion" here
+    public AudioClip peterEnteringClip;
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
     public float openAngle = 90f;
     public float openSpeed = 2f;
 
-    // Raghad: drag the EnemySpawner object here — spawns Yokai when player enters mansion
+    [Header("Second Door")]
+    public Transform secondDoor;
+
     [Header("Yokai Spawner")]
     public EnemySpawner yokaiSpawner;
 
@@ -58,7 +60,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     {
         if (!isInteractable) return;
 
-        // Step 1: First interaction — if player already has the key, skip locked dialogue and open directly
         if (!questGiven)
         {
             questGiven = true;
@@ -66,7 +67,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             if (doorQuest != null)
                 QuestManager.Instance.AcceptQuest(doorQuest);
 
-            // Only play locked sound and show locked message if player does NOT have the key
             if (!HasKey())
             {
                 UIManager.Instance.ShowHoverText("Search for the key, then come back!", transform.position);
@@ -82,7 +82,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             }
         }
 
-        // Step 2: No key yet
         if (!HasKey())
         {
             UIManager.Instance.ShowHoverText("You don't have the key yet!", transform.position);
@@ -90,7 +89,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             return;
         }
 
-        // Step 3: Has key — open it!
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
 
         if (doorQuest != null)
@@ -101,7 +99,6 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
 
-        // Raghad: start spawning Yokai when player opens the mansion door
         if (yokaiSpawner != null)
             yokaiSpawner.StartSpawning();
 
@@ -115,6 +112,7 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
             if (item.itemName == requiredKeyName)
                 return true;
         }
+
         return false;
     }
 
@@ -126,26 +124,44 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
     IEnumerator OpenDoor()
     {
-        Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = startRotation * Quaternion.Euler(0, openAngle, 0);
+        Quaternion firstStartRotation = transform.rotation;
+        Quaternion firstEndRotation = firstStartRotation * Quaternion.Euler(0, openAngle, 0);
+
+        Quaternion secondStartRotation = Quaternion.identity;
+        Quaternion secondEndRotation = Quaternion.identity;
+
+        if (secondDoor != null)
+        {
+            secondStartRotation = secondDoor.rotation;
+            secondEndRotation = secondStartRotation * Quaternion.Euler(0, -openAngle, 0);
+        }
 
         float t = 0f;
+
         while (t < 1f)
         {
             t += Time.deltaTime * openSpeed;
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+
+            transform.rotation = Quaternion.Lerp(firstStartRotation, firstEndRotation, t);
+
+            if (secondDoor != null)
+                secondDoor.rotation = Quaternion.Lerp(secondStartRotation, secondEndRotation, t);
+
             yield return null;
         }
 
-        transform.rotation = endRotation;
+        transform.rotation = firstEndRotation;
 
-        // Wait 1 second then play Peter's "Hello? Is anyone here?"
+        if (secondDoor != null)
+            secondDoor.rotation = secondEndRotation;
+
         yield return new WaitForSeconds(1f);
+
         if (peterEnteringClip != null && audioSource != null)
             audioSource.PlayOneShot(peterEnteringClip);
 
-        // Wait 2 more seconds then play Magician's "Down here... come down"
         yield return new WaitForSeconds(2f);
+
         if (magicianCallClip != null)
             AudioSource.PlayClipAtPoint(magicianCallClip, transform.position);
     }
