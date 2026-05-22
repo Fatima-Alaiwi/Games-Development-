@@ -7,6 +7,10 @@ public class PowerCellFloorPickup : MonoBehaviour, IInteractable
     public Sprite itemIcon;
     public AudioClip collectSound;
 
+    [Header("Quest Update")]
+    public string loadTruckQuestName = "LoadTruck";
+    public string loadTruckStepDescription = "Load the truck";
+
     [Header("Interaction Settings")]
     [SerializeField] private string _interactionText = "Press [E] to Pick up Power Cell";
     [SerializeField] private bool _isInteractable = true;
@@ -24,6 +28,11 @@ public class PowerCellFloorPickup : MonoBehaviour, IInteractable
 
         if (added)
         {
+            if (QuestManager.Instance != null)
+            {
+                QuestManager.Instance.UpdateQuestDescription(loadTruckQuestName, loadTruckStepDescription);
+            }
+
             if (collectSound != null) 
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
