@@ -3,11 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\collectiblepotion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\collectiblepotion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\fairywings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\fairywings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\fairywings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -54,11 +58,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Actor.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Actor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Actor.cs",
@@ -70,12 +74,25 @@
               "IsPinned": true
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CollectiblePotion.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-22T04:30:27.374Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "FairyNPC.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
@@ -88,7 +105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FairyWings.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
@@ -96,12 +113,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAUwA8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-17T20:08:31.374Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-17T20:08:31.374Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "EnemyAttack.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyAttack.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAttack.cs",
@@ -113,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ZoneTrigger.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\ZoneTrigger.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ZoneTrigger.cs",
@@ -125,7 +141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "EnemySpawnerReporter.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerReporter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerReporter.cs",
@@ -137,7 +153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "EnemySpawner.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawner.cs",
@@ -149,7 +165,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "EnemySpawnerTest.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerTest.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerTest.cs",
@@ -161,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "EnemyMoveGun.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMoveGun.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMoveGun.cs",
@@ -173,7 +189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "EnemyMove.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMove.cs",
@@ -185,7 +201,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "SimpleLit.shader",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
@@ -193,7 +209,8 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-04-21T09:40:42.715Z"
+              "WhenOpened": "2026-04-21T09:40:42.715Z",
+              "EditorCaption": ""
             }
           ]
         }
