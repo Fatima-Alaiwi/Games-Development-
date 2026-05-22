@@ -10,31 +10,32 @@ public class BottlePickup : MonoBehaviour, IInteractable
     public Transform LabelAnchor => labelAnchor;
 
     [Header("Quest Settings")]
-    public Quest bottleQuest; // Drag BottleQuest here
+    public Quest bottleQuest;
 
     [Header("Inventory Settings")]
-    public Sprite bottleIcon; // Drag the bottle icon/sprite here
+    public Sprite bottleIcon;
 
-    public Quest requiredQuest; // drag "Kill All Enemies" quest here in Inspector
+    [Header("Sound")]
+    public AudioClip collectSound;
 
     public void Interact()
     {
-        if (!QuestManager.Instance.IsQuestComplete(requiredQuest))
-    {
-        UIManager.Instance.ShowHoverText("I should look around first...", transform.position);
-        return;
-    }
-    
-        // 1. Accept quest if not already active
-        if (bottleQuest != null && !QuestManager.Instance.activeQuests.Contains(bottleQuest))
-            QuestManager.Instance.AcceptQuest(bottleQuest);
+        // 1. Add to inventory immediately — no quest check needed
+        bool added = InventoryManager.instance.AddItem("Bottle", bottleIcon);
 
-        // 2. Update quest progress
-        if (bottleQuest != null)
+        if (!added)
+        {
+            Debug.Log("Inventory full!");
+            return;
+        }
+
+        // 2. If the bottle quest is already active, update its progress
+        if (bottleQuest != null && QuestManager.Instance.activeQuests.Contains(bottleQuest))
             QuestManager.Instance.UpdateProgress("Bottle", 1);
 
-        // 3. Add to inventory (needs name + icon)
-        InventoryManager.instance.AddItem("Bottle", bottleIcon);
+        // 3. Play collect sound
+        if (collectSound != null)
+            AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
         // 4. Hide the bottle
         gameObject.SetActive(false);

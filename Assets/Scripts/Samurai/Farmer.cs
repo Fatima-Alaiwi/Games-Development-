@@ -4,25 +4,25 @@ public class Farmer : MonoBehaviour, IInteractable
 {
     [SerializeField] private string defaultText = "Talk to Farmer";
 
-public string InteractionText
-{
-    get
+    public string InteractionText
     {
-        if (hasGivenKey)
-            return "Subarashii! Safe travels, stranger.";
+        get
+        {
+            if (hasGivenKey)
+                return "Subarashii! Safe travels, stranger.";
 
-        int count = GetItemCount();
+            int count = GetItemCount();
 
-        if (count >= requiredAmount)
-            return "Give items to Farmer";
+            if (count >= requiredAmount)
+                return "Give items to Farmer";
 
-        if (count == 1)
-            return "You are almost there...";
+            if (count == 1)
+                return "You are almost there...";
 
-        return defaultText;
+            return defaultText;
+        }
     }
-}
-//    public string InteractionText { get; set; } = "Talk to Farmer";
+
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
@@ -32,20 +32,24 @@ public string InteractionText
     public AudioClip collectSound;
 
     [Header("Dialogue")]
-    public AudioClip greetingClip;   // 0 items - hint about fruit
-    public AudioClip oneItemClip;    // has 1 item - ask for more
-    public AudioClip thankYouClip;   // has 2 items - complete quest
+    public AudioClip greetingClip;    // 0 items — hint about fruit
+    public AudioClip oneItemClip;     // 1 item — ask for more
+    public AudioClip thankYouClip;    // 2 items — complete quest + hint about braziers
 
     [Header("Quest Settings")]
     public Quest fruitQuest;
+    public Quest gasQuest;            // drag GasQuest ScriptableObject here
     public string requiredItemName = "Fruit";
     public int requiredAmount = 2;
 
-    [Header("Animation")]
-    private Animator animator;
+    [Header("Bell / Ambient Sound")]
+    public AudioClip bellClip;        // drag bell sound here
+    public float bellTriggerRadius = 8f; // radius of the trigger zone
 
+    private Animator animator;
     private bool hasGivenKey = false;
     private AudioSource audioSource;
+    private bool bellPlayed = false;
 
     void Start()
     {
@@ -53,52 +57,74 @@ public string InteractionText
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
 
-        // Get animator from this object or children
         animator = GetComponentInChildren<Animator>();
+
+        // Create trigger zone for bell sound automatically
+        SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
+        trigger.isTrigger = true;
+        trigger.radius = bellTriggerRadius;
     }
-public void Interact()
-{
-    if (animator != null)
-        animator.SetBool("isTalking", true);
 
-    int count = GetItemCount();
-    Debug.Log("COUNT IS: " + count);
-
-    if (!hasGivenKey && count >= requiredAmount)
+    // Bell plays once when player enters the zone
+    void OnTriggerEnter(Collider other)
     {
-        // ✅ Has both items - give key
-        hasGivenKey = true;
-       // isInteractable = false;
-        PlayClip(thankYouClip);
-       // InteractionText = "Subarashii! Safe travels, stranger.";
-        InventoryManager.instance.RemoveItem(requiredItemName, requiredAmount);
-        bool added = InventoryManager.instance.AddItem("Key1", keyIcon);
-        if (added && collectSound != null)
-            AudioSource.PlayClipAtPoint(collectSound, transform.position);
-        Invoke(nameof(StopTalking), thankYouClip != null ? thankYouClip.length : 2f);
-        return;
+        if (bellPlayed) return;
+        if (!other.CompareTag("Player")) return;
+
+        if (bellClip != null)
+            AudioSource.PlayClipAtPoint(bellClip, transform.position);
+
+        bellPlayed = true;
     }
 
-    if (!hasGivenKey && count == 1)
+    public void Interact()
     {
-        // ✅ Has 1 item
-        PlayClip(oneItemClip);
-        //InteractionText = "You are almost there...";
-        Invoke(nameof(StopTalking), oneItemClip != null ? oneItemClip.length : 2f);
-        return;
-    }
+        if (animator != null)
+            animator.SetBool("isTalking", true);
 
-    if (!hasGivenKey && count == 0)
-    {
-        // ✅ No items - start quest
-        PlayClip(greetingClip);
-        //InteractionText = "Check back once you're done!";
-        if (fruitQuest != null && QuestManager.Instance != null)
-            QuestManager.Instance.AcceptQuest(fruitQuest);
-        Invoke(nameof(StopTalking), greetingClip != null ? greetingClip.length : 2f);
-        return;
+        int count = GetItemCount();
+        Debug.Log("COUNT IS: " + count);
+
+        if (!hasGivenKey && count >= requiredAmount)
+        {
+            // Has both fruits — give key + hint about braziers
+            hasGivenKey = true;
+            PlayClip(thankYouClip);
+
+            InventoryManager.instance.RemoveItem(requiredItemName, requiredAmount);
+            bool added = InventoryManager.instance.AddItem("Key1", keyIcon);
+
+            if (added && collectSound != null)
+                AudioSource.PlayClipAtPoint(collectSound, transform.position);
+
+            // Complete fruit quest
+            if (QuestManager.Instance != null && fruitQuest != null)
+                QuestManager.Instance.CompleteQuestPublic(fruitQuest);
+
+            // Automatically start gas quest as a hint
+            if (QuestManager.Instance != null && gasQuest != null)
+                QuestManager.Instance.AcceptQuest(gasQuest);
+
+            Invoke(nameof(StopTalking), thankYouClip != null ? thankYouClip.length : 2f);
+            return;
+        }
+
+        if (!hasGivenKey && count == 1)
+        {
+            PlayClip(oneItemClip);
+            Invoke(nameof(StopTalking), oneItemClip != null ? oneItemClip.length : 2f);
+            return;
+        }
+
+        if (!hasGivenKey && count == 0)
+        {
+            PlayClip(greetingClip);
+            if (fruitQuest != null && QuestManager.Instance != null)
+                QuestManager.Instance.AcceptQuest(fruitQuest);
+            Invoke(nameof(StopTalking), greetingClip != null ? greetingClip.length : 2f);
+            return;
+        }
     }
-}
 
     void StopTalking()
     {

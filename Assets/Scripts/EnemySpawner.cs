@@ -18,8 +18,6 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesKilled = 0;
     private bool isSpawning = false;
 
-
-
     public void StartSpawning()
     {
         if (isSpawning)
@@ -61,6 +59,14 @@ public class EnemySpawner : MonoBehaviour
     {
         while (enemiesSpawned < totalEnemiesToSpawn)
         {
+            // Safety check — stop if prefab was destroyed or removed
+            if (enemyPrefab == null)
+            {
+                Debug.LogError("EnemySpawner: Enemy prefab is missing or was destroyed. Stopping spawner.");
+                isSpawning = false;
+                yield break;
+            }
+
             int randomIndex = Random.Range(0, spawnPoints.Length);
             Transform spawnPoint = spawnPoints[randomIndex];
 
@@ -103,7 +109,17 @@ public class EnemySpawner : MonoBehaviour
         if (enemiesKilled >= totalEnemiesToSpawn)
         {
             Debug.Log("EnemySpawner: All enemies defeated!");
+            CompleteKillQuestIfNeeded();
             isSpawning = false;
         }
+    }
+
+    private void CompleteKillQuestIfNeeded()
+    {
+        if (killQuest == null || QuestManager.Instance == null) return;
+        if (QuestManager.Instance.IsQuestCompleted(killQuest.questName)) return;
+
+        killQuest.currentAmount = killQuest.goalAmount;
+        QuestManager.Instance.CompleteQuestPublic(killQuest);
     }
 }
