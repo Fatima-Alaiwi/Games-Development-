@@ -9,6 +9,7 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     [SerializeField] private string _defaultInteractionText = "Drive Truck";
 
     [Header("Quest Assignment")]
+    public string requiredLoadTruckQuestName = "LoadTruck";
     public Quest deliverCellQuest; 
 
     [Header("Cell Placement Setup")]
@@ -106,9 +107,15 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (frontLeft.gameObject.activeSelf == false)  
+        if (frontLeft == null || frontLeft.gameObject.activeSelf == false)  
         {
             Debug.Log("The truck is missing a wheel. I can't drive this!");
+            return;
+        }
+
+        if (!CanUseTruckForQuest())
+        {
+            Debug.Log($"Truck locked: talk to the InfoBot and start '{requiredLoadTruckQuestName}' first.");
             return;
         }
 
@@ -124,24 +131,81 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
     private void TryPlacePowerCube()
     {
-        if (InventoryManager.instance != null)
+        if (InventoryManager.instance == null)
         {
-            if (truckBackCubeVisual != null)
-            {
-                truckBackCubeVisual.SetActive(true);
-            }
+            Debug.LogWarning("Cannot place power cell: InventoryManager is missing.");
+            return;
+        }
 
-            _hasPlacedCube = true;
+        if (!InventoryManager.instance.HasItem(powerCellItemName))
+        {
+            Debug.Log($"Cannot load truck: player does not have {powerCellItemName}.");
+            return;
+        }
 
-            if (QuestManager.Instance != null && deliverCellQuest != null)
+        if (!InventoryManager.instance.RemoveItem(powerCellItemName))
+        {
+            Debug.LogWarning($"Cannot load truck: failed to remove {powerCellItemName} from inventory.");
+            return;
+        }
+
+        if (truckBackCubeVisual != null)
+        {
+            truckBackCubeVisual.SetActive(true);
+        }
+
+        _hasPlacedCube = true;
+
+        if (QuestManager.Instance != null)
+        {
+            CompleteActiveQuest(requiredLoadTruckQuestName);
+
+            if (deliverCellQuest != null)
             {
                 QuestManager.Instance.AcceptQuest(deliverCellQuest);
             }
+        }
 
-            if (UIManager.Instance != null)
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.HideHoverText();
+        }
+    }
+
+    private bool CanUseTruckForQuest()
+    {
+        if (_hasPlacedCube) return true;
+        if (QuestManager.Instance == null) return false;
+
+        foreach (Quest quest in QuestManager.Instance.activeQuests)
+        {
+            if (quest != null && quest.questName == requiredLoadTruckQuestName)
             {
-                UIManager.Instance.HideHoverText();
+                return true;
             }
+        }
+
+        return false;
+    }
+
+    private void CompleteActiveQuest(string questName)
+    {
+        if (QuestManager.Instance == null) return;
+
+        Quest questToComplete = null;
+        foreach (Quest quest in QuestManager.Instance.activeQuests)
+        {
+            if (quest != null && quest.questName == questName)
+            {
+                questToComplete = quest;
+                break;
+            }
+        }
+
+        if (questToComplete != null)
+        {
+            questToComplete.currentAmount = questToComplete.goalAmount;
+            QuestManager.Instance.CompleteQuestPublic(questToComplete);
         }
     }
 
