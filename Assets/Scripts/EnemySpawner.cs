@@ -109,7 +109,17 @@ public class EnemySpawner : MonoBehaviour
         if (enemiesKilled >= totalEnemiesToSpawn)
         {
             Debug.Log("EnemySpawner: All enemies defeated!");
+            CompleteKillQuestIfNeeded();
             isSpawning = false;
         }
+    }
+
+    private void CompleteKillQuestIfNeeded()
+    {
+        if (killQuest == null || QuestManager.Instance == null) return;
+        if (QuestManager.Instance.IsQuestCompleted(killQuest.questName)) return;
+
+        killQuest.currentAmount = killQuest.goalAmount;
+        QuestManager.Instance.CompleteQuestPublic(killQuest);
     }
 }
