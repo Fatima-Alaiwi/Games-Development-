@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 
 public class PauseMenuManager : MonoBehaviour
@@ -16,13 +18,11 @@ public class PauseMenuManager : MonoBehaviour
 
     void Start()
     {
-        
+        EnsureEventSystemExists();
         HideAllPanels();
-        // 2. Reset the game state
         isPaused = false;
         Time.timeScale = 1f;
 
-        // 3. Lock the cursor for gameplay
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -39,47 +39,46 @@ public class PauseMenuManager : MonoBehaviour
     public void OpenPausePanel()
     {
         HideAllPanels();
-        pauseMenuPanel.SetActive(true);
+        SetPanelActive(pauseMenuPanel, true);
     }
 
     public void OpenSettings()
     {
         HideAllPanels();
-        settingsPanel.SetActive(true);
+        SetPanelActive(settingsPanel, true);
     }
 
     public void OpenSaveConfirm()
     {
         HideAllPanels();
-        saveConfirmPanel.SetActive(true);
+        SetPanelActive(saveConfirmPanel, true);
     }
 
     public void OpenInstructions()
     {
         HideAllPanels();
-        instructionsPanel.SetActive(true);
+        SetPanelActive(instructionsPanel, true);
     }
 
     public void OpenRestartConfirm()
     {
         HideAllPanels();
-        restartConfirmPanel.SetActive(true);
+        SetPanelActive(restartConfirmPanel, true);
     }
 
     private void HideAllPanels()
     {
-        pauseMenuPanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        saveConfirmPanel.SetActive(false);
-        instructionsPanel.SetActive(false);
-        restartConfirmPanel.SetActive(false);
-        quitConfirmationPanel.SetActive(false);
+        SetPanelActive(pauseMenuPanel, false);
+        SetPanelActive(settingsPanel, false);
+        SetPanelActive(saveConfirmPanel, false);
+        SetPanelActive(instructionsPanel, false);
+        SetPanelActive(restartConfirmPanel, false);
+        SetPanelActive(quitConfirmationPanel, false);
     }
 
     public void Resume()
     {
         isPaused = false;
-        pauseMenuPanel.SetActive(false);
         HideAllPanels();
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
@@ -90,10 +89,7 @@ public class PauseMenuManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-        pauseMenuPanel.SetActive(true);
         OpenPausePanel(); 
-        Time.timeScale = 0f;
-        isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -116,26 +112,44 @@ public class PauseMenuManager : MonoBehaviour
     }
 
     // Opens the confirm window
-public void OpenQuitConfirm()
-{
-    quitConfirmationPanel.SetActive(true);
-}
+    public void OpenQuitConfirm()
+    {
+        SetPanelActive(quitConfirmationPanel, true);
+    }
 
-// Closes the confirm window
-public void CloseQuitConfirm()
-{
-    quitConfirmationPanel.SetActive(false);
-}
+    // Closes the confirm window
+    public void CloseQuitConfirm()
+    {
+        SetPanelActive(quitConfirmationPanel, false);
+    }
 
-// Actually quits the game
-public void QuitGame()
-{
-    Debug.Log("Quitting game...");
+    // Actually quits the game
+    public void QuitGame()
+    {
+        Debug.Log("Quitting game...");
     
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-    #else
+#else
         Application.Quit();
-    #endif
-}
+#endif
+    }
+
+    private void SetPanelActive(GameObject panel, bool active)
+    {
+        if (panel != null)
+        {
+            panel.SetActive(active);
+        }
+    }
+
+    private void EnsureEventSystemExists()
+    {
+
+        GameObject eventSystemObject = new GameObject("EventSystem");
+        eventSystemObject.AddComponent<EventSystem>();
+
+        InputSystemUIInputModule inputModule = eventSystemObject.AddComponent<InputSystemUIInputModule>();
+        inputModule.AssignDefaultActions();
+    }
 }
