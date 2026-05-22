@@ -45,7 +45,8 @@ public class Farmer : MonoBehaviour, IInteractable
     [Header("Bell / Ambient Sound")]
     public AudioClip bellClip;        // drag bell sound here
     public float bellTriggerRadius = 8f; // radius of the trigger zone
-
+    [Header("Spawner")]
+    public EnemySpawner villageSpawner;
     private Animator animator;
     private bool hasGivenKey = false;
     private AudioSource audioSource;
@@ -104,7 +105,8 @@ public class Farmer : MonoBehaviour, IInteractable
             // Automatically start gas quest as a hint
             if (QuestManager.Instance != null && gasQuest != null)
                 QuestManager.Instance.AcceptQuest(gasQuest);
-
+             if (villageSpawner != null)
+        villageSpawner.StartSpawning();
             Invoke(nameof(StopTalking), thankYouClip != null ? thankYouClip.length : 2f);
             return;
         }
