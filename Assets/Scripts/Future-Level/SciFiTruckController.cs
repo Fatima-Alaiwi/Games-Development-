@@ -9,6 +9,7 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     [SerializeField] private string _defaultInteractionText = "Drive Truck";
 
     [Header("Quest Assignment")]
+    public string requiredLoadTruckQuestName = "LoadTruck";
     public Quest deliverCellQuest; 
 
     [Header("Cell Placement Setup")]
@@ -112,6 +113,12 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
             return;
         }
 
+        if (!CanUseTruckForQuest())
+        {
+            Debug.Log($"Truck locked: talk to the InfoBot and start '{requiredLoadTruckQuestName}' first.");
+            return;
+        }
+
         if (!_hasPlacedCube)
         {
             TryPlacePowerCube();
@@ -149,14 +156,56 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
 
         _hasPlacedCube = true;
 
-        if (QuestManager.Instance != null && deliverCellQuest != null)
+        if (QuestManager.Instance != null)
         {
-            QuestManager.Instance.AcceptQuest(deliverCellQuest);
+            CompleteActiveQuest(requiredLoadTruckQuestName);
+
+            if (deliverCellQuest != null)
+            {
+                QuestManager.Instance.AcceptQuest(deliverCellQuest);
+            }
         }
 
         if (UIManager.Instance != null)
         {
             UIManager.Instance.HideHoverText();
+        }
+    }
+
+    private bool CanUseTruckForQuest()
+    {
+        if (_hasPlacedCube) return true;
+        if (QuestManager.Instance == null) return false;
+
+        foreach (Quest quest in QuestManager.Instance.activeQuests)
+        {
+            if (quest != null && quest.questName == requiredLoadTruckQuestName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void CompleteActiveQuest(string questName)
+    {
+        if (QuestManager.Instance == null) return;
+
+        Quest questToComplete = null;
+        foreach (Quest quest in QuestManager.Instance.activeQuests)
+        {
+            if (quest != null && quest.questName == questName)
+            {
+                questToComplete = quest;
+                break;
+            }
+        }
+
+        if (questToComplete != null)
+        {
+            questToComplete.currentAmount = questToComplete.goalAmount;
+            QuestManager.Instance.CompleteQuestPublic(questToComplete);
         }
     }
 

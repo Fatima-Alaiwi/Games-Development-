@@ -3174,8 +3174,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  detectionRange: 20
-  stopDistance: 10
+  detectionRange: 150
+  stopDistance: 25
   pistolModel: {fileID: 3226317581600013975}
 --- !u!195 &2897220315460095508
 NavMeshAgent:
@@ -3211,8 +3211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cd3daaa63586a4e9eeb29c8eff8ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 6
-  maxHealth: 6
+  currentHealth: 4
+  maxHealth: 4
   isPlayer: 0
   healthBar: {fileID: 0}
   hurtSound: {fileID: 0}

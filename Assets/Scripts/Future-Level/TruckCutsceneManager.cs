@@ -14,6 +14,10 @@ public class TruckCutsceneManager : MonoBehaviour
     [Header("Post-Cutscene Quest Trigger")]
     public ZoneTrigger killRobotsZoneTrigger;
 
+    [Header("Post-Cutscene Voice Line")]
+    public AudioSource voiceLineAudioSource;
+    public AudioClip postCutsceneVoiceLine;
+
     public Transform playerCutsceneStandingPoint;
     public Transform pointA; 
     public Transform pointB; 
@@ -162,6 +166,7 @@ public class TruckCutsceneManager : MonoBehaviour
         }
 
         EnableKillRobotsZoneTrigger();
+        PlayPostCutsceneVoiceLine();
     }
 
     private void SetPlayerCanMove(bool canMove)
@@ -181,5 +186,13 @@ public class TruckCutsceneManager : MonoBehaviour
 
         killRobotsZoneTrigger.gameObject.SetActive(true);
         killRobotsZoneTrigger.enabled = true;
+    }
+
+    private void PlayPostCutsceneVoiceLine()
+    {
+        if (voiceLineAudioSource != null && postCutsceneVoiceLine != null)
+        {
+            voiceLineAudioSource.PlayOneShot(postCutsceneVoiceLine);
+        }
     }
 }
