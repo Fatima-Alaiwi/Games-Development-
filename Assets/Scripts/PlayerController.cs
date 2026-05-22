@@ -233,13 +233,12 @@ public class PlayerController : MonoBehaviour
                 T.TakeDamage(attackDamage);
 
             // Fatima bamboo quest
-           ChoppableBamboo bamboo = hit.transform.GetComponentInParent<ChoppableBamboo>();
-            if(bamboo != null)
-                bamboo.GetChopped();
-            // Fatima gong quest 
-            GongInteractable gong = hit.transform.GetComponentInParent<GongInteractable>();
-            if (gong != null)
-                gong.GetStruck();
+            
+            // Barricade bamboo (blocking portal)
+            BarricadeBamboo barricade = hit.transform.GetComponentInParent<BarricadeBamboo>();
+            if (barricade != null)
+                barricade.GetChopped();
+             
         } 
     }
     void HitTarget(RaycastHit hit)
