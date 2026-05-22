@@ -11,6 +11,13 @@ public class TruckCutsceneManager : MonoBehaviour
     public string powerCellItemName = "PowerCell";
     public string completionStepDescription = "Quest Complete: Power cell stolen by drone.";
 
+    [Header("Post-Cutscene Quest Trigger")]
+    public ZoneTrigger killRobotsZoneTrigger;
+
+    [Header("Post-Cutscene Voice Line")]
+    public AudioSource voiceLineAudioSource;
+    public AudioClip postCutsceneVoiceLine;
+
     public Transform playerCutsceneStandingPoint;
     public Transform pointA; 
     public Transform pointB; 
@@ -63,11 +70,7 @@ public class TruckCutsceneManager : MonoBehaviour
 
             if (charController != null) charController.enabled = true;
 
-            var field = _savedPlayerScript.GetType().GetField("canMove");
-            if (field != null)
-            {
-                field.SetValue(_savedPlayerScript, true);
-            }
+            SetPlayerCanMove(false);
         }
 
         if (cutsceneCamera != null)
@@ -147,19 +150,49 @@ public class TruckCutsceneManager : MonoBehaviour
             drone.gameObject.SetActive(false);
         }
 
+        SetPlayerCanMove(true);
+
         if (QuestManager.Instance != null && _questToComplete != null)
         {
-            if (!QuestManager.Instance.activeQuests.Contains(_questToComplete))
-            {
-                QuestManager.Instance.activeQuests.Add(_questToComplete);
-            }
-
-            QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
             QuestManager.Instance.UpdateQuestDescription(_questToComplete.questName, completionStepDescription);
+
+            _questToComplete.currentAmount = _questToComplete.goalAmount;
+
+            QuestManager.Instance.CompleteQuestPublic(_questToComplete);
         }
         else if (QuestManager.Instance != null)
         {
             QuestManager.Instance.UpdateQuestCount(powerCellItemName, 1);
+        }
+
+        EnableKillRobotsZoneTrigger();
+        PlayPostCutsceneVoiceLine();
+    }
+
+    private void SetPlayerCanMove(bool canMove)
+    {
+        if (_savedPlayerScript == null) return;
+
+        var field = _savedPlayerScript.GetType().GetField("canMove");
+        if (field != null)
+        {
+            field.SetValue(_savedPlayerScript, canMove);
+        }
+    }
+
+    private void EnableKillRobotsZoneTrigger()
+    {
+        if (killRobotsZoneTrigger == null) return;
+
+        killRobotsZoneTrigger.gameObject.SetActive(true);
+        killRobotsZoneTrigger.enabled = true;
+    }
+
+    private void PlayPostCutsceneVoiceLine()
+    {
+        if (voiceLineAudioSource != null && postCutsceneVoiceLine != null)
+        {
+            voiceLineAudioSource.PlayOneShot(postCutsceneVoiceLine);
         }
     }
 }
