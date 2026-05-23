@@ -12,6 +12,9 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
     public string requiredLoadTruckQuestName = "LoadTruck";
     public Quest deliverCellQuest; 
 
+    [Header("Delivery Marker")]
+    public GameObject deliveryMarker;
+
     [Header("Cell Placement Setup")]
     public GameObject truckBackCubeVisual;
     public string powerCellItemName = "PowerCell"; 
@@ -166,6 +169,8 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
             }
         }
 
+        SetDeliveryMarkerActive(true);
+
         if (UIManager.Instance != null)
         {
             UIManager.Instance.HideHoverText();
@@ -290,6 +295,14 @@ public class SciFiTruckController : MonoBehaviour, IInteractable
         if (playerCamera != null) 
         {
             playerCamera.gameObject.SetActive(true);
+        }
+    }
+
+    private void SetDeliveryMarkerActive(bool state)
+    {
+        if (deliveryMarker != null)
+        {
+            deliveryMarker.SetActive(state);
         }
     }
 }

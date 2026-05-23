@@ -4,6 +4,7 @@ public class CutsceneTrigger : MonoBehaviour
 {
     public TruckCutsceneManager cutsceneManager;
     public GameObject staticCutsceneTruckProp;
+    public GameObject deliveryMarker;
     public Quest questToComplete;
 
     private void OnTriggerEnter(Collider other)
@@ -30,6 +31,11 @@ public class CutsceneTrigger : MonoBehaviour
             if (staticCutsceneTruckProp != null)
             {
                 staticCutsceneTruckProp.SetActive(true);
+            }
+
+            if (deliveryMarker != null)
+            {
+                deliveryMarker.SetActive(false);
             }
 
             cutsceneManager.StartCutscene();
