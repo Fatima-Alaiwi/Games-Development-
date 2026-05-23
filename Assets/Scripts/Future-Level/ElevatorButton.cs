@@ -25,7 +25,7 @@ public class ElevatorButton : MonoBehaviour, IInteractable
     public GameObject elevatorInteriorInteractable;
 
     [Header("Audio Setup")]
-    public AudioSource playerAudioSource; // Drag the Player's AudioSource component here
+    public AudioSource playerAudioSource;
     public List<AudioClip> elevatorInvestigationLines = new List<AudioClip>();
 
     private bool _isSpeaking = false;
@@ -36,7 +36,6 @@ public class ElevatorButton : MonoBehaviour, IInteractable
     private Vector3 _leftDoorOpenWorldPosition;
     private Vector3 _rightDoorOpenWorldPosition;
 
-    // Interface Requirements
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
     public string InteractionText => GetInteractionText();

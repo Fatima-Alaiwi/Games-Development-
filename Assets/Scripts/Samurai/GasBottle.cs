@@ -16,6 +16,10 @@ public class GasBottle : MonoBehaviour, IInteractable
     [Header("Quest Settings")]
     public Quest gasQuest;
 
+    [Header("Spawner")]
+    public EnemySpawner brazierSpawner;
+    public int requiredGasCount = 2; // how many gas bottles needed before spawning
+
     public void Interact()
     {
         bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
@@ -31,7 +35,21 @@ public class GasBottle : MonoBehaviour, IInteractable
             if (QuestManager.Instance != null)
                 QuestManager.Instance.UpdateProgress(itemName, 1);
 
+            // Check how many gas bottles collected
+            int gasCount = GetGasCount();
+            if (brazierSpawner != null && gasCount >= requiredGasCount)
+                brazierSpawner.StartSpawning();
+
             gameObject.SetActive(false);
         }
+    }
+
+    int GetGasCount()
+    {
+        if (InventoryManager.instance == null) return 0;
+        foreach (var item in InventoryManager.instance.items)
+            if (item.itemName == itemName)
+                return item.count;
+        return 0;
     }
 }

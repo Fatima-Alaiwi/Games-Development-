@@ -8,7 +8,8 @@ public class BrazierGate : MonoBehaviour
 
     private int braziersLit = 0;
     private AudioSource audioSource;
-
+    [Header("Spawner")]
+    public EnemySpawner gateSpawner;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();

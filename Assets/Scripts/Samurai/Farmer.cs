@@ -52,19 +52,29 @@ public class Farmer : MonoBehaviour, IInteractable
     private AudioSource audioSource;
     private bool bellPlayed = false;
 
-    void Start()
+  void Start()
+{
+    audioSource = GetComponent<AudioSource>();
+    if (audioSource == null)
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+    // Find animator but skip farmerSphere
+    Animator[] animators = GetComponentsInChildren<Animator>();
+    foreach (var anim in animators)
     {
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-            audioSource = gameObject.AddComponent<AudioSource>();
-
-        animator = GetComponentInChildren<Animator>();
-
-        // Create trigger zone for bell sound automatically
-        SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
-        trigger.isTrigger = true;
-        trigger.radius = bellTriggerRadius;
+        if (anim.gameObject.name != "farmerSphere")
+        {
+            animator = anim;
+            break;
+        }
     }
+
+    Debug.Log("Animator found: " + (animator != null ? animator.gameObject.name : "NULL"));
+
+    SphereCollider trigger = gameObject.AddComponent<SphereCollider>();
+    trigger.isTrigger = true;
+    trigger.radius = bellTriggerRadius;
+}
 
     // Bell plays once when player enters the zone
     void OnTriggerEnter(Collider other)

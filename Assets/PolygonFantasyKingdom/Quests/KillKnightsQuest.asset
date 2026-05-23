@@ -15,8 +15,8 @@ MonoBehaviour:
   questName: KillKnightsQuest
   description: Kill all knights to escape the dining hall
   goalItemName: enemy_kill
-  activeMessage: 'Knights Still Standing:'
+  activeMessage: 'Knights Defeated:'
   completeMessage: All Knights Defeated! you can escape the dining hall safely.
-  goalAmount: 4
+  goalAmount: 5
   currentAmount: 0
   isCompleted: 0

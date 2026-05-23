@@ -32,7 +32,6 @@ public class TrafficSpawner : MonoBehaviour
 
         GameObject spawnedCar = Instantiate(carToSpawn, transform.position, transform.rotation);
 
-        // Calculate a unique speed for this specific car
         float randomSpeed = baseSpeed + Random.Range(-speedVariation, speedVariation);
 
         FlyingCarMovement movement = spawnedCar.AddComponent<FlyingCarMovement>();
