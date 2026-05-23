@@ -15,7 +15,7 @@ MonoBehaviour:
   questName: Deliver Cell
   description: 'Player needs to drive the truck and reach the building '
   goalItemName: Deliver Cell to the Building
-  activeMessage: Power Restored
+  activeMessage: Deliver Cell to the Building
   completeMessage: Power Cell Delivered
   goalAmount: 1
   currentAmount: 0

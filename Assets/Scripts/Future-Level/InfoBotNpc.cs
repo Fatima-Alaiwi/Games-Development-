@@ -8,6 +8,12 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     public Transform _labelAnchor;
     public bool _isInteractable = true;
     public AudioSource audioSource;
+    public Animator animator;
+
+    [Header("Animation")]
+    public string idleStateName = "infot-bot-idle";
+    public string talkStateName = "info-bot-talk-1";
+    public float animationFadeTime = 0.15f;
 
     [Header("Quest Assignment")]
     public Quest investigateBuildingQuest;
@@ -37,6 +43,13 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         {
             audioSource = GetComponent<AudioSource>();
         }
+
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
+        PlayIdleAnimation();
     }
 
     public void Interact()
@@ -97,6 +110,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         }
 
         _isSpeakingSequence = true;
+        PlayTalkAnimation();
 
         for (int i = 0; i < clipList.Count; i++)
         {
@@ -106,7 +120,6 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
             {
                 audioSource.clip = currentClip;
                 audioSource.Play();
-                PlayTalkAnimation();
 
                 yield return new WaitForSeconds(currentClip.length);
             }
@@ -114,6 +127,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
         onSequenceComplete?.Invoke();
         _isSpeakingSequence = false;
+        PlayIdleAnimation();
     }
 
     private List<AudioClip> GetTargetClips(string questName)
@@ -141,7 +155,18 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
     private void PlayTalkAnimation()
     {
-        Animator anim = GetComponent<Animator>();
-        if (anim != null) anim.SetTrigger("Talk");
+        PlayAnimationState(talkStateName);
+    }
+
+    private void PlayIdleAnimation()
+    {
+        PlayAnimationState(idleStateName);
+    }
+
+    private void PlayAnimationState(string stateName)
+    {
+        if (animator == null || string.IsNullOrEmpty(stateName)) return;
+
+        animator.CrossFadeInFixedTime(stateName, animationFadeTime);
     }
 }
