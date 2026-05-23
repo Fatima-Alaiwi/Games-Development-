@@ -15,7 +15,6 @@ public class RobotDeathObserver : MonoBehaviour
         _enemyShooting = GetComponent<EnemyShooting>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         
-        // Directly grab the animator that is driving the 3D model visuals
         _correctModelAnimator = GetComponentInChildren<Animator>();
     }
 
@@ -35,17 +34,14 @@ public class RobotDeathObserver : MonoBehaviour
     _hasTriggeredDeath = true;
     Debug.Log($"<color=lime>Observer executing Death Animation directly on {gameObject.name}</color>");
 
-    // 1. Force the correct 3D model animator to switch states immediately
     if (_correctModelAnimator != null)
     {
         _correctModelAnimator.SetTrigger("Die");
     }
 
-    // 2. Shut down the AI loops immediately
     if (_robotAI != null) _robotAI.enabled = false;
     if (_enemyShooting != null) _enemyShooting.enabled = false;
 
-    // 3. Halt navigation positioning
     if (_navMeshAgent != null && _navMeshAgent.enabled)
     {
         if (_navMeshAgent.isOnNavMesh)

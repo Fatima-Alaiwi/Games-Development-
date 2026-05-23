@@ -30,7 +30,6 @@ public class RobotAI : MonoBehaviour
         _shootingScript = GetComponent<EnemyShooting>();
         _anim = GetComponent<Animator>();
 
-        // Debugging Component Check
         if (_agent == null)
         {
             Debug.LogError("<color=red>ROBOT ERROR:</color> NavMeshAgent is MISSING from this object!");
@@ -100,7 +99,6 @@ public class RobotAI : MonoBehaviour
             if (player == null) return;
         }
 
-        // Drive walking animation via physical velocity
         if (_anim != null)
         {
             float currentSpeed = _agent.velocity.magnitude;
@@ -144,7 +142,6 @@ public class RobotAI : MonoBehaviour
             }
         }
 
-        // Debug path status if not moving
         if (!_agent.hasPath && _agent.pathStatus == NavMeshPathStatus.PathInvalid) {
             Debug.LogWarning("ROBOT: I have no valid path to the player! Check your NavMesh Bake.");
         }
@@ -205,7 +202,6 @@ public class RobotAI : MonoBehaviour
             if (_shootingScript != null) _shootingScript.enabled = false;
             LogNavMeshDebug(chaseState, distance, chasePosition, foundPlayerNavMeshPoint, path.status);
             
-            // Helpful log to see if the agent is actually trying to move
             if (_agent.velocity.magnitude < 0.1f) {
             }
         } 
@@ -215,7 +211,6 @@ public class RobotAI : MonoBehaviour
             _agent.ResetPath();
             if (_shootingScript != null) _shootingScript.enabled = true;
 
-            // Smooth rotation
             Vector3 direction = (player.position - transform.position).normalized;
             direction.y = 0;
             if (direction != Vector3.zero)
