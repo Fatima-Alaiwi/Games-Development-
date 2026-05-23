@@ -3,19 +3,19 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 
-//raghad try :)
 public class LockedDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] private string _interactionText = "Press E to Enter Code";
-    public string InteractionText => _interactionText;
+    [SerializeField] private string _lockedInteractionText = "Get the code from the Magician first!";
+    public string InteractionText => GetInteractionText();
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
     [Header("Quest Requirement")]
-    public Quest requiredQuest; // drag BottleQuest here
+    public Quest requiredQuest;   // drag BottleQuest here
     public Quest questToComplete; // drag FindLibraryQuest here
-    public Quest portalKeyQuest; // Raghad: drag FindPortalKeyQuest here
+    public Quest portalKeyQuest;  // drag FindPortalKeyQuest here
 
     [Header("Code Settings")]
     public string correctCode = "888";
@@ -40,29 +40,36 @@ public class LockedDoor : MonoBehaviour, IInteractable
     {
         audioSource = GetComponent<AudioSource>();
 
-        // Hide panel at start
         if (codePanel != null)
             codePanel.SetActive(false);
+    }
+
+    private string GetInteractionText()
+    {
+        if (isOpen)
+            return "";
+
+        if (requiredQuest != null && !QuestManager.Instance.IsQuestComplete(requiredQuest))
+            return _lockedInteractionText;
+
+        return _interactionText;
     }
 
     public void Interact()
     {
         if (!isInteractable || isOpen) return;
 
-        // Can't use door until bottles are delivered
         if (requiredQuest != null && !QuestManager.Instance.IsQuestComplete(requiredQuest))
         {
-            UIManager.Instance.ShowHoverText("I need to find something first...", transform.position);
+            UIManager.Instance.ShowHoverText(_lockedInteractionText, transform.position);
             return;
         }
 
         if (!panelOpen)
         {
-            // Show code panel
             panelOpen = true;
             codePanel.SetActive(true);
 
-            // Unlock cursor so player can type
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -77,27 +84,21 @@ public class LockedDoor : MonoBehaviour, IInteractable
 
         if (enteredCode == correctCode)
         {
-            // Correct code!
             feedbackText.text = "Access Granted!";
             feedbackText.color = Color.green;
 
-            // Close panel
             codePanel.SetActive(false);
             panelOpen = false;
 
-            // Lock cursor again
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            // Open door
             isOpen = true;
             isInteractable = false;
 
-            // Complete the find library quest — player found it!
             if (questToComplete != null)
                 QuestManager.Instance.UpdatedCompleteQuest(questToComplete);
 
-            // Raghad: start portal key quest so HUD shows "Find the key inside!"
             if (portalKeyQuest != null)
                 QuestManager.Instance.AcceptQuest(portalKeyQuest);
 
@@ -108,7 +109,6 @@ public class LockedDoor : MonoBehaviour, IInteractable
         }
         else
         {
-            // Wrong code!
             feedbackText.text = "Wrong Code. Try Again.";
             feedbackText.color = Color.red;
             codeInputField.text = "";
