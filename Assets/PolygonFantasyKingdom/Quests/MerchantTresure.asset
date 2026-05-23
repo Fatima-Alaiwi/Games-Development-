@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MerchantTresure
   m_EditorClassIdentifier: 
   questName: MerchantTresure
-  description: Find the Merchant's Tresure Near the Sea Shore.
-  goalItemName: GoldBar
-  activeMessage: Find the Merchant's Gold
-  completeMessage: You Found the gold! Go back to the Merchant!
+  description: Find the Mage's Tresure Near the alley of the dead.
+  goalItemName: TresureItem
+  activeMessage: Find the Mage's Gold
+  completeMessage: You Found the Tresure! Give it back to the Mage!
   goalAmount: 2
   currentAmount: 0
   isCompleted: 0

@@ -85,4 +85,15 @@ public class InventoryManager : MonoBehaviour
         }
         return false;
     }
+    public int GetItemCount(string name)
+    {
+        foreach (var item in items)
+        {
+            if (item.itemName == name)
+            {
+                return item.count; // Found the item! Return the quantity Peter has
+            }
+        }
+        return 0; // Item not found, return 0
+    }
 }
