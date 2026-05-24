@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3892819439396172410}
   - component: {fileID: 4609504094552943356}
   - component: {fileID: 4944067425638335403}
-  - component: {fileID: 1266280894042128901}
+  - component: {fileID: 234147573637250557}
   m_Layer: 6
   m_Name: Enemy_Samurai
   m_TagString: Untagged
@@ -67,7 +67,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.68848854, z: -0, w: 0.72524726}
   m_LocalPosition: {x: 27.78, y: -0.214, z: 73.53}
-  m_LocalScale: {x: 1, y: 0.84389555, z: 0.9222517}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3389597116340574031}
@@ -110,7 +110,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 6
+  m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &8978773889206114664
@@ -174,8 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bafecdf794d8c468d2e243dc94812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
-  distanceToStop: 1
+  moveSpeed: 7
+  distanceToStop: 2
   theRigidbody: {fileID: 8978773889206114664}
   agent: {fileID: 1262582398488448089}
 --- !u!136 &3892819439396172410
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c112b8bfc528b4aa3565f5498c0ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1266280894042128901
+--- !u!114 &234147573637250557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -236,12 +236,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1985583850545851641}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db0941ade2aeafa44af45a48e1be4282, type: 3}
+  m_Script: {fileID: 11500000, guid: 3356caaa7ab0601479e41f620ad514d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkInterval: 1
-  stuckThreshold: 0.2
-  unstuckJumpRadius: 2
+  rotationSpeed: 8
+  distanceToStop: 1.5
+  stuckCheckInterval: 1.5
+  stuckMoveThreshold: 0.15
+  stuckCountBeforeWarp: 2
 --- !u!1001 &8726669092374824724
 PrefabInstance:
   m_ObjectHideFlags: 0
