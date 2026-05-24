@@ -10,7 +10,7 @@ public class WeaponData : ScriptableObject
     [Header("Weapon")]
     public WeaponType type;
     public bool automatic = true;
-    public int maxAmmo = 10;
+    public int maxAmmo = 4;
     public float fireRate = 0.5f;
     public int attackDamage = 1;
     public float reloadTime = 0.5f;
