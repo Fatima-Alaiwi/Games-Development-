@@ -50,6 +50,8 @@ public class QuestHUD : MonoBehaviour
 
         // Hide the UI but keep the script running
         ShowUI(false);
+
+      
     }
 
     private void ShowUI(bool isVisible)
