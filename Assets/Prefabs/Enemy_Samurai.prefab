@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 3892819439396172410}
   - component: {fileID: 4609504094552943356}
   - component: {fileID: 4944067425638335403}
+  - component: {fileID: 1266280894042128901}
   m_Layer: 6
   m_Name: Enemy_Samurai
   m_TagString: Untagged
@@ -226,6 +227,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c112b8bfc528b4aa3565f5498c0ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1266280894042128901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985583850545851641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db0941ade2aeafa44af45a48e1be4282, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkInterval: 1
+  stuckThreshold: 0.2
+  unstuckJumpRadius: 2
 --- !u!1001 &8726669092374824724
 PrefabInstance:
   m_ObjectHideFlags: 0
