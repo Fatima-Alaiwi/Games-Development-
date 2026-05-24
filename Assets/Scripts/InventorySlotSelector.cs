@@ -75,6 +75,8 @@ public class InventorySlotSelector : MonoBehaviour
             case "Vitamins":    healAmount = 4; break;
             case "FirstAidKit": healAmount = 8; break;
             case "Potion": healAmount = 4; break;
+            
+
             default:
                 Debug.Log(selectedItem.itemName + " cannot be used.");
                 return;

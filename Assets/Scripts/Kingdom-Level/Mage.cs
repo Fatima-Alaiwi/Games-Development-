@@ -11,21 +11,25 @@ public class Mage : MonoBehaviour, IInteractable
     public Transform LabelAnchor => labelAnchor;
 
     [Header("Dialogue Clips")]
-    public AudioClip greetingClip;       // Plays when first asking for the treasure
-    public AudioClip waitClip;           // Plays if E is pressed but player lacks items
-    public AudioClip rewardClip;         // Plays once Peter hands over both treasures 
-    public AudioClip completedClip;      // Optional: Plays if spoken to again after finishing everything
+    public AudioClip greetingClip;
+    public AudioClip waitClip;
+    public AudioClip rewardClip;
+    public AudioClip completedClip;
 
     [Header("Peter Voice Lines")]
-    public AudioClip peterClip;      // Peter's audio reaction line playing after reward
+    public AudioClip peterClip;
 
     [Header("Quest Requirements")]
-    public Quest magesTreasureQuest;     // Drag the "Mage's Treasure" quest here
-    public Quest returnHomeQuest;        // Optional: Next quest (e.g., escaping or final portal quest)
+    public Quest magesTreasureQuest;
+    public Quest returnHomeQuest;
 
     [Header("Item Requirements")]
-    public string itemTargetName = "TreasureItem";
-    public int requiredTreasureCount = 2;
+    public string item1Name = "Gold";
+    public string item2Name = "Key";
+
+    [Header("Potion Reward")]
+    public GameObject potionPrefab;
+    public Transform potionSpawnPoint;
 
     private bool hasHandedOverTreasure = false;
     private bool playerIsNearby = false;
@@ -43,100 +47,104 @@ public class Mage : MonoBehaviour, IInteractable
 
     void Update()
     {
-        // Detect pressing 'Q' to turn in items, but only if player is near the Mage and quest isn't done
         if (playerIsNearby && !hasHandedOverTreasure && Input.GetKeyDown(KeyCode.Q))
         {
             TryGiveTreasure();
         }
     }
 
-    /// <summary>
-    /// Triggered when the player presses 'E' (Standard Interaction)
-    /// </summary>
     public void Interact()
     {
         if (!isInteractable) return;
 
-        // Trigger talking animation
         SetTalkingAnimation(true);
 
         if (!hasHandedOverTreasure)
         {
-            // Play a hint reminder telling the player what to do
             PlayClip(greetingClip);
-            Debug.Log("Mage: Bring me the 2 Treasure Items, then press 'Q' to hand them over!");
-
-            // If they don't have enough items yet, you could alternate to waitClip
+            Debug.Log("Mage: Bring me Gold and a Key, then press Q to hand them over!");
             StartCoroutine(StopTalkingAfterAudio(greetingClip));
         }
         else
         {
-            // Dialogue after the quest has already been finished completely
-            PlayClip(completedClip != null ? completedClip : rewardClip);
-            Debug.Log("Mage: Only my ancient magic can rip open the seams of reality now...");
             AudioClip played = completedClip != null ? completedClip : rewardClip;
+            PlayClip(played);
             StartCoroutine(StopTalkingAfterAudio(played));
         }
     }
 
-    /// <summary>
-    /// Processes the item hand-over when pressing 'Q'
-    /// </summary>
     private void TryGiveTreasure()
     {
+        bool hasItem1 = InventoryManager.instance.HasItem(item1Name);
+        bool hasItem2 = InventoryManager.instance.HasItem(item2Name);
 
-        int currentCount = InventoryManager.instance.GetItemCount(itemTargetName);
-
-        if (currentCount >= requiredTreasureCount)
+        if (hasItem1 && hasItem2)
         {
             hasHandedOverTreasure = true;
             SetTalkingAnimation(true);
 
-            // 1. Deduct items from player's inventory
-            InventoryManager.instance.RemoveItem(itemTargetName, requiredTreasureCount);
-            Debug.Log($"Handed over {requiredTreasureCount} {itemTargetName}s successfully!");
+            // Remove both items
+            InventoryManager.instance.RemoveItem(item1Name, 1);
+            InventoryManager.instance.RemoveItem(item2Name, 1);
+            Debug.Log($"Handed over {item1Name} and {item2Name}!");
 
-            // 2. Complete the Mage's Treasure quest lines
+            // Complete quest
             if (magesTreasureQuest != null)
                 QuestManager.Instance.UpdatedCompleteQuest(magesTreasureQuest);
 
-            // 3. Play the Mage's reward/ritual speech
+            // Play mage reward audio
             PlayClip(rewardClip);
-            Debug.Log("Mage: Magnificent! The ancient magic holds power once more...");
 
-            // 4. Begin next story quest if applicable
+            // Start next quest
             if (returnHomeQuest != null)
                 QuestManager.Instance.AcceptQuest(returnHomeQuest);
 
-            // 5. Chain Peter's voice line right after the Mage finishes his line
-            if (peterClip != null && rewardClip != null)
+            // Spawn potion
+            if (potionPrefab != null)
             {
-                float totalWaitTime = rewardClip.length + 0.5f;
-                StartCoroutine(PlayPeterLineAfterDelay(totalWaitTime));
+                Vector3 spawnPos = potionSpawnPoint != null
+                    ? potionSpawnPoint.position
+                    : transform.position - Vector3.up * 0.5f;
+                Instantiate(potionPrefab, spawnPos, Quaternion.identity);
+                Debug.Log("Potion spawned!");
             }
-            else if (peterClip != null)
+
+            // Play Peter's audio reaction line right after the Mage finishes speaking
+            float rewardLength = rewardClip != null ? rewardClip.length : 0f;
+            if (peterClip != null)
             {
-                StartCoroutine(PlayPeterLineAfterDelay(2f));
+                StartCoroutine(PlayPeterLineAfterDelay(rewardLength));
+            }
+            else
+            {
+                StartCoroutine(StopTalkingAfterAudio(rewardClip));
             }
         }
         else
         {
-            // Player pressed Q but lacks both items
+            // Missing one or both items
             SetTalkingAnimation(true);
             PlayClip(waitClip);
-            Debug.Log($"Mage: You only have {currentCount}/{requiredTreasureCount} items. I cannot help you yet.");
+            Debug.Log($"Mage: I need both {item1Name} and {item2Name}.");
             StartCoroutine(StopTalkingAfterAudio(waitClip));
         }
     }
 
-    #region Trigger Proximity Detection
-    // These track if Peter is close enough to use 'Q'. Make sure the Mage has a trigger zone attached!
+    IEnumerator PlayPeterLineAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay + 0.2f);
+        if (peterClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(peterClip);
+        }
+        yield return new WaitForSeconds(peterClip != null ? peterClip.length : 2f);
+        SetTalkingAnimation(false);
+    }
+
+    #region Trigger Proximity
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerIsNearby = true;
-        }
+        if (other.CompareTag("Player")) playerIsNearby = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -149,21 +157,10 @@ public class Mage : MonoBehaviour, IInteractable
     }
     #endregion
 
-    #region Helper Routines
-    IEnumerator PlayPeterLineAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (peterClip != null && audioSource != null)
-        {
-            audioSource.PlayOneShot(peterClip);
-        }
-        yield return new WaitForSeconds(peterClip != null ? peterClip.length : 1f);
-        SetTalkingAnimation(false);
-    }
-
+    #region Helpers
     IEnumerator StopTalkingAfterAudio(AudioClip clip)
     {
-        float wait = (clip != null) ? clip.length : 2f;
+        float wait = clip != null ? clip.length : 2f;
         yield return new WaitForSeconds(wait);
         SetTalkingAnimation(false);
     }
