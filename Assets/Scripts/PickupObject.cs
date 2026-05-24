@@ -14,6 +14,16 @@ public class PickupObject : MonoBehaviour, IInteractable
     public Sprite itemIcon;
     public AudioClip collectSound;
 
+    [Header("Rotation Settings")]
+    [SerializeField] private bool isRotatable = false;
+    [SerializeField] private float rotateSpeed = 1f;
+
+    void Update()
+    {
+        if (isRotatable)
+            transform.Rotate(0, rotateSpeed, 0, Space.World);
+    }
+
     public void Interact()
     {
         bool added = InventoryManager.instance.AddItem(itemName, itemIcon);
