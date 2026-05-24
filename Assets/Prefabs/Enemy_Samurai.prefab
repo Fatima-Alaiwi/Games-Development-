@@ -85,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 1
+  maxHealth: 2
   isPlayer: 0
   healthBar: {fileID: 0}
   hurtSound: {fileID: 0}
