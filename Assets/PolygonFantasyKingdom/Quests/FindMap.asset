@@ -18,5 +18,5 @@ MonoBehaviour:
   activeMessage: Find the Fairy tree map
   completeMessage: Head to the Fairy Tree to meet the fairy and the wise man
   goalAmount: 1
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 1
+  isCompleted: 1
