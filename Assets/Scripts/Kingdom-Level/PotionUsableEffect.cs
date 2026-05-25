@@ -35,10 +35,12 @@ public class PotionUsableEffect : MonoBehaviour
     private void ConsumePotion()
     {
         isEffectPlaying = true;
-
-        // Remove 1 potion from the inventory slot setup
         InventoryManager.instance.RemoveItem(potionItemName, 1);
         Debug.Log("Potion consumed! Triggering dizzy overlay effect.");
+
+        // Reveal portals when potion is used
+        if (PortalManager.Instance != null)
+            PortalManager.Instance.RevealPortals();
 
         // Fire screen visual sequence
         StartCoroutine(PlayDizzyEffect());

@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 23157175271422202}
   - component: {fileID: 64928516181449824}
   - component: {fileID: 2584842974948948994}
-  - component: {fileID: 4790426231027713382}
-  - component: {fileID: 4496457803625135063}
+  - component: {fileID: 2507196220302276504}
   m_Layer: 6
   m_Name: MagePotion
   m_TagString: Untagged
@@ -140,7 +139,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4790426231027713382
+--- !u!114 &2507196220302276504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,27 +148,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200035444335532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad6b9a749866d0946b9b8169f4434497, type: 3}
+  m_Script: {fileID: 11500000, guid: 19d4ede52acf5384eb90e81a258dffe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <InteractionText>k__BackingField: Press E to Pick Up
+  <InteractionText>k__BackingField: Press E to Pick Up Potion
   labelAnchor: {fileID: 190209578492674322}
   itemName: MagePotion
   itemIcon: {fileID: 21300000, guid: 3b18de21d5f690143920972108c4d001, type: 3}
   collectSound: {fileID: 8300000, guid: 8aea700f036b4c9488e9ba55fb3994f2, type: 3}
---- !u!114 &4496457803625135063
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200035444335532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcaf7cc426c443f4088c168d25b2c138, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotateSpeed: 3
+  isRotatable: 1
+  rotateSpeed: 1
 --- !u!1 &4509936439672512095
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,8 +183,8 @@ Transform:
   m_GameObject: {fileID: 4509936439672512095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.23, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.02, y: 0.13, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4772380956628810}
