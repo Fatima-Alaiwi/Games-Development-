@@ -35,6 +35,7 @@ public class PickupObject : MonoBehaviour, IInteractable
             if (QuestManager.Instance != null)
                 QuestManager.Instance.UpdateProgress(itemName, 1);
 
+            GetComponent<Collectible>()?.MarkCollected();
             Destroy(gameObject);
         }
         else

@@ -96,6 +96,8 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
         isInteractable = false;
 
+        GetComponent<SaveableDoor>()?.MarkOpened();
+
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
 
@@ -120,6 +122,14 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(delay);
         UIManager.Instance.HideHoverText();
+    }
+
+    public void SnapOpen()
+    {
+        isInteractable = false;
+        transform.rotation = transform.rotation * Quaternion.Euler(0, openAngle, 0);
+        if (secondDoor != null)
+            secondDoor.rotation = secondDoor.rotation * Quaternion.Euler(0, -openAngle, 0);
     }
 
     IEnumerator OpenDoor()

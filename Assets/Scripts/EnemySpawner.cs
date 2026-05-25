@@ -51,6 +51,7 @@ public class EnemySpawner : MonoBehaviour
         enemiesSpawned = 0;
         enemiesKilled = 0;
 
+        GetComponent<SaveableSpawner>()?.MarkTriggered();
         StartCoroutine(SpawnEnemies());
         Debug.Log("EnemySpawner: Spawning started.");
     }

@@ -24,6 +24,7 @@ public class GoldIngot : MonoBehaviour, IInteractable
             if (collectSound != null)
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
+            GetComponent<Collectible>()?.MarkCollected();
             gameObject.SetActive(false);
         }
         else

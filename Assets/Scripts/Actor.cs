@@ -60,6 +60,16 @@ public class Actor : MonoBehaviour
         Debug.Log(gameObject.name + " healed " + amount + ". Health now: " + currentHealth);
     }
 
+    public void RestoreHealth(int health, int max)
+    {
+        maxHealth = max;
+        currentHealth = Mathf.Clamp(health, 0, maxHealth);
+        isDead = false;
+
+        if (isPlayer && healthBar != null)
+            healthBar.SetHealth(currentHealth);
+    }
+
     void Death()
     {
         if (isDead) return;

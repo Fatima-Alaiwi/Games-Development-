@@ -97,6 +97,7 @@ public class HorrorMansionPortalInteractable : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        SaveSystem.Save();
         SceneManager.LoadScene(targetScene);
     }
 }
