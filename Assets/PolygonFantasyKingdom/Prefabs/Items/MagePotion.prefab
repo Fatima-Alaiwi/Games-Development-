@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1426366341057716
+--- !u!1 &1200035444335532
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4675657632128996}
-  - component: {fileID: 33995687118172404}
-  - component: {fileID: 23615420522828380}
-  - component: {fileID: 64866532054027324}
-  - component: {fileID: 6615016145410796475}
+  - component: {fileID: 4772380956628810}
+  - component: {fileID: 33059187086150424}
+  - component: {fileID: 23157175271422202}
+  - component: {fileID: 64928516181449824}
+  - component: {fileID: 2584842974948948994}
+  - component: {fileID: 2507196220302276504}
   m_Layer: 6
-  m_Name: SM_Item_Bottle_16
+  m_Name: MagePotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4675657632128996
+--- !u!4 &4772380956628810
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426366341057716}
+  m_GameObject: {fileID: 1200035444335532}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6043346579543104336}
+  - {fileID: 190209578492674322}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33995687118172404
+--- !u!33 &33059187086150424
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426366341057716}
-  m_Mesh: {fileID: 4300000, guid: 1edc1db076a80384cad615358119b0d7, type: 3}
---- !u!23 &23615420522828380
+  m_GameObject: {fileID: 1200035444335532}
+  m_Mesh: {fileID: 4300000, guid: ccc24da915cbe564eab030089633086e, type: 3}
+--- !u!23 &23157175271422202
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426366341057716}
+  m_GameObject: {fileID: 1200035444335532}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -89,13 +90,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64866532054027324
+--- !u!64 &64928516181449824
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426366341057716}
+  m_GameObject: {fileID: 1200035444335532}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -110,23 +111,54 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 43438524519046546, guid: 5b4114551c101b740ae415bd69f07609, type: 2}
---- !u!114 &6615016145410796475
+  m_Mesh: {fileID: 43384974407760932, guid: 564b9e152d94f6048a71cca6129c8a73, type: 2}
+--- !u!54 &2584842974948948994
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200035444335532}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2507196220302276504
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426366341057716}
+  m_GameObject: {fileID: 1200035444335532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77e95cb0a27030b43bc5351965d12281, type: 3}
+  m_Script: {fileID: 11500000, guid: 19d4ede52acf5384eb90e81a258dffe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _interactionText: Press E to Pick Up Potion
-  _labelAnchor: {fileID: 6043346579543104336}
-  talkToMerchantQuest: {fileID: 11400000, guid: 8d59f04a67821cf48a0766d8676940ed, type: 2}
---- !u!1 &3433388007533824875
+  <InteractionText>k__BackingField: Press E to Pick Up Potion
+  labelAnchor: {fileID: 190209578492674322}
+  itemName: MagePotion
+  itemIcon: {fileID: 21300000, guid: 3b18de21d5f690143920972108c4d001, type: 3}
+  collectSound: {fileID: 8300000, guid: 8aea700f036b4c9488e9ba55fb3994f2, type: 3}
+  isRotatable: 1
+  rotateSpeed: 1
+--- !u!1 &4509936439672512095
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,26 +166,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6043346579543104336}
+  - component: {fileID: 190209578492674322}
   m_Layer: 6
-  m_Name: TextAnchor
+  m_Name: Anchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6043346579543104336
+--- !u!4 &190209578492674322
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3433388007533824875}
+  m_GameObject: {fileID: 4509936439672512095}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.35, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.02, y: 0.13, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4675657632128996}
+  m_Father: {fileID: 4772380956628810}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

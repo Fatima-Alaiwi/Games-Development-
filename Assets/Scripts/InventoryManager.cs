@@ -33,6 +33,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(string name, Sprite icon)
     {
+        Debug.Log("Trying to add: " + name + " with icon: " + (icon != null ? icon.name : "NULL"));
         foreach (var item in items)
         {
             if (item.itemName == name)
@@ -57,6 +58,7 @@ public class InventoryManager : MonoBehaviour
         items.Add(newItem);
         UpdateUI();
         return true;
+        
     }
 
     public bool RemoveItem(string name, int amount = 1)
@@ -130,4 +132,5 @@ public class InventoryManager : MonoBehaviour
             if (def.itemName == name) return def.icon;
         return null;
     }
+
 }

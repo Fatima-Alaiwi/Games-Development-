@@ -3,8 +3,72 @@
   "WorkspaceRootPath": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\mage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\horrormansionportalinteractable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\horrormansionportalinteractable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\map\\mapui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\mapui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\map\\maptoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\maptoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\lab-level\\powercontrolpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lab-level\\powercontrolpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\lab-level\\powercell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lab-level\\powercell.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\map\\fogrevealtrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\fogrevealtrigger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\map\\mappickupitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\mappickupitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\potionusableeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\potionusableeffect.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\inventoryslotselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\inventoryslotselector.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\keyquestchain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\keyquestchain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\merchant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\merchant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\lockeddoorkingdom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\lockeddoorkingdom.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\box.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\box.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\lightpulser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\lightpulser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\inventorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\inventorymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Collectable Rotate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,10 +77,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\collectiblepotion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\collectiblepotion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\fairynpc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\fairywings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,6 +117,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\PickupObject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\Scripts\\PickupObject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,11 +130,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 17,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 23,
               "Title": "Actor.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Actor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Actor.cs",
@@ -88,6 +152,199 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "HorrorMansionPortalInteractable.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\HorrorMansionPortalInteractable.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\HorrorMansionPortalInteractable.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\HorrorMansionPortalInteractable.cs",
+              "RelativeToolTip": "Assets\\Scripts\\HorrorMansionPortalInteractable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-25T15:52:31.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MapToggle.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAQwFMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-25T02:11:52.364Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MapUI.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
+              "ViewState": "AgIAAAMBAAAAAAAAAAAYwB4BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T23:16:33.719Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "PickupObject1.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\PickupObject1.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\PickupObject1.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\PickupObject1.cs",
+              "RelativeToolTip": "Assets\\Scripts\\PickupObject1.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T23:12:44.475Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PowerCell.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerCell.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Lab-Level\\PowerCell.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerCell.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Lab-Level\\PowerCell.cs",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAowDoAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T20:14:42.891Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "PowerControlPanel.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAkwEAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T20:14:28.556Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FogRevealTrigger.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAuwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T20:10:32.251Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MapPickupItem.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAzwD0AAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T20:01:51.639Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PotionUsableEffect.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T17:05:27.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "KeyQuestChain.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T15:09:05.762Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "LockedDoorKingdom.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
+              "ViewState": "AgIAAKAAAAAAAAAAAAAswLsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-24T14:20:22.577Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LightPulser.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T22:58:08.402Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Box.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Box.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Box.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Box.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Box.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAowEkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T22:05:26.654Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "InventorySlotSelector.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventorySlotSelector.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\InventorySlotSelector.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventorySlotSelector.cs",
+              "RelativeToolTip": "Assets\\Scripts\\InventorySlotSelector.cs",
+              "ViewState": "AgIAAEIAAAAAAAAAAAAkwE0AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T16:32:35.399Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "InventoryManager.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventoryManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\InventoryManager.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventoryManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\InventoryManager.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAAAuwBkAAABjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T00:14:42.63Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Mage.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Mage.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Mage.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Mage.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Mage.cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAAAALcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-23T00:07:01.989Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "Collectable Rotate.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Collectable Rotate.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Collectable Rotate.cs",
@@ -98,7 +355,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 11,
               "Title": "Merchant.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Merchant.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Merchant.cs",
@@ -106,12 +363,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Merchant.cs",
               "ViewState": "AgIAAFYAAAAAAAAAAAAswGgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-22T18:26:30.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-22T18:26:30.433Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 18,
               "Title": "CollectiblePotion.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
@@ -123,19 +379,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 16,
               "Title": "FairyNPC.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
               "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
               "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
-              "ViewState": "AgIAAIUAAAAAAAAAAAAAAI0AAAA6AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-22T01:40:09.768Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 19,
               "Title": "FairyWings.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
@@ -147,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 22,
               "Title": "EnemyAttack.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyAttack.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAttack.cs",
@@ -159,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 26,
               "Title": "ZoneTrigger.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\ZoneTrigger.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ZoneTrigger.cs",
@@ -171,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 25,
               "Title": "EnemySpawnerReporter.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerReporter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerReporter.cs",
@@ -183,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 24,
               "Title": "EnemySpawner.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawner.cs",
@@ -195,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 27,
               "Title": "EnemySpawnerTest.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerTest.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerTest.cs",
@@ -207,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 21,
               "Title": "EnemyMoveGun.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMoveGun.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMoveGun.cs",
@@ -219,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 20,
               "Title": "EnemyMove.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMove.cs",
@@ -231,7 +487,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 28,
               "Title": "SimpleLit.shader",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
@@ -239,7 +495,8 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-04-21T09:40:42.715Z"
+              "WhenOpened": "2026-04-21T09:40:42.715Z",
+              "EditorCaption": ""
             }
           ]
         }

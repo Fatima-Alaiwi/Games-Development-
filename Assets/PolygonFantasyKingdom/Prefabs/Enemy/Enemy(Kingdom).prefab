@@ -46,7 +46,8 @@ GameObject:
   - component: {fileID: 5040350907828281348}
   - component: {fileID: 2930969614547107053}
   - component: {fileID: 3515285674856654767}
-  - component: {fileID: 5789601325353215790}
+  - component: {fileID: 2194778914880924935}
+  - component: {fileID: -1499516586681398904}
   m_Layer: 6
   m_Name: Enemy(Kingdom)
   m_TagString: Untagged
@@ -82,9 +83,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07cd3daaa63586a4e9eeb29c8eff8ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  currentHealth: 0
+  maxHealth: 1
   isPlayer: 0
   healthBar: {fileID: 0}
+  hurtSound: {fileID: 0}
 --- !u!136 &3378617738722398620
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -107,7 +110,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &5040350907828281348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20bafecdf794d8c468d2e243dc94812e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 2
   distanceToStop: 1.5
   theRigidbody: {fileID: 2930969614547107053}
   agent: {fileID: 3515285674856654767}
@@ -173,7 +176,30 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5789601325353215790
+--- !u!136 &2194778914880924935
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750941887780207448}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &-1499516586681398904
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,12 +208,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1750941887780207448}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20690b6d7e1cd4c43be77e1da0858cef, type: 3}
+  m_Script: {fileID: 11500000, guid: e1d3a2453f1b8d14a816c6a557a73fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 2
-  attackCooldown: 1.5
-  attackDamage: 1
+  damageAmount: 1
+  damageCooldown: 1
 --- !u!1001 &3784433499417395283
 PrefabInstance:
   m_ObjectHideFlags: 0
