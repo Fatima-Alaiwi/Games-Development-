@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./time-voyager-logo.png" alt="Time Voyager Cover" width="850">
+  <img src="./game-logo.png" alt="Time Voyager Cover" width="850">
 </p>
 
 # Time Voyager
@@ -52,12 +52,11 @@ The lab level is a technical chapter built around machines, panels, power system
 
 **Flow**
 
-1. Enter the lab or technical facility.
+1. Find Keycard to enter Portal Room
 2. Use computers and control panels.
-3. Complete satellite and power objectives.
-4. Collect keycards and power cells.
-5. Pick up the gun.
-6. Activate the portal when all conditions are met.
+3. Complete satellite and power Cell objectives.
+4. Pick up the gun.
+5. Activate the portal when all conditions are met.
 
 ### ⛩️ Level 2: Samurai Level
 
