@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Brazier : MonoBehaviour, IInteractable
 {
     [field: SerializeField]
@@ -10,11 +9,14 @@ public class Brazier : MonoBehaviour, IInteractable
 
     [Header("Settings")]
     public string requiredItemName = "Gas";
-    public GameObject fireEffect; // drag FX_Fire prefab here
+    public GameObject fireEffect;
     public AudioClip lightSound;
 
+    [Header("Voice Line")]
+    public AudioClip voiceLine; // drag voice clip here in Inspector
+
     [Header("Gate Settings")]
-    public BrazierGate gate; // reference to gate controller
+    public BrazierGate gate;
 
     private bool isLit = false;
     private AudioSource audioSource;
@@ -25,7 +27,6 @@ public class Brazier : MonoBehaviour, IInteractable
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
 
-        // Make sure fire is off at start
         if (fireEffect != null)
             fireEffect.SetActive(false);
     }
@@ -34,17 +35,14 @@ public class Brazier : MonoBehaviour, IInteractable
     {
         if (isLit) return;
 
-        // Check if player has gas
         if (!InventoryManager.instance.HasItem(requiredItemName))
         {
             InteractionText = "I need a gas bottle...";
             return;
         }
 
-        // Use one gas bottle
         InventoryManager.instance.RemoveItem(requiredItemName, 1);
 
-        // Light the fire
         isLit = true;
         isInteractable = false;
         InteractionText = "";
@@ -55,7 +53,19 @@ public class Brazier : MonoBehaviour, IInteractable
         if (lightSound != null && audioSource != null)
             audioSource.PlayOneShot(lightSound);
 
-        // Tell the gate one brazier is lit
+        // Play voice line on VoiceAudioSource so it doesn't
+        // conflict with the light sound on this object
+        if (voiceLine != null)
+        {
+            GameObject voiceObj = GameObject.Find("VoiceAudioSource");
+            if (voiceObj != null)
+            {
+                AudioSource voiceSource = voiceObj.GetComponent<AudioSource>();
+                if (voiceSource != null)
+                    voiceSource.PlayOneShot(voiceLine);
+            }
+        }
+
         if (gate != null)
             gate.BrazierLit();
     }

@@ -38,7 +38,7 @@ public class Farmer : MonoBehaviour, IInteractable
 
     [Header("Quest Settings")]
     public Quest fruitQuest;
-    public Quest gasQuest;
+//    public Quest gasQuest;
     public string requiredItemName = "Fruit";
     public int requiredAmount = 2;
 
@@ -90,50 +90,47 @@ public class Farmer : MonoBehaviour, IInteractable
         bellPlayed = true;
     }
 
-    public void Interact()
+  public void Interact()
+{
+    int count = GetItemCount();
+    Debug.Log("COUNT IS: " + count);
+
+    if (!hasGivenKey && count >= requiredAmount)
     {
-        int count = GetItemCount();
-        Debug.Log("COUNT IS: " + count);
+        hasGivenKey = true;
+        TriggerTalkingAnimation(thankYouClip);
 
-        if (!hasGivenKey && count >= requiredAmount)
-        {
-            hasGivenKey = true;
-            TriggerTalkingAnimation(thankYouClip);
+        InventoryManager.instance.RemoveItem(requiredItemName, requiredAmount);
+        bool added = InventoryManager.instance.AddItem("Key1", keyIcon);
 
-            InventoryManager.instance.RemoveItem(requiredItemName, requiredAmount);
-            bool added = InventoryManager.instance.AddItem("Key1", keyIcon);
+        if (added && collectSound != null)
+            AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-            if (added && collectSound != null)
-                AudioSource.PlayClipAtPoint(collectSound, transform.position);
+        if (QuestManager.Instance != null && fruitQuest != null)
+            QuestManager.Instance.CompleteQuestPublic(fruitQuest);
 
-            if (QuestManager.Instance != null && fruitQuest != null)
-                QuestManager.Instance.CompleteQuestPublic(fruitQuest);
+        if (villageSpawner != null)
+            villageSpawner.StartSpawning();
 
-            if (QuestManager.Instance != null && gasQuest != null)
-                QuestManager.Instance.AcceptQuest(gasQuest);
-
-            if (villageSpawner != null)
-                villageSpawner.StartSpawning();
-
-            return;
-        }
-
-        if (!hasGivenKey && count == 1)
-        {
-            TriggerTalkingAnimation(oneItemClip);
-            return;
-        }
-
-        if (!hasGivenKey && count == 0)
-        {
-            TriggerTalkingAnimation(greetingClip);
-
-            if (fruitQuest != null && QuestManager.Instance != null)
-                QuestManager.Instance.AcceptQuest(fruitQuest);
-
-            return;
-        }
+        return;
     }
+
+    if (!hasGivenKey && count == 1)
+    {
+        TriggerTalkingAnimation(oneItemClip);
+        return;
+    }
+
+    if (!hasGivenKey && count == 0)
+    {
+        TriggerTalkingAnimation(greetingClip);
+
+        if (fruitQuest != null && QuestManager.Instance != null)
+            QuestManager.Instance.AcceptQuest(fruitQuest);
+
+        return;
+    }
+}
 
     void TriggerTalkingAnimation(AudioClip clip)
     {
