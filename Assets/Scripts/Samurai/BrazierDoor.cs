@@ -9,14 +9,17 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
+
     [Header("Spawner")]
     public EnemySpawner brazierSpawner;
+
     [Header("Requirements")]
     public BrazierGate brazierGate;
-    public string requiredKeyName = "Key1"; // must match inventory item name
+    public string requiredKeyName = "Key1";
 
     [Header("Quest")]
-    public Quest farmerQuest; // drag your farmer quest here in Inspector
+    public Quest farmerQuest;
+    public Quest killQuestBrazier; // drag KillQuest_Brazier here
 
     [Header("Door Settings")]
     public float openAngle = -90f;
@@ -24,8 +27,11 @@ public class BrazierDoor : MonoBehaviour, IInteractable
 
     [Header("Sound")]
     public AudioClip openingDoorClip;
-    private AudioSource audioSource;
 
+    [Header("Voice Line")]
+    public AudioClip voiceLine;
+
+    private AudioSource audioSource;
     private bool isOpen = false;
 
     void Start()
@@ -37,17 +43,19 @@ public class BrazierDoor : MonoBehaviour, IInteractable
 
     void Update()
     {
-        // Dynamically update interaction text so player knows what's missing
         if (isOpen) return;
 
         bool braziersLit = brazierGate != null && brazierGate.BothLit();
-        bool hasKey = InventoryManager.instance != null && 
+        bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
+        bool killQuestDone = killQuestBrazier == null ||
+                             (QuestManager.Instance != null &&
+                             QuestManager.Instance.IsQuestCompleted(killQuestBrazier.questName));
 
-        if (!braziersLit && !hasKey)
-            _interactionText = "The door won't budge... light the braziers and find a key.";
-        else if (!braziersLit)
+        if (!braziersLit)
             _interactionText = "The braziers must be lit first...";
+        else if (!killQuestDone)
+            _interactionText = "Defeat all enemies first...";
         else if (!hasKey)
             _interactionText = "You need a key to open this gate.";
         else
@@ -59,12 +67,21 @@ public class BrazierDoor : MonoBehaviour, IInteractable
         if (isOpen) return;
 
         bool braziersLit = brazierGate != null && brazierGate.BothLit();
-        bool hasKey = InventoryManager.instance != null && 
+        bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
+        bool killQuestDone = killQuestBrazier == null ||
+                             (QuestManager.Instance != null &&
+                             QuestManager.Instance.IsQuestCompleted(killQuestBrazier.questName));
 
         if (!braziersLit)
         {
             Debug.Log("Braziers not lit yet.");
+            return;
+        }
+
+        if (!killQuestDone)
+        {
+            Debug.Log("Enemies not defeated yet.");
             return;
         }
 
@@ -74,10 +91,8 @@ public class BrazierDoor : MonoBehaviour, IInteractable
             return;
         }
 
-        // Consume the key
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
 
-        // Play gate sound via BrazierGate
         if (brazierGate != null)
             brazierGate.PlayOpenSound();
 
@@ -92,8 +107,21 @@ public class BrazierDoor : MonoBehaviour, IInteractable
 
         if (openingDoorClip != null && audioSource != null)
             audioSource.PlayOneShot(openingDoorClip);
+
+        // Play voice line on VoiceAudioSource
+        if (voiceLine != null)
+        {
+            GameObject voiceObj = GameObject.Find("VoiceAudioSource");
+            if (voiceObj != null)
+            {
+                AudioSource voiceSource = voiceObj.GetComponent<AudioSource>();
+                if (voiceSource != null)
+                    voiceSource.PlayOneShot(voiceLine);
+            }
+        }
+
         if (brazierSpawner != null)
-        brazierSpawner.StartSpawning();
+            brazierSpawner.StartSpawning();
 
         StartCoroutine(OpenDoorCoroutine());
     }
