@@ -9,7 +9,8 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
-
+    [Header("Spawner")]
+    public EnemySpawner brazierSpawner;
     [Header("Requirements")]
     public BrazierGate brazierGate;
     public string requiredKeyName = "Key1"; // must match inventory item name
@@ -91,6 +92,8 @@ public class BrazierDoor : MonoBehaviour, IInteractable
 
         if (openingDoorClip != null && audioSource != null)
             audioSource.PlayOneShot(openingDoorClip);
+        if (brazierSpawner != null)
+        brazierSpawner.StartSpawning();
 
         StartCoroutine(OpenDoorCoroutine());
     }

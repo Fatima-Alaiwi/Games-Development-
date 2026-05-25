@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 {
     Vector3 moveDirection = Vector3.zero;
 
-    if (canMove) // ✅ only set direction if allowed to move
+    if (canMove) 
     {
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -227,19 +227,20 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, 
         out RaycastHit hit, attackDistance, attackLayer))
         { 
+            if (hit.transform.root == transform.root) return;
+
             HitTarget(hit);
 
             if(hit.transform.TryGetComponent<Actor>(out Actor T))
                 T.TakeDamage(attackDamage);
 
             // Fatima bamboo quest
-           ChoppableBamboo bamboo = hit.transform.GetComponentInParent<ChoppableBamboo>();
-            if(bamboo != null)
-                bamboo.GetChopped();
-            // Fatima gong quest 
-            GongInteractable gong = hit.transform.GetComponentInParent<GongInteractable>();
-            if (gong != null)
-                gong.GetStruck();
+            
+            // Barricade bamboo (blocking portal)
+            BarricadeBamboo barricade = hit.transform.GetComponentInParent<BarricadeBamboo>();
+            if (barricade != null)
+                barricade.GetChopped();
+             
         } 
     }
     void HitTarget(RaycastHit hit)

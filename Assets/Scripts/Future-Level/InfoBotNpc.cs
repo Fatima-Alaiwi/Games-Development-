@@ -8,6 +8,14 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     public Transform _labelAnchor;
     public bool _isInteractable = true;
     public AudioSource audioSource;
+    public Animator animator;
+
+    [Header("Animation")]
+    public string idleStateName = "infot-bot-idle";
+    public string talkStateName = "info-bot-talk-1";
+    public string waveStateName = "info-bot-wave";
+    public float waveDuration = 1.2f;
+    public float animationFadeTime = 0.15f;
 
     [Header("Quest Assignment")]
     public Quest investigateBuildingQuest;
@@ -26,10 +34,11 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
     public List<AudioClip> investigateBuildingCompleteLines = new List<AudioClip>();
 
     private bool _isSpeakingSequence = false;
+    private bool _hasPlayedGreetingWave = false;
 
     public bool isInteractable { get => _isInteractable; set => _isInteractable = value; }
     public Transform LabelAnchor => _labelAnchor;
-    public string InteractionText => "Communicate";
+    public string InteractionText => "Press [E] To Talk";
 
     void Awake()
     {
@@ -37,6 +46,13 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         {
             audioSource = GetComponent<AudioSource>();
         }
+
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
+
+        PlayIdleAnimation();
     }
 
     public void Interact()
@@ -51,7 +67,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
                 {
                     QuestManager.Instance.AcceptQuest(investigateBuildingQuest);
                 }
-            }));
+            }, true));
             return;
         }
 
@@ -88,7 +104,7 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         }
     }
 
-    private IEnumerator PlayDialogueSequence(List<AudioClip> clipList, System.Action onSequenceComplete)
+    private IEnumerator PlayDialogueSequence(List<AudioClip> clipList, System.Action onSequenceComplete, bool playGreetingWave = false)
     {
         if (clipList == null || clipList.Count == 0)
         {
@@ -97,6 +113,11 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
         }
 
         _isSpeakingSequence = true;
+        bool shouldWaveFirst = playGreetingWave && !_hasPlayedGreetingWave;
+        if (!shouldWaveFirst)
+        {
+            PlayTalkAnimation();
+        }
 
         for (int i = 0; i < clipList.Count; i++)
         {
@@ -106,14 +127,34 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
             {
                 audioSource.clip = currentClip;
                 audioSource.Play();
-                PlayTalkAnimation();
 
-                yield return new WaitForSeconds(currentClip.length);
+                if (shouldWaveFirst && i == 0)
+                {
+                    PlayWaveAnimation();
+                    _hasPlayedGreetingWave = true;
+
+                    float waveTime = Mathf.Min(waveDuration, currentClip.length);
+                    yield return new WaitForSeconds(waveTime);
+
+                    PlayTalkAnimation();
+
+                    float remainingClipTime = currentClip.length - waveTime;
+                    if (remainingClipTime > 0f)
+                    {
+                        yield return new WaitForSeconds(remainingClipTime);
+                    }
+                }
+                else
+                {
+                    PlayTalkAnimation();
+                    yield return new WaitForSeconds(currentClip.length);
+                }
             }
         }
 
         onSequenceComplete?.Invoke();
         _isSpeakingSequence = false;
+        PlayIdleAnimation();
     }
 
     private List<AudioClip> GetTargetClips(string questName)
@@ -141,7 +182,23 @@ public class InfoBotNPC : MonoBehaviour, IInteractable
 
     private void PlayTalkAnimation()
     {
-        Animator anim = GetComponent<Animator>();
-        if (anim != null) anim.SetTrigger("Talk");
+        PlayAnimationState(talkStateName);
+    }
+
+    private void PlayWaveAnimation()
+    {
+        PlayAnimationState(waveStateName);
+    }
+
+    private void PlayIdleAnimation()
+    {
+        PlayAnimationState(idleStateName);
+    }
+
+    private void PlayAnimationState(string stateName)
+    {
+        if (animator == null || string.IsNullOrEmpty(stateName)) return;
+
+        animator.CrossFadeInFixedTime(stateName, animationFadeTime);
     }
 }

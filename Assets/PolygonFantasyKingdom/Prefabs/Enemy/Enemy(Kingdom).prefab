@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 5040350907828281348}
   - component: {fileID: 2930969614547107053}
   - component: {fileID: 3515285674856654767}
+  - component: {fileID: 5789601325353215790}
   m_Layer: 6
   m_Name: Enemy(Kingdom)
   m_TagString: Untagged
@@ -61,14 +62,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1750941887780207448}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.12100314, w: 0.9926521}
   m_LocalPosition: {x: -72.37, y: 31, z: -33}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5698375280371994802}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 13.9}
 --- !u!114 &5037451373102848971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +173,21 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &5789601325353215790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1750941887780207448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20690b6d7e1cd4c43be77e1da0858cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 2
+  attackCooldown: 1.5
+  attackDamage: 1
 --- !u!1001 &3784433499417395283
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -588,7 +604,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.75448054
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalRotation.x
@@ -596,7 +612,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6563224
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalRotation.z
@@ -608,7 +624,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 82.04
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4744796364203432, guid: dc6170fded71bf944b115160ab2cae64, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
