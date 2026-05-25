@@ -28,11 +28,17 @@ public class Magician : MonoBehaviour, IInteractable
     public Quest findLibraryQuest;
     public Quest bottleQuest;
 
+    [Header("Library Key")]
+    [Tooltip("Collectible ID of the library key (horror_key2). No replay if player already has it.")]
+    public string libraryKeyCollectibleId = "horr_key2";
+
     // Internal state
     private bool hasGivenCode = false;
     private bool hasPlayedWait = false;
     private bool hasCompletedFindQuest = false;
     private bool hasPlayedGreeting = false; // true after E press #1
+    private bool stateRestoredFromSave = false;
+    private bool hasReplayedCode = false; // one reminder replay per session after load
 
     private AudioSource audioSource;
     private Animator animator;
@@ -46,8 +52,41 @@ public class Magician : MonoBehaviour, IInteractable
         animator = GetComponent<Animator>();
     }
 
+    // Restores runtime flags from saved quest data.
+    // Called lazily on first Interact() so save data is guaranteed to be loaded by then.
+    void RestoreStateFromSave()
+    {
+        if (QuestManager.Instance == null) return;
+
+        // findLibraryQuest active or completed is the ONLY reliable indicator that the code was given.
+        // bottleQuest completes when bottles are COLLECTED, not when given to the magician,
+        // so it must NOT be used here — it would skip RemoveItem and leave bottles in inventory.
+        if (findLibraryQuest != null &&
+            (QuestManager.Instance.IsQuestComplete(findLibraryQuest) ||
+             QuestManager.Instance.activeQuests.Contains(findLibraryQuest)))
+        {
+            hasGivenCode = true;
+            hasPlayedGreeting = true;
+            hasCompletedFindQuest = true;
+            return;
+        }
+
+        // findMagicianQuest completed means greeting was played but code not given yet
+        if (findMagicianQuest != null && QuestManager.Instance.IsQuestComplete(findMagicianQuest))
+        {
+            hasPlayedGreeting = true;
+            hasCompletedFindQuest = true;
+        }
+    }
+
     public void Interact()
     {
+        if (!stateRestoredFromSave)
+        {
+            stateRestoredFromSave = true;
+            RestoreStateFromSave();
+        }
+
         if (animator != null)
             animator.SetBool("isTalking", true);
 
@@ -63,9 +102,28 @@ public class Magician : MonoBehaviour, IInteractable
             return;
         }
 
-        // --- Already gave the code, do nothing ---
+        // --- Already gave the code: replay password once as a reminder, then do nothing ---
         if (hasGivenCode)
+        {
+            if (!hasReplayedCode)
+            {
+                hasReplayedCode = true;
+
+                // If player already opened the library (has the key or completed find library quest),
+                // they don't need to hear the password again — skip the replay entirely
+                bool alreadyHasLibraryKey = CollectibleTracker.IsCollected(libraryKeyCollectibleId);
+                bool libraryQuestDone = findLibraryQuest != null &&
+                                        QuestManager.Instance.IsQuestComplete(findLibraryQuest);
+
+                if (!alreadyHasLibraryKey && !libraryQuestDone)
+                {
+                    PlayClip(rewardClip);
+                    float replayDelay = rewardClip != null ? rewardClip.length + 0.3f : 10f;
+                    StartCoroutine(PlayPeterLineAfterDelay(replayDelay));
+                }
+            }
             return;
+        }
 
         // --- E press #1: Play greeting, complete find quest, start bottle quest ---
         if (!hasPlayedGreeting)

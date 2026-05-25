@@ -9,6 +9,8 @@ public class HorrorMansionPortalInteractable : MonoBehaviour, IInteractable
 {
     [Header("Scene")]
     public string targetScene = "Demo_Dungeon_01";
+    [Tooltip("The level this portal leads to — saved so the menu shows the correct level on Continue.")]
+    public SavedValue.LevelId nextLevel = SavedValue.LevelId.Kingdom;
 
     [Header("Sound")]
     public AudioClip teleportSound;
@@ -97,7 +99,12 @@ public class HorrorMansionPortalInteractable : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        SavedValue.SetCurrentLevel(nextLevel);
         SaveSystem.Save();
-        SceneManager.LoadScene(targetScene);
+
+        if (LoadingScreenController.Instance != null)
+            LoadingScreenController.Instance.LoadScene(targetScene);
+        else
+            SceneManager.LoadScene(targetScene);
     }
 }

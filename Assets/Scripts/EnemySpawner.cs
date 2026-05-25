@@ -18,7 +18,9 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesKilled = 0;
     private bool isSpawning = false;
 
-    public void StartSpawning()
+    // alreadyKilled: pass the saved kill count when restoring from a save,
+    // so only the remaining enemies spawn and the internal counter starts correctly.
+    public void StartSpawning(int alreadyKilled = 0)
     {
         if (isSpawning)
         {
@@ -42,18 +44,19 @@ public class EnemySpawner : MonoBehaviour
         if (killQuest != null)
         {
             if (QuestManager.Instance != null)
-                QuestManager.Instance.AcceptQuest(killQuest);
+                QuestManager.Instance.AcceptQuest(killQuest); // no-op if already active or completed
             else
                 Debug.LogWarning("EnemySpawner: killQuest is assigned but QuestManager.Instance is null. Quest will not be tracked.");
         }
 
         isSpawning = true;
-        enemiesSpawned = 0;
-        enemiesKilled = 0;
+        // Start both counters at alreadyKilled so the spawner only produces the remaining enemies
+        enemiesSpawned = alreadyKilled;
+        enemiesKilled = alreadyKilled;
 
         GetComponent<SaveableSpawner>()?.MarkTriggered();
         StartCoroutine(SpawnEnemies());
-        Debug.Log("EnemySpawner: Spawning started.");
+        Debug.Log($"EnemySpawner: Spawning started (already killed: {alreadyKilled}/{totalEnemiesToSpawn}).");
     }
 
     IEnumerator SpawnEnemies()

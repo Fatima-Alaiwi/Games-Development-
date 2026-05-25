@@ -5,41 +5,23 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 54da1b5b1bcf12e4398ab21c8b1c083b
-  - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 7347382281141e84b9e6465ca0f1ce47
-  - enabled: 1
-    path: Assets/Scenes/Maha-Scene.unity
-    guid: da033ba814670034ba402d218ceb0930
-  - enabled: 1
-    path: Assets/Scenes/Manaf-scene.unity
-    guid: 05d86fc953d0d324fa36af027f03d392
-  - enabled: 1
-    path: Assets/Scenes/InstructionsScene.unity
-    guid: 47b01ef73573bb24695e1f89afe2284d
-  - enabled: 1
-    path: Assets/Scenes/SettingsScene.unity
-    guid: c89d92f68791c884794fa7953afa2e95
-  - enabled: 1
-    path: Assets/Scenes/CreditsScene.unity
-    guid: 1eb3e9cea52354145aea5f017c163295
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/PolygonHorrorMansion/Scenes/Demo_01.unity
+    path: Assets/PolygonSciFiWorlds/Scenes/LabLevel.unity
+    guid: 8fbc165d579552144af32511c7e676e7
+  - enabled: 1
+    path: Assets/PolygonHorrorMansion/Scenes/HorrorLevel.unity
     guid: dda52f1b21df39c459a6b2eafa31df9d
   - enabled: 1
     path: Assets/PolygonFantasyKingdom/Scenes/KingdomLevel.unity
     guid: 23d8661265deed742959416ea58475f7
   - enabled: 1
-    path: Assets/PolygonDungeonRealms/Scenes/Demo_Dungeon_01.unity
+    path: Assets/PolygonDungeonRealms/Scenes/DungeonLevel.unity
     guid: d515063cc7e552649959320dfe40578b
   - enabled: 1
-    path: Assets/PolygonSciFiCity/Scenes/Demo.unity
+    path: Assets/PolygonSciFiCity/Scenes/FutureCityLevel.unity
     guid: f3b9e9dadf5931045b77452c62c3cdbc
   - enabled: 1
     path: Assets/PolygonSamurai/Scenes/Samurai_Level.unity
