@@ -28,10 +28,18 @@ public class Door : MonoBehaviour, IInteractable
         if (!isInteractable) return;
         isInteractable = false;
 
+        GetComponent<SaveableDoor>()?.MarkOpened();
+
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);
 
         StartCoroutine(OpenDoor());
+    }
+
+    public void SnapOpen()
+    {
+        isInteractable = false;
+        transform.rotation = transform.rotation * Quaternion.Euler(0, openAngle, 0);
     }
 
     IEnumerator OpenDoor()

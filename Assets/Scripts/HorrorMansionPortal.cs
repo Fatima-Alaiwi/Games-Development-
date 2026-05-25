@@ -79,6 +79,7 @@ public class HorrorMansionPortal : MonoBehaviour
         cg.alpha = 1f;
 
         // Load next scene
+        SaveSystem.Save();
         SceneManager.LoadScene(nextSceneName);
     }
 }

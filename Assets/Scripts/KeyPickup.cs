@@ -20,19 +20,26 @@ public class KeyPickup : MonoBehaviour, IInteractable
     [Header("Quest Settings")]
     public string questGoalName = "key_1"; // change to "key_3" on key_3 in Inspector
 
+    private Collectible _collectible;
+
+    void Awake()
+    {
+        TryGetComponent(out _collectible);
+    }
+
     public void Interact()
     {
-        // 1. Add to inventory with its specific name
+        if (!isInteractable) return;
+        isInteractable = false;
+
         InventoryManager.instance.AddItem(inventoryItemName, keyIcon);
 
-        // 2. Play sound
         if (collectSound != null)
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-        // 3. Update quest
         QuestManager.Instance.UpdateProgress(questGoalName, 1);
 
-        // 4. Hide the key
+        if (_collectible != null) _collectible.MarkCollected();
         gameObject.SetActive(false);
 
         Debug.Log("Key picked up: " + inventoryItemName);

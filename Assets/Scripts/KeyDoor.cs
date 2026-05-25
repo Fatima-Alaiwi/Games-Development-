@@ -57,6 +57,8 @@ public class KeyDoor : MonoBehaviour, IInteractable
 
         isInteractable = false;
 
+        GetComponent<SaveableDoor>()?.MarkOpened();
+
         // Remove key_3 from inventory
         InventoryManager.instance.RemoveItem("HorrorKey_3");
 
@@ -68,6 +70,12 @@ public class KeyDoor : MonoBehaviour, IInteractable
             audioSource.PlayOneShot(openingDoorClip);
 
         StartCoroutine(OpenDoor());
+    }
+
+    public void SnapOpen()
+    {
+        isInteractable = false;
+        transform.rotation = transform.rotation * Quaternion.Euler(0, openAngle, 0);
     }
 
     IEnumerator OpenDoor()

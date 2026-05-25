@@ -18,6 +18,16 @@ public class InventoryManager : MonoBehaviour
         public int count;
     }
 
+    // Assign item name → sprite pairs here in the Inspector so icons survive save/load.
+    [System.Serializable]
+    public class ItemDefinition
+    {
+        public string itemName;
+        public Sprite icon;
+    }
+
+    public ItemDefinition[] knownItems;
+
     public List<InventoryItem> items = new List<InventoryItem>();
     public InventorySlot[] slots;
 
@@ -90,10 +100,34 @@ public class InventoryManager : MonoBehaviour
         foreach (var item in items)
         {
             if (item.itemName == name)
-            {
-                return item.count; // Found the item! Return the quantity Peter has
-            }
+                return item.count;
         }
-        return 0; // Item not found, return 0
+        return 0;
+    }
+
+    public void LoadFromSave(List<InventorySaveData> savedItems)
+    {
+        items.Clear();
+        if (savedItems == null) return;
+
+        foreach (var saved in savedItems)
+        {
+            InventoryItem entry = new InventoryItem
+            {
+                itemName = saved.itemName,
+                count = saved.count,
+                icon = GetIconForItem(saved.itemName)
+            };
+            items.Add(entry);
+        }
+        UpdateUI();
+    }
+
+    Sprite GetIconForItem(string name)
+    {
+        if (knownItems == null) return null;
+        foreach (var def in knownItems)
+            if (def.itemName == name) return def.icon;
+        return null;
     }
 }

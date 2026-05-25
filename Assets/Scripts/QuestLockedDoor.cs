@@ -55,11 +55,21 @@ public class QuestLockedDoor : MonoBehaviour, IInteractable
         isInteractable = false;
         InteractionText = "";
 
+        GetComponent<SaveableDoor>()?.MarkOpened();
+
         if (doorAnimator != null)
             doorAnimator.SetTrigger(openAnimationTrigger);
-        else
-            gameObject.SetActive(false); // Fallback: just hide the door
 
         Debug.Log("Door unlocked and opened!");
+    }
+
+    public void SnapOpen()
+    {
+        isOpen = true;
+        isInteractable = false;
+        InteractionText = "";
+
+        if (doorAnimator != null)
+            doorAnimator.SetTrigger(openAnimationTrigger);
     }
 }
