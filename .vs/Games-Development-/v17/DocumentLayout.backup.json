@@ -7,11 +7,11 @@
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\mapui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\pickupobject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pickupobject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\map\\maptoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\map\\maptoggle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\lab-level\\powercontrolpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\lab-level\\powercontrolpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lab-level\\powercontrolpanel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -113,6 +113,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\pickupobject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:assets\\scripts\\pickupobject1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -122,7 +126,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
@@ -139,20 +143,37 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MapToggle.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\MapToggle.cs",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAQwFMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-25T02:11:52.364Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MapUI.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
               "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
               "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\Map\\MapUI.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAAAFIAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAkBAAAAAAAAAAAYwBwBAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-24T23:16:33.719Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 28,
               "Title": "PickupObject1.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\PickupObject1.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\PickupObject1.cs",
@@ -160,12 +181,7 @@
               "RelativeToolTip": "Assets\\Scripts\\PickupObject1.cs",
               "ViewState": "AgIAAAsAAAAAAAAAAAAgwB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-24T23:12:44.475Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+              "WhenOpened": "2026-05-24T23:12:44.475Z"
             },
             {
               "$type": "Document",
@@ -189,8 +205,7 @@
               "RelativeToolTip": "Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
               "ViewState": "AgIAADQAAAAAAAAAAAAkwEAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-24T20:14:28.556Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-24T20:14:28.556Z"
             },
             {
               "$type": "Document",

@@ -282,6 +282,6 @@ public class MapUI : MonoBehaviour
         rt.gameObject.SetActive(true);
 
         // Scale up slightly when reached
-        rt.localScale = loc.isReached ? Vector3.one * 3f : Vector3.one;
+        rt.localScale = loc.isReached ? Vector3.one * 1.3f : Vector3.one;
     }
 }
