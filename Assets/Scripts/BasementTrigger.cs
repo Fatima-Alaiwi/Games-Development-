@@ -16,6 +16,14 @@ public class BasementTrigger : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
+            // Quest already completed in a previous session — don't ring again
+            if (answerPhoneQuest != null && QuestManager.Instance != null &&
+                QuestManager.Instance.IsQuestComplete(answerPhoneQuest))
+            {
+                hasTriggered = true;
+                return;
+            }
+
             hasTriggered = true;
             phone.StartRinging();
 

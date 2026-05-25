@@ -31,6 +31,14 @@ public class PhoneInteractable : MonoBehaviour, IInteractable
     {
         if (hasBeenPickedUp) return;
 
+        // Don't ring if the quest was already completed (e.g. loaded from a save)
+        if (answerPhoneQuest != null && QuestManager.Instance != null &&
+            QuestManager.Instance.IsQuestComplete(answerPhoneQuest))
+        {
+            hasBeenPickedUp = true;
+            return;
+        }
+
         if (phoneAudioSource != null && ringClip != null)
         {
             phoneAudioSource.clip = ringClip;

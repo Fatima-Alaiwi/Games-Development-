@@ -10,6 +10,8 @@ public class PortalInteractable : MonoBehaviour, IInteractable
 
     [Header("Scene")]
     public string targetScene = "Demo";
+    [Tooltip("The level this portal leads to — saved so the menu shows the correct level on Continue.")]
+    public SavedValue.LevelId nextLevel = SavedValue.LevelId.Lab;
 
     [Header("Sound")]
     public AudioClip teleportSound;
@@ -106,6 +108,7 @@ public class PortalInteractable : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        SavedValue.SetCurrentLevel(nextLevel);
         SaveSystem.Save();
         SceneManager.LoadScene(targetScene);
     }

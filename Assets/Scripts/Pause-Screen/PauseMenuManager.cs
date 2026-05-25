@@ -15,6 +15,12 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject restartConfirmPanel;
     public GameObject quitConfirmationPanel;
 
+    [Header("HUD")]
+    [Tooltip("Drag the Canvas that contains the health bar here.")]
+    public GameObject hudCanvas;
+    [Tooltip("Drag the Canvas (2) that contains the inventory slots here.")]
+    public GameObject inventoryCanvas;
+
     void Start()
     {
         EnsureEventSystemExists();
@@ -85,6 +91,9 @@ public class PauseMenuManager : MonoBehaviour
 
         HideAllPanels();
 
+        if (hudCanvas != null) hudCanvas.SetActive(true);
+        if (inventoryCanvas != null) inventoryCanvas.SetActive(true);
+
         Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -96,6 +105,9 @@ public class PauseMenuManager : MonoBehaviour
         isPaused = true;
 
         Time.timeScale = 0f;
+
+        if (hudCanvas != null) hudCanvas.SetActive(false);
+        if (inventoryCanvas != null) inventoryCanvas.SetActive(false);
 
         OpenPausePanel();
 
