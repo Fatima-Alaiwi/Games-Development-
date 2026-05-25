@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 3892819439396172410}
   - component: {fileID: 4609504094552943356}
   - component: {fileID: 4944067425638335403}
+  - component: {fileID: 6341422195415303710}
   m_Layer: 6
   m_Name: Enemy_Samurai
   m_TagString: Untagged
@@ -65,8 +66,8 @@ Transform:
   m_GameObject: {fileID: 1985583850545851641}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.68848854, z: -0, w: 0.72524726}
-  m_LocalPosition: {x: 27.78, y: -0.214, z: 73.53}
-  m_LocalScale: {x: 1, y: 0.84389555, z: 0.9222517}
+  m_LocalPosition: {x: 27.78, y: 1, z: 73.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3389597116340574031}
@@ -85,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 3
+  maxHealth: 2
   isPlayer: 0
   healthBar: {fileID: 0}
   hurtSound: {fileID: 0}
@@ -109,7 +110,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
-  m_Height: 6
+  m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!54 &8978773889206114664
@@ -149,7 +150,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -196,10 +197,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 1
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &4609504094552943356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,6 +227,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c112b8bfc528b4aa3565f5498c0ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6341422195415303710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985583850545851641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3356caaa7ab0601479e41f620ad514d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 6
+  distanceToStop: 1.2
+  normalSpeed: 7
+  boostSpeed: 14
+  stuckCheckInterval: 3
+  stuckMoveThreshold: 0.3
 --- !u!1001 &8726669092374824724
 PrefabInstance:
   m_ObjectHideFlags: 0
