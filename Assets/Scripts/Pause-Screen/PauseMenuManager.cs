@@ -15,6 +15,16 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject restartConfirmPanel;
     public GameObject quitConfirmationPanel;
 
+    [Header("HUD")]
+    [Tooltip("Drag the Canvas that contains the health bar here.")]
+    public GameObject hudCanvas;
+    [Tooltip("Drag the Canvas (2) that contains the inventory slots here.")]
+    public GameObject inventoryCanvas;
+    [Tooltip("Drag the Quest HUD panel here.")]
+    public GameObject questPanel;
+    [Tooltip("Drag the Ammo display panel here.")]
+    public GameObject ammoPanel;
+
     void Start()
     {
         EnsureEventSystemExists();
@@ -85,6 +95,11 @@ public class PauseMenuManager : MonoBehaviour
 
         HideAllPanels();
 
+        if (hudCanvas != null) hudCanvas.SetActive(true);
+        if (inventoryCanvas != null) inventoryCanvas.SetActive(true);
+        if (questPanel != null) questPanel.SetActive(true);
+        if (ammoPanel != null) ammoPanel.SetActive(true);
+
         Time.timeScale = 1f;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -97,6 +112,11 @@ public class PauseMenuManager : MonoBehaviour
 
         Time.timeScale = 0f;
 
+        if (hudCanvas != null) hudCanvas.SetActive(false);
+        if (inventoryCanvas != null) inventoryCanvas.SetActive(false);
+        if (questPanel != null) questPanel.SetActive(false);
+        if (ammoPanel != null) ammoPanel.SetActive(false);
+
         OpenPausePanel();
 
         Cursor.lockState = CursorLockMode.None;
@@ -106,7 +126,8 @@ public class PauseMenuManager : MonoBehaviour
     public void ConfirmRestart()
     {
         Time.timeScale = 1f;
-        OpenPausePanel();
+        isPaused = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ConfirmSave()

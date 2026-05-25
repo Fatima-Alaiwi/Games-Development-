@@ -15,8 +15,8 @@ MonoBehaviour:
   questName: KillKnightsQuest
   description: Kill all knights to escape the dining hall
   goalItemName: enemy_kill
-  activeMessage: 'Knights Defeated:'
-  completeMessage: All Knights Defeated! you can escape the dining hall safely.
+  activeMessage: 'Deafeat the knights '
+  completeMessage: All Knights Defeated! Find the Key to the map!
   goalAmount: 5
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 5
+  isCompleted: 1

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: MerchantTresure
   description: Find the Mage's Tresure Near the alley of the dead.
-  goalItemName: TresureItem
-  activeMessage: Find the Mage's Gold
+  goalItemName: TreasureItem
+  activeMessage: Find the Mage's Tresure
   completeMessage: You Found the Tresure! Give it back to the Mage!
   goalAmount: 2
   currentAmount: 0

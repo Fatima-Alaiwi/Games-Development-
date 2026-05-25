@@ -18,5 +18,5 @@ MonoBehaviour:
   activeMessage: 'Look for the Tresure Key '
   completeMessage: You found the key to the Kingdom map Tresure box!
   goalAmount: 1
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 1
+  isCompleted: 1

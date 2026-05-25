@@ -15,7 +15,7 @@ MonoBehaviour:
   questName: FindPortal
   description: Peter finds the Portal that takes him to the next timeline
   goalItemName: Portal
-  activeMessage: Find your way Home
+  activeMessage: Find the Portal Home
   completeMessage: Amazing Work! Godspeed!
   goalAmount: 1
   currentAmount: 0

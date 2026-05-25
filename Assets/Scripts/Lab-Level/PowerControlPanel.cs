@@ -58,8 +58,8 @@ public class PowerControlPanel : MonoBehaviour, IInteractable
             QuestManager.Instance.AcceptQuest(powerQuest);
             Debug.Log("Quest Started: " + powerQuest.questName);
         }
-        
-        PowerCell[] allCells = FindObjectsOfType<PowerCell>();
+
+        PowerCell[] allCells = FindObjectsByType<PowerCell>(FindObjectsSortMode.None);
         
         if (allCells.Length > 0)
         {

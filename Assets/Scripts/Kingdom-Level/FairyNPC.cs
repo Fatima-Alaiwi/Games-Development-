@@ -63,7 +63,7 @@ public class FairyNPC : MonoBehaviour, IInteractable
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-        
+
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1.0f; // 3D sound optimization for FPS perspective
     }
@@ -88,7 +88,6 @@ public class FairyNPC : MonoBehaviour, IInteractable
         float rightWingSin = Mathf.Sin(wingProgress) * rightFlapAngle;
 
         if (leftWing != null) leftWing.localRotation = Quaternion.Euler(180f, leftWingSin, 0);
-        // Note the negative sign (-) on the right wing inversion, keeping its independent angle variable intact
         if (rightWing != null) rightWing.localRotation = Quaternion.Euler(0, rightWingSin, 0);
 
         // --- Separate Left and Right Arm Angle Drops ---
@@ -108,9 +107,9 @@ public class FairyNPC : MonoBehaviour, IInteractable
 
     private IEnumerator TalkRoutine()
     {
-        isInteractable = false; 
-        isTalking = true;       
-        
+        isInteractable = false;
+        isTalking = true;
+
         Debug.Log("Peter interacted with the Fairy!");
 
         // 1. Complete the 'Talk To Fairy' Quest if it exists
@@ -118,7 +117,7 @@ public class FairyNPC : MonoBehaviour, IInteractable
         {
             talkToFairyQuest.isCompleted = true;
 
-            // Move the quest to the completed list so QuestHUD displays 'completeMessage'
+            // Move the quest to the completed list so Raghad's QuestHUD displays 'completeMessage'
             if (!QuestManager.Instance.completedQuests.Contains(talkToFairyQuest))
             {
                 QuestManager.Instance.completedQuests.Add(talkToFairyQuest);
@@ -129,40 +128,41 @@ public class FairyNPC : MonoBehaviour, IInteractable
             {
                 QuestManager.Instance.activeQuests.Remove(talkToFairyQuest);
             }
-
         }
-        
+
         // 2. Play her custom voice line audio track
-        float dialogueDuration = 2.5f; 
+        float dialogueDuration = 2.5f;
         if (audioSource != null && voiceLineClip != null)
         {
             audioSource.PlayOneShot(voiceLineClip);
-            dialogueDuration = voiceLineClip.length; 
+            dialogueDuration = voiceLineClip.length;
         }
+
+        // Wait exactly for the duration of her speaking line
         yield return new WaitForSeconds(dialogueDuration);
 
-        // 3. Give the player the 'Talk to Merchant' Quest mid-dialogue
+        // 3. Dialogue has finished: Stop fast wing-flapping animations instantly
+        isTalking = false;
+
+        // 4. Drop the health reward pack right on cue when speech stops!
+        if (healthPickupPrefab != null)
+        {
+            Vector3 spawnPos = spawnPoint != null ? spawnPoint.position : transform.position - Vector3.up * 0.5f;
+            Instantiate(healthPickupPrefab, spawnPos, Quaternion.identity);
+            Debug.Log("Potion spawned successfully!");
+        }
+
+        // 5. Instantly hand over the 'Talk to Merchant' Quest to update Raghad's HUD layout
         if (talkToMerchantQuest != null && QuestManager.Instance != null)
         {
-            // This safely passes the new ScriptableObject quest over to your team's manager system
             talkToMerchantQuest.isCompleted = false;
             QuestManager.Instance.AcceptQuest(talkToMerchantQuest);
             Debug.Log($"New Quest Active: {talkToMerchantQuest.questName}");
         }
 
-        // Flap wings for the dynamic length of her voice track
-        yield return new WaitForSeconds(dialogueDuration);
-
-        // 4. Drop the health reward pack
-        if (healthPickupPrefab != null)
-        {
-            Vector3 spawnPos = spawnPoint != null ? spawnPoint.position : transform.position - Vector3.up * 0.5f;
-            Instantiate(healthPickupPrefab, spawnPos, Quaternion.identity);
-        }
-
-        isTalking = false; 
         _interactionText = "Fairy: Go see the Merchant in town, Peter!";
-        
+
+        // Brief cooldown pause before allowing player interaction input resets
         yield return new WaitForSeconds(2f);
         isInteractable = true;
     }

@@ -25,11 +25,15 @@ public class SaveableSpawner : MonoBehaviour
         EnemySpawner spawner = GetComponent<EnemySpawner>();
         if (spawner == null) return;
 
-        // If the kill quest is already completed, all enemies were already defeated — don't re-spawn.
+        // Kill quest already completed — all enemies were defeated, nothing to spawn.
         if (spawner.killQuest != null && QuestManager.Instance != null &&
             QuestManager.Instance.IsQuestCompleted(spawner.killQuest.questName))
             return;
 
-        spawner.StartSpawning();
+        // Read how many kills were already saved so we only spawn the remaining enemies.
+        int alreadyKilled = spawner.killQuest != null ? spawner.killQuest.currentAmount : 0;
+        alreadyKilled = Mathf.Clamp(alreadyKilled, 0, spawner.totalEnemiesToSpawn);
+
+        spawner.StartSpawning(alreadyKilled);
     }
 }
