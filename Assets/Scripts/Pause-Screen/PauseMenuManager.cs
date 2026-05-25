@@ -20,6 +20,10 @@ public class PauseMenuManager : MonoBehaviour
     public GameObject hudCanvas;
     [Tooltip("Drag the Canvas (2) that contains the inventory slots here.")]
     public GameObject inventoryCanvas;
+    [Tooltip("Drag the Quest HUD panel here.")]
+    public GameObject questPanel;
+    [Tooltip("Drag the Ammo display panel here.")]
+    public GameObject ammoPanel;
 
     void Start()
     {
@@ -93,6 +97,8 @@ public class PauseMenuManager : MonoBehaviour
 
         if (hudCanvas != null) hudCanvas.SetActive(true);
         if (inventoryCanvas != null) inventoryCanvas.SetActive(true);
+        if (questPanel != null) questPanel.SetActive(true);
+        if (ammoPanel != null) ammoPanel.SetActive(true);
 
         Time.timeScale = 1f;
 
@@ -108,6 +114,8 @@ public class PauseMenuManager : MonoBehaviour
 
         if (hudCanvas != null) hudCanvas.SetActive(false);
         if (inventoryCanvas != null) inventoryCanvas.SetActive(false);
+        if (questPanel != null) questPanel.SetActive(false);
+        if (ammoPanel != null) ammoPanel.SetActive(false);
 
         OpenPausePanel();
 
