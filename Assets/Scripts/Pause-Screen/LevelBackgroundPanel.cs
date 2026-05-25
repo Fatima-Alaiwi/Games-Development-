@@ -9,7 +9,7 @@ public class LevelBackgroundPanel : MonoBehaviour
     private class LevelBackground
     {
         public SavedValue.LevelId level;
-        public Sprite background;
+        public Sprite background = null;
     }
 
     private static readonly List<LevelBackgroundPanel> ActivePanels = new List<LevelBackgroundPanel>();
@@ -87,6 +87,9 @@ public class LevelBackgroundPanel : MonoBehaviour
 
     private Sprite GetBackgroundForLevel(SavedValue.LevelId level)
     {
+        if (backgrounds == null)
+            return null;
+
         for (int i = 0; i < backgrounds.Length; i++)
         {
             if (backgrounds[i] != null && backgrounds[i].level == level)
