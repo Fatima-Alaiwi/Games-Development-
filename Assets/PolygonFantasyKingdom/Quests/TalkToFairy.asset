@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: TalkToFairy
   description: Talk to the fairy for guidance.
-  goalItemName: HealingPotion
+  goalItemName: Potion
   activeMessage: Find the Fairy to Get the healing potion!
   completeMessage: Listen To the Fairy Carefully to get the Potion!
   goalAmount: 1
   currentAmount: 0
-  isCompleted: 1
+  isCompleted: 0

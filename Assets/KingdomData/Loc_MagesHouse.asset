@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 369586666b912cb4cb5bce6e16d459af, type: 3}
+  m_Name: Loc_MagesHouse
+  m_EditorClassIdentifier: 
+  locationName: Mage's House
+  worldPosition: {x: 197.899, y: 15.765}
+  pinIcon: {fileID: 21300000, guid: 69a99afb0e94e7b4ea550c9005018541, type: 3}
+  pinColor: {r: 0.41176474, g: 0.25882354, b: 0.6666667, a: 1}
+  linkedQuestName: 
+  isReached: 1
+  isVisible: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questName: TalkToMerchant
   description: Talk to the merchant for guidance
-  goalItemName: 
+  goalItemName: Merchant
   activeMessage: Find and Talk to the merchant for guidance
   completeMessage: You Found the Merchant!
   goalAmount: 0
