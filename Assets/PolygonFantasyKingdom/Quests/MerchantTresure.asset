@@ -18,5 +18,5 @@ MonoBehaviour:
   activeMessage: Find the Mage's Tresure
   completeMessage: You Found the Tresure! Give it back to the Mage!
   goalAmount: 2
-  currentAmount: 2
-  isCompleted: 1
+  currentAmount: 0
+  isCompleted: 0

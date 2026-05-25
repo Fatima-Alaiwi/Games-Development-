@@ -56,7 +56,7 @@ public class PowerCell : MonoBehaviour, IInteractable
 
     private void LockRemainingCells()
     {
-        PowerCell[] allCells = FindObjectsOfType<PowerCell>();
+       PowerCell[] allCells = FindObjectsByType<PowerCell>(FindObjectsSortMode.None);
         foreach (PowerCell cell in allCells)
         {
             if (cell != this)
