@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 {
     Vector3 moveDirection = Vector3.zero;
 
-    if (canMove) // ✅ only set direction if allowed to move
+    if (canMove) 
     {
         moveDirection.x = input.x;
         moveDirection.z = input.y;
@@ -227,6 +227,8 @@ public class PlayerController : MonoBehaviour
         if(Physics.Raycast(cam.transform.position, cam.transform.forward, 
         out RaycastHit hit, attackDistance, attackLayer))
         { 
+            if (hit.transform.root == transform.root) return;
+
             HitTarget(hit);
 
             if(hit.transform.TryGetComponent<Actor>(out Actor T))

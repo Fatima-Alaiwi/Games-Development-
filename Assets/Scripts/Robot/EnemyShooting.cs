@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyShooting : MonoBehaviour {
     public GameObject laserPrefab;
     public Transform muzzlePoint;
-    public AudioSource shootAudio; // Sound of the gun
+    public AudioSource shootAudio;
     public float fireRate = 2.0f;
     private float nextFire;
 

@@ -8,18 +8,18 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/PolygonHorrorMansion/Scenes/Demo_01.unity
     guid: dda52f1b21df39c459a6b2eafa31df9d
   - enabled: 1
-    path: Assets/PolygonDungeonRealms/Scenes/Demo_Dungeon_01.unity
-    guid: d515063cc7e552649959320dfe40578b
-  - enabled: 1
-    path: Assets/PolygonSciFiCity/Scenes/Demo.unity
-    guid: f3b9e9dadf5931045b77452c62c3cdbc
-  - enabled: 1
     path: Assets/PolygonFantasyKingdom/Scenes/KingdomLevel.unity
     guid: 23d8661265deed742959416ea58475f7
+  - enabled: 1
+    path: Assets/PolygonDungeonRealms/Scenes/Demo_Dungeon_01.unity
+    guid: d515063cc7e552649959320dfe40578b
+  - enabled: 0
+    path: Assets/PolygonSciFiCity/Scenes/Demo.unity
+    guid: f3b9e9dadf5931045b77452c62c3cdbc
   m_configObjects:
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: f00ee64006f1181419746ab648cd2a22, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

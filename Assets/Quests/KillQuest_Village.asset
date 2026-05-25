@@ -17,6 +17,6 @@ MonoBehaviour:
   goalItemName: enemy_kill
   activeMessage: 'Enemies remaining:'
   completeMessage: Area cleared!
-  goalAmount: 3
-  currentAmount: 0
+  goalAmount: 2
+  currentAmount: 2
   isCompleted: 0

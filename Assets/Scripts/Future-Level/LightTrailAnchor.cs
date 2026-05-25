@@ -13,7 +13,7 @@ public class LightTrailAnchor : MonoBehaviour
         {
             trail.startColor = trailColor;
             trail.endColor = new Color(trailColor.r, trailColor.g, trailColor.b, 0); 
-            trail.emitting = false; // Start off
+            trail.emitting = false;
         }
     }
 

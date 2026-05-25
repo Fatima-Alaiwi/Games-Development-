@@ -111,13 +111,18 @@ public class PauseMenuManager : MonoBehaviour
 
     public void ConfirmSave()
     {
-        Debug.Log("Game Saved to Slot!");
+        SaveSystem.Save();
         OpenPausePanel();
     }
 
+    [Header("Main Menu")]
+    [Tooltip("Exact name of your Main Menu scene in Build Settings.")]
+    public string mainMenuScene = "MainMenu";
+
     public void ExitToMain()
     {
-        Application.Quit();
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(mainMenuScene);
     }
 
     // Opens the confirm window
