@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3892819439396172410}
   - component: {fileID: 4609504094552943356}
   - component: {fileID: 4944067425638335403}
-  - component: {fileID: 6341422195415303710}
+  - component: {fileID: 3966113005622982012}
   m_Layer: 6
   m_Name: Enemy_Samurai
   m_TagString: Untagged
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c112b8bfc528b4aa3565f5498c0ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6341422195415303710
+--- !u!114 &3966113005622982012
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
