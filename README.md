@@ -71,8 +71,7 @@ The samurai level focuses on village objectives, enemy encounters, and ritual-st
 3. Collect gas bottles.
 4. Light the braziers at the gate.
 5. Clear enemy encounters and bamboo barriers.
-6. Strike the gong.
-7. Use the activated portal.
+6. Use the activated portal.
 
 ### 🏚️ Level 3: Horror Mansion
 
