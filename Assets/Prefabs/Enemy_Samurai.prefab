@@ -241,10 +241,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 6
   distanceToStop: 1.2
-  normalSpeed: 7
-  boostSpeed: 14
   stuckCheckInterval: 3
   stuckMoveThreshold: 0.3
+  stuckCountBeforeWarp: 2
 --- !u!1001 &8726669092374824724
 PrefabInstance:
   m_ObjectHideFlags: 0
