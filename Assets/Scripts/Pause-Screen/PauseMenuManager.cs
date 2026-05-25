@@ -118,7 +118,8 @@ public class PauseMenuManager : MonoBehaviour
     public void ConfirmRestart()
     {
         Time.timeScale = 1f;
-        OpenPausePanel();
+        isPaused = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void ConfirmSave()
