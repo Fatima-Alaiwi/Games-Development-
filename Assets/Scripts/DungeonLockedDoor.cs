@@ -92,6 +92,8 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
             isOpen = true;
             isInteractable = false;
 
+            GetComponent<SaveableDoor>()?.MarkOpened();
+
             if (audioSource != null && openingDoorClip != null)
                 audioSource.PlayOneShot(openingDoorClip);
 
@@ -115,6 +117,14 @@ public class DungeonLockedDoor : MonoBehaviour, IInteractable
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    public void SnapOpen()
+    {
+        isOpen = true;
+        isInteractable = false;
+        if (codePanel != null) codePanel.SetActive(false);
+        transform.rotation = transform.rotation * Quaternion.Euler(0, openAngle, 0);
     }
 
     IEnumerator OpenDoor()

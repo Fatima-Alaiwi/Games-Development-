@@ -18,6 +18,13 @@ public class BottlePickup : MonoBehaviour, IInteractable
     [Header("Sound")]
     public AudioClip collectSound;
 
+    private Collectible _collectible;
+
+    void Awake()
+    {
+        TryGetComponent(out _collectible);
+    }
+
     public void Interact()
     {
         // 1. Add to inventory immediately — no quest check needed
@@ -37,7 +44,8 @@ public class BottlePickup : MonoBehaviour, IInteractable
         if (collectSound != null)
             AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
-        // 4. Hide the bottle
+        // 4. Track as collected so save/load hides it, then hide it
+        if (_collectible != null) _collectible.MarkCollected();
         gameObject.SetActive(false);
 
         Debug.Log("Bottle picked up!");

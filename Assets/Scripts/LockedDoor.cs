@@ -21,7 +21,8 @@ public class LockedDoor : MonoBehaviour, IInteractable
     public string correctCode = "888";
 
     [Header("Opening Settings")]
-    public float openAngle = -90f;
+    [Tooltip("Absolute Y rotation (world space) when the door is fully open. E.g. if closed = 90, open = 200.")]
+    public float openYRotation = 200f;
     public float openSpeed = 2f;
 
     [Header("Sound")]
@@ -35,10 +36,12 @@ public class LockedDoor : MonoBehaviour, IInteractable
 
     private bool isOpen = false;
     private bool panelOpen = false;
+    private SaveableDoor _saveable;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+        TryGetComponent(out _saveable);
 
         if (codePanel != null)
             codePanel.SetActive(false);
@@ -96,6 +99,8 @@ public class LockedDoor : MonoBehaviour, IInteractable
             isOpen = true;
             isInteractable = false;
 
+            if (_saveable != null) _saveable.MarkOpened();
+
             if (questToComplete != null)
                 QuestManager.Instance.UpdatedCompleteQuest(questToComplete);
 
@@ -124,10 +129,20 @@ public class LockedDoor : MonoBehaviour, IInteractable
         Cursor.visible = false;
     }
 
+    public void SnapOpen()
+    {
+        isOpen = true;
+        isInteractable = false;
+        if (codePanel != null) codePanel.SetActive(false);
+        Vector3 e = transform.eulerAngles;
+        transform.eulerAngles = new Vector3(e.x, openYRotation, e.z);
+    }
+
     IEnumerator OpenDoor()
     {
         Quaternion startRotation = transform.rotation;
-        Quaternion endRotation = startRotation * Quaternion.Euler(0, openAngle, 0);
+        Vector3 e = transform.eulerAngles;
+        Quaternion endRotation = Quaternion.Euler(e.x, openYRotation, e.z);
 
         float t = 0f;
         while (t < 1f)

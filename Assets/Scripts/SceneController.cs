@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
@@ -9,11 +10,29 @@ public class SceneController : MonoBehaviour
     public GameObject instructionsPanel;
     public GameObject creditsPanel;
 
-    
-    //will add the game level after
+    [Header("Continue Button")]
+    [Tooltip("Assign the Continue button so it hides when no save file exists.")]
+    public Button continueButton;
+
+    [Header("First Level")]
+    [Tooltip("Scene name to load when starting a brand-new game.")]
+    public string firstLevelScene = "Demo_01";
+
+    void Start()
+    {
+        if (continueButton != null)
+            continueButton.interactable = SaveSystem.HasSave();
+    }
+
     public void StartGame()
     {
-        //SceneManager.LoadScene("GameLevel");
+        SceneManager.LoadScene(firstLevelScene);
+    }
+
+    public void ContinueGame()
+    {
+        if (!SaveSystem.HasSave()) return;
+        SaveSystem.ContinueGame();
     }
 
     public void QuitGame()

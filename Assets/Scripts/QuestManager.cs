@@ -23,9 +23,10 @@ public class QuestManager : MonoBehaviour
 
     public void AcceptQuest(Quest quest)
     {
+        if (completedQuests.Contains(quest)) return; // already done — don't reset
         if (!activeQuests.Contains(quest))
         {
-            quest.ResetQuest(); 
+            quest.ResetQuest();
             activeQuests.Add(quest);
             Debug.Log("Quest Started: " + quest.questName);
         }
@@ -164,5 +165,38 @@ public bool IsQuestComplete(Quest quest)
     foreach (Quest q in completedQuests)
         if (q == quest) return true;
     return false;
+}
+
+public void LoadFromSave(List<QuestSaveData> savedActive, List<string> savedCompletedNames)
+{
+    activeQuests.Clear();
+    completedQuests.Clear();
+
+    // Find all Quest ScriptableObjects currently loaded in memory.
+    Quest[] allQuests = Resources.FindObjectsOfTypeAll<Quest>();
+
+    if (savedActive != null)
+    {
+        foreach (var qData in savedActive)
+        {
+            Quest match = System.Array.Find(allQuests, x => x.questName == qData.questName);
+            if (match == null) continue;
+            match.currentAmount = qData.currentAmount;
+            match.isCompleted = qData.isCompleted;
+            activeQuests.Add(match);
+        }
+    }
+
+    if (savedCompletedNames != null)
+    {
+        foreach (var name in savedCompletedNames)
+        {
+            Quest match = System.Array.Find(allQuests, x => x.questName == name);
+            if (match == null) continue;
+            match.isCompleted = true;
+            if (!completedQuests.Contains(match))
+                completedQuests.Add(match);
+        }
+    }
 }
 }

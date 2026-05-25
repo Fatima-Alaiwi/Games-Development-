@@ -3181,6 +3181,8 @@ MonoBehaviour:
   settingsPanel: {fileID: 119612920}
   instructionsPanel: {fileID: 364102340}
   creditsPanel: {fileID: 1907964361}
+  continueButton: {fileID: 0}
+  firstLevelScene: Demo_01
 --- !u!114 &1212650301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3357,7 +3359,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1331897956}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1212650300}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: ContinueGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &1331897955
 CanvasRenderer:
   m_ObjectHideFlags: 0

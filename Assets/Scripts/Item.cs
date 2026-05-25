@@ -13,11 +13,11 @@ public class Item : MonoBehaviour
             if (added)
             {
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
-                
-                // ✅ Also update quest progress if there's an active quest for this item
+
                 if (QuestManager.Instance != null)
                     QuestManager.Instance.UpdateProgress(itemName, 1);
 
+                GetComponent<Collectible>()?.MarkCollected();
                 Destroy(gameObject);
             }
             else

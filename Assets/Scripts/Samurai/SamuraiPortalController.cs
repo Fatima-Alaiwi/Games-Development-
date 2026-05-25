@@ -91,6 +91,7 @@ public class SamuraiPortalController : MonoBehaviour, IInteractable
             yield return null;
         }
 
+        SaveSystem.Save();
         SceneManager.LoadScene(targetScene);
     }
 
