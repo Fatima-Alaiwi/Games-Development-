@@ -23,65 +23,40 @@ public class LockedBox : MonoBehaviour, IInteractable
     [Header("Opening Settings")]
     public float openAngle = 90f;
     public float openSpeed = 2f;
+    public Transform lidTransform;
 
     [Header("Glow Settings")]
     public Light glowLight;
-
-    // Dynamic focus tracking to prevent background inputs
-    private bool isPlayerNear = false;
+    [Header("Contents")]
+    public GameObject chestContents; // drag Map object here
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Standard Interact (Triggered by pressing E or looking at the object)
     public void Interact()
     {
         if (!isInteractable) return;
 
         if (audioSource != null && lockedSoundClip != null)
-        {
             audioSource.PlayOneShot(lockedSoundClip);
-        }
 
         Debug.Log("This box is locked. Press 'Q' to use your Key.");
     }
 
     void Update()
     {
-        // 1. If the box is already open, stop tracking inputs
         if (!isInteractable) return;
 
-        // 2. CRITICAL FIX: Only check for Q if Peter is actively standing near this specific box!
-        if (isPlayerNear && Input.GetKeyDown(KeyCode.Q))
-        {
+        if (Input.GetKeyDown(KeyCode.Q))
             TryUnlockAndOpen();
-        }
-    }
-
-    // Automatically tracks if Peter is near this exact box
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;
-        }
     }
 
     private void TryUnlockAndOpen()
     {
         if (InventoryManager.instance != null)
         {
-            // This will now only execute if the player is standing next to the box
             bool hasKey = InventoryManager.instance.RemoveItem(requiredKeyName);
             if (hasKey)
             {
@@ -93,9 +68,7 @@ public class LockedBox : MonoBehaviour, IInteractable
                 Debug.Log("You do not have the required key: " + requiredKeyName);
 
                 if (audioSource != null && lockedSoundClip != null)
-                {
                     audioSource.PlayOneShot(lockedSoundClip);
-                }
             }
         }
         else
@@ -108,7 +81,9 @@ public class LockedBox : MonoBehaviour, IInteractable
     private void UnlockAndOpenSequence()
     {
         isInteractable = false;
-        isPlayerNear = false; // Disable any further input tracking completely
+
+        // Disable this collider so it no longer blocks the map
+        GetComponent<Collider>().enabled = false;
 
         if (glowLight != null) glowLight.enabled = false;
 
@@ -116,35 +91,37 @@ public class LockedBox : MonoBehaviour, IInteractable
             audioSource.PlayOneShot(openingBoxClip);
 
         if (QuestManager.Instance != null)
-        {
             QuestManager.Instance.UpdateProgress(gameObject.name, 1);
-        }
 
         StartCoroutine(OpenBoxAndReact());
     }
 
     IEnumerator OpenBoxAndReact()
     {
-        Quaternion startRotation = transform.rotation;
+        Transform t = lidTransform != null ? lidTransform : transform;
+        Quaternion startRotation = t.rotation;
         Quaternion endRotation = startRotation * Quaternion.Euler(openAngle, 0, 0);
 
-        float t = 0f;
-        while (t < 1f)
+        float elapsed = 0f;
+        while (elapsed < 1f)
         {
-            t += Time.deltaTime * openSpeed;
-            transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
+            elapsed += Time.deltaTime * openSpeed;
+            t.rotation = Quaternion.Lerp(startRotation, endRotation, elapsed);
             yield return null;
         }
-        transform.rotation = endRotation;
+        t.rotation = endRotation;
 
         if (openingBoxClip != null)
-        {
             yield return new WaitForSeconds(openingBoxClip.length);
+
+        // Reveal contents after lid opens
+        if (chestContents != null)
+        {
+            chestContents.transform.SetParent(null); // detach from chest
+            chestContents.SetActive(true);
         }
 
         if (peterReactionClip != null && audioSource != null)
-        {
             audioSource.PlayOneShot(peterReactionClip);
-        }
     }
 }

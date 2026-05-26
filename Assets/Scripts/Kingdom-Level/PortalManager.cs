@@ -12,8 +12,6 @@ public class PortalManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        foreach (var obj in portalObjects)
-            if (obj != null) obj.SetActive(false);
     }
 
     public void RevealPortals()
