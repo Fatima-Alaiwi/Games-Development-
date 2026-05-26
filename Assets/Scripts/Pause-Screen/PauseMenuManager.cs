@@ -32,6 +32,8 @@ public class PauseMenuManager : MonoBehaviour
 
     void Start()
     {
+        AudioVolumeSlider.ApplySavedVolume();
+
         EnsureEventSystemExists();
         CachePauseCanvasSorting();
 
