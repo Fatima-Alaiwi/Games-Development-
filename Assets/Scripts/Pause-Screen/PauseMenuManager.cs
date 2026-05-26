@@ -42,6 +42,12 @@ public class PauseMenuManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        // Temporary debug
+        GameObject examine = GameObject.Find("ExamineUI");
+        if (examine != null)
+            Debug.Log("ExamineUI active: " + examine.activeSelf.ToString());
+        else
+            Debug.Log("ExamineUI is NULL");
     }
 
     void Update()

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PosterExamine : MonoBehaviour, IInteractable
 {
     [field: SerializeField]
-    public string InteractionText { get; set; } = "Press E to View";
+    public string InteractionText { get; set; } = "Press E to View Alley Story";
     public bool isInteractable { get; set; } = true;
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
@@ -28,14 +28,15 @@ public class PosterExamine : MonoBehaviour, IInteractable
 
     void Update()
     {
-        if (isExamining && Input.GetKeyDown(KeyCode.E))
-            ClosePoster();
+
     }
 
     public void Interact()
     {
         if (!isExamining)
             OpenPoster();
+        else
+            ClosePoster();
     }
 
     void OpenPoster()
