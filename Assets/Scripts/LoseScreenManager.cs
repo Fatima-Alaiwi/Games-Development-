@@ -10,6 +10,10 @@ public class LoseScreenManager : MonoBehaviour
     [Tooltip("Your lose screen panel from the prefab. Leave it inactive at the start.")]
     public GameObject loseScreenPanel;
 
+    [Header("Fail Sound")]
+    [Tooltip("The fail sound clip to play when the lose screen appears.")]
+    public AudioClip failSound;
+
     [Header("Main Menu")]
     [Tooltip("Exact name of the Main Menu scene in Build Settings.")]
     public string mainMenuScene = "MainMenu";
@@ -48,9 +52,10 @@ public class LoseScreenManager : MonoBehaviour
         HideHUDs();
 
         if (loseScreenPanel != null)
-        {
             loseScreenPanel.SetActive(true);
-        }
+
+        if (failSound != null)
+            AudioSource.PlayClipAtPoint(failSound, Camera.main != null ? Camera.main.transform.position : Vector3.zero);
 
         PauseMenuManager.isPaused = true;
         Time.timeScale = 0f;

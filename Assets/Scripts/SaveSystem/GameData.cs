@@ -18,6 +18,7 @@ public class GameData
     public List<string> collectedObjectIds = new List<string>();
     public List<string> openedDoorIds = new List<string>();
     public List<string> triggeredSpawnerIds = new List<string>();
+    public List<string> playedAudioTriggerIds = new List<string>();
 }
 
 [Serializable]

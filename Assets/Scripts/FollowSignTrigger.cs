@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class FollowSignTrigger : MonoBehaviour
 {
+    [Tooltip("Unique ID for this trigger — must match the GameObject name in the scene (e.g. enteringTheLevelSound).")]
+    public string triggerId;
+
     AudioSource audioSource;
-    bool hasPlayed = false;
 
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        if (string.IsNullOrEmpty(triggerId))
+            triggerId = gameObject.name;
     }
 
     void OnTriggerEnter(Collider other)
-{
-    if (other.CompareTag("Player") && !hasPlayed)
     {
-        audioSource.volume = 0.3f; // change this value (0 = silent, 1 = full)
+        if (!other.CompareTag("Player")) return;
+        if (AudioTriggerTracker.HasPlayed(triggerId)) return;
+
+        audioSource.volume = 0.3f;
         audioSource.Play();
-        hasPlayed = true;
+        AudioTriggerTracker.MarkPlayed(triggerId);
     }
-}
 }

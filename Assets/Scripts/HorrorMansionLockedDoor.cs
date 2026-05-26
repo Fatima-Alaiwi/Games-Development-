@@ -16,6 +16,8 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
     [Header("Quest")]
     public Quest doorQuest;
+    [Tooltip("Quest to start automatically when the door opens (e.g. Find the basement).")]
+    public Quest nextQuest;
 
     [Header("Key")]
     public string requiredKeyName = "HorrorKey";
@@ -93,6 +95,9 @@ public class HorrorMansionLockedDoor : MonoBehaviour, IInteractable
 
         if (doorQuest != null)
             QuestManager.Instance.UpdateProgress(doorQuest.goalItemName, 1);
+
+        if (nextQuest != null)
+            QuestManager.Instance.AcceptQuest(nextQuest);
 
         isInteractable = false;
 

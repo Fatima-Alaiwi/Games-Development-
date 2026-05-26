@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class EnemyMoveGun : MonoBehaviour
 {
-    public float moveSpeed, distanceToStop;
+    public float moveSpeed;
     public Rigidbody theRigidbody;
     public NavMeshAgent agent;
 
@@ -21,7 +21,7 @@ public class EnemyMoveGun : MonoBehaviour
 
         target = PlayerControllerGun.instance.transform.position;
 
-        if (Vector3.Distance(transform.position, target) > distanceToStop)
+        if (Vector3.Distance(transform.position, target) > attackRange)
             agent.destination = target;
         else
             agent.destination = transform.position;
