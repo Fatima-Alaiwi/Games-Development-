@@ -2203,8 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8230034c3f402f6499ae84e68dbdc4e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
-  distanceToStop: 1
+  moveSpeed: 0.8
   theRigidbody: {fileID: 3417933742564434340}
   agent: {fileID: 2478040361777225181}
   attackRange: 1.5
