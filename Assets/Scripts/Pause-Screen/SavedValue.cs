@@ -14,9 +14,9 @@ public class SavedValue : MonoBehaviour
     }
 
     private static SavedValue instance;
-    private static LevelId currentLevel = LevelId.Kingdom;
+    private static LevelId currentLevel = LevelId.Lab;
 
-    [SerializeField] private LevelId level = LevelId.Kingdom;
+    [SerializeField] private LevelId level = LevelId.Lab;
 
     public static LevelId CurrentLevel
     {
@@ -33,6 +33,12 @@ public class SavedValue : MonoBehaviour
     {
         instance = this;
         currentLevel = level;
+    }
+
+    private void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 
     private void OnValidate()

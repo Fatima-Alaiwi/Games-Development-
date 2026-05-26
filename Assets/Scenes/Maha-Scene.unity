@@ -3182,7 +3182,7 @@ MonoBehaviour:
   instructionsPanel: {fileID: 364102340}
   creditsPanel: {fileID: 1907964361}
   continueButton: {fileID: 0}
-  firstLevelScene: Demo_01
+  firstLevelScene: LabLevel
 --- !u!114 &1212650301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4812,7 +4812,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Instructions
+  m_text: Audio
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 444670c46b26a7447bfacfa3ad111911, type: 2}
   m_sharedMaterial: {fileID: 3488806378252109176, guid: 444670c46b26a7447bfacfa3ad111911, type: 2}

@@ -26,8 +26,8 @@ From a haunted mansion to a dragon dungeon, a futuristic city, a fantasy kingdom
 | 1 | 🧪 Lab Level | [Maha Hafeez](https://github.com/mahaH26) | Technical level with computers, power systems, satellite objectives, keycards, weapons, and portal activation. |
 | 2 | ⛩️ Samurai Level | [Fatima Alaiwi](https://github.com/Fatima-Alaiwi) | Village objective level with fruit collection, gas bottles, braziers, enemy encounters, bamboo barriers, and the gong portal. |
 | 3 | 🏚️ Horror Mansion | [Raghad Alesakfi](https://github.com/RaghadAlesakfi) | Escape level that introduces exploration, keys, locked doors, voice lines, and the mansion portal. |
-| 4 | 🐉 Dungeon | [Zahraa Hubail](https://github.com/zahraa-hubail) | Quest-and-combat level where Peter solves door requirements, meets the Wise Man, and defeats the dragon. |
-| 5 | 🏰 Kingdom | [Norain Almajed](https://github.com/NorainAlmajed) | Fantasy NPC quest chain with the Fairy, Merchant, Mage, treasure collection, and rewards. |
+| 4 | 🏰 Kingdom | [Norain Almajed](https://github.com/NorainAlmajed) | Fantasy NPC quest chain with the Fairy, Merchant, Mage, treasure collection, and rewards. |
+| 5 | 🐉 Dungeon | [Zahraa Hubail](https://github.com/zahraa-hubail) | Quest-and-combat level where Peter solves door requirements, meets the Wise Man, and defeats the dragon. |
 | 6 | 🤖 Future / Sci-Fi City | [Manaf Hujairi](https://github.com/Manaf-10) | Mission-based level with InfoBot guidance, elevators, power-cell tasks, truck driving, robots, and cutscene. |
 
 ## 🌀 Game Progression
@@ -85,24 +85,9 @@ Peter wakes inside a haunted mansion with locked rooms, strange clues, and no sa
 2. Find and use key items.
 3. Unlock the path to the portal.
 4. Trigger the portal sequence.
-5. Escape into the dungeon world.
+5. Escape into the Kingdom.
 
-### 🐉 Level 4: Dungeon
-
-**Responsible:** [Zahraa Hubail](https://github.com/zahraa-hubail)
-
-After escaping the mansion, Peter lands in a dungeon filled with locked gates, quest paths, and a dragon guarding the way forward. The player must collect items, solve door requirements, complete NPC objectives, and prepare for the final dragon encounter. The portal only opens once the dragon challenge is complete.
-
-**Flow**
-
-1. Enter the dungeon from the mansion portal.
-2. Search for keys and useful items.
-3. Complete dungeon quests and Wise Man objectives.
-4. Unlock deeper areas through quest-based doors.
-5. Defeat the dragon.
-6. Use the unlocked portal to continue.
-
-### 🏰 Level 5: Kingdom
+### 🏰 Level 4: Kingdom
 
 **Responsible:** [Norain Almajed](https://github.com/NorainAlmajed)
 
@@ -116,6 +101,21 @@ The kingdom level becomes a fantasy quest chain built around character interacti
 4. Collect the treasure items required by the Mage.
 5. Hand in the treasure.
 6. Complete the Mage objective and prepare for the next step.
+
+### 🐉 Level 5: Dungeon
+
+**Responsible:** [Zahraa Hubail](https://github.com/zahraa-hubail)
+
+After escaping the mansion, Peter lands in a dungeon filled with locked gates, quest paths, and a dragon guarding the way forward. The player must collect items, solve door requirements, complete NPC objectives, and prepare for the final dragon encounter. The portal only opens once the dragon challenge is complete.
+
+**Flow**
+
+1. Enter the dungeon from the mansion portal.
+2. Search for keys and useful items.
+3. Complete dungeon quests and Wise Man objectives.
+4. Unlock deeper areas through quest-based doors.
+5. Defeat the dragon.
+6. Use the unlocked portal to continue.
 
 ### 🤖 Level 6: Future / Sci-Fi City
 

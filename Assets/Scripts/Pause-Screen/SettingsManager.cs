@@ -9,8 +9,21 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        // 1. Get all available screen resolutions
+        if (resolutionDropdown == null)
+        {
+            Debug.LogWarning("SettingsManager is missing a resolution dropdown reference.", this);
+            enabled = false;
+            return;
+        }
+
         resolutions = Screen.resolutions;
+        if (resolutions == null || resolutions.Length == 0)
+        {
+            Debug.LogWarning("No screen resolutions found for SettingsManager.", this);
+            enabled = false;
+            return;
+        }
+
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
@@ -18,11 +31,9 @@ public class SettingsManager : MonoBehaviour
 
         for (int i = 0; i < resolutions.Length; i++)
         {
-            // Create a string for each resolution: "Width x Height"
             string option = resolutions[i].width + " x " + resolutions[i].height;
             options.Add(option);
 
-            // Check if this is the resolution the player is currently using
             if (resolutions[i].width == Screen.currentResolution.width &&
                 resolutions[i].height == Screen.currentResolution.height)
             {
@@ -30,7 +41,6 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
-        // 2. Add the list to the dropdown and set the default value
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
@@ -38,6 +48,9 @@ public class SettingsManager : MonoBehaviour
 
     public void SetResolution(int resolutionIndex)
     {
+        if (resolutions == null || resolutionIndex < 0 || resolutionIndex >= resolutions.Length)
+            return;
+
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }

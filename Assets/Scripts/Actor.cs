@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Actor : MonoBehaviour
 {
@@ -78,9 +77,7 @@ public class Actor : MonoBehaviour
         if (isPlayer)
         {
             Debug.Log("Player is dead!");
-            Scene currentScene = SceneManager.GetActiveScene();
-            //SceneManager.LoadScene(currentScene.name); //raghad commented this for the health Bar
-            StartCoroutine(DelayedRestart());
+            StartCoroutine(DelayedLoseScreen());
         }
         else
         {
@@ -100,11 +97,10 @@ public class Actor : MonoBehaviour
         }
     }
 
-    IEnumerator DelayedRestart()
+    IEnumerator DelayedLoseScreen()
     {
-        // Raghad: wait for health bar to reach empty before restarting
+        // Wait for the health bar to reach empty before showing the lose screen.
         yield return new WaitForSeconds(2f);
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+        LoseScreenManager.Show();
     }
 }
