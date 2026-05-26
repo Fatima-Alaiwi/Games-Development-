@@ -35,6 +35,8 @@ public class GasBottle : MonoBehaviour, IInteractable
             if (QuestManager.Instance != null)
                 QuestManager.Instance.UpdateProgress(itemName, 1);
 
+            GetComponent<Collectible>()?.MarkCollected();
+
             // Check how many gas bottles collected
             int gasCount = GetGasCount();
             if (brazierSpawner != null && gasCount >= requiredGasCount)

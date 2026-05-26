@@ -10,6 +10,8 @@ public class PlayerVoiceTrigger : MonoBehaviour
 
     [Header("Settings")]
     public bool playOnlyOnce = true;
+    [Tooltip("Frames to wait before activating this trigger. Set to 2 for enter-level voices so the save system moves the player before the trigger listens.")]
+    public int startDelayFrames = 0;
     public string playerTag = "Player";
     public float delay = 0f;
 
@@ -19,17 +21,48 @@ public class PlayerVoiceTrigger : MonoBehaviour
 
     private bool _hasPlayed = false;
     private bool _playerIsInside = false;
+    private bool _isReady = false;
 
     void Start()
     {
-        // Continuously poll conditions in background
-        // This handles the case where the quest completes
-        // while the player is already inside the trigger
+        if (startDelayFrames > 0)
+            StartCoroutine(DelayedStart());
+        else
+        {
+            _isReady = true;
+            StartCoroutine(PollConditions());
+        }
+    }
+
+    IEnumerator DelayedStart()
+    {
+        for (int i = 0; i < startDelayFrames; i++)
+            yield return null;
+
+        _isReady = true;
+
+        // Player may already be inside the trigger — check manually
+        var box = GetComponent<BoxCollider>();
+        if (box != null)
+        {
+            Vector3 worldCenter = transform.TransformPoint(box.center);
+            Vector3 halfExtents = Vector3.Scale(box.size * 0.5f, transform.lossyScale);
+            foreach (var hit in Physics.OverlapBox(worldCenter, halfExtents, transform.rotation))
+            {
+                if (hit.CompareTag(playerTag))
+                {
+                    _playerIsInside = true;
+                    break;
+                }
+            }
+        }
+
         StartCoroutine(PollConditions());
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if (!_isReady) return;
         if (!other.CompareTag(playerTag)) return;
         _playerIsInside = true;
         TryPlay();
@@ -41,7 +74,6 @@ public class PlayerVoiceTrigger : MonoBehaviour
         _playerIsInside = false;
     }
 
-    // Polls every 0.5s instead of every frame — cheap and reliable
     IEnumerator PollConditions()
     {
         while (!_hasPlayed)
@@ -63,7 +95,7 @@ public class PlayerVoiceTrigger : MonoBehaviour
     IEnumerator PlayWithDelay()
     {
         if (_hasPlayed) yield break;
-        _hasPlayed = true; // block duplicates immediately
+        _hasPlayed = true;
 
         yield return new WaitForSeconds(delay);
         Play();
@@ -103,8 +135,7 @@ public class PlayerVoiceTrigger : MonoBehaviour
     {
         if (audioSource == null || voiceLine == null)
         {
-            Debug.LogWarning($"PlayerVoiceTrigger on {gameObject.name}: " +
-                             $"missing AudioSource or AudioClip!");
+            Debug.LogWarning($"PlayerVoiceTrigger on {gameObject.name}: missing AudioSource or AudioClip!");
             return;
         }
 

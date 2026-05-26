@@ -38,6 +38,7 @@ public class FruitBasket : MonoBehaviour, IInteractable
             if (QuestManager.Instance != null)
                 QuestManager.Instance.UpdateProgress(itemName, 1);
 
+            GetComponent<Collectible>()?.MarkCollected();
             gameObject.SetActive(false);
         }
     }

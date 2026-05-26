@@ -8,9 +8,6 @@ public class BambooBarricadeManager : MonoBehaviour
     [Header("Barricade Collider")]
     public Collider barricadeCollider;
 
-    [Header("Portal")]
-    public SamuraiPortalController portal;
-
     [Header("Quest")]
     public Quest bambooQuest;
 
@@ -58,9 +55,6 @@ public class BambooBarricadeManager : MonoBehaviour
 
         if (QuestManager.Instance != null && bambooQuest != null)
             QuestManager.Instance.CompleteQuestPublic(bambooQuest);
-
-        if (portal != null)
-            portal.ActivatePortal();
 
         StartCoroutine(PlayClearedVoices());
 
