@@ -42,6 +42,9 @@ public class Actor : MonoBehaviour
         if (isPlayer && healthBar != null)
             healthBar.SetHealth(currentHealth);
 
+        if (isPlayer && CameraShake.Instance != null)
+            CameraShake.Instance.Shake();
+
         if (currentHealth <= 0)
             Death();
     }
