@@ -10,6 +10,8 @@ public class PlayerVoiceTrigger : MonoBehaviour
 
     [Header("Settings")]
     public bool playOnlyOnce = true;
+    [Tooltip("If a save file exists (player is continuing), skip this trigger. Enable for enter-level voice lines.")]
+    public bool skipIfSaveExists = false;
     public string playerTag = "Player";
     public float delay = 0f;
 
@@ -71,6 +73,8 @@ public class PlayerVoiceTrigger : MonoBehaviour
 
     bool CanPlay()
     {
+        if (skipIfSaveExists && SaveSystem.HasSave()) return false;
+
         if (requiredActiveQuests.Count > 0)
         {
             if (QuestManager.Instance == null) return false;

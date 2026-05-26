@@ -1,7 +1,7 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-using UnityEngine.UI;
 
 public class SamuraiPortalController : MonoBehaviour, IInteractable
 {
@@ -10,13 +10,19 @@ public class SamuraiPortalController : MonoBehaviour, IInteractable
 
     [Header("Scene")]
     public string targetScene;
+    [Tooltip("The level this portal leads to — saved so the menu shows the correct level on Continue.")]
+    public SavedValue.LevelId nextLevel;
 
     [Header("Sound")]
     public AudioClip teleportSound;
     private AudioSource audioSource;
 
+    [Header("Fade")]
+    public float audioDelay = 1.5f;
+    public float fadeDuration = 1.2f;
+    private CanvasGroup _fadeCanvasGroup;
+
     [Header("Interaction Text")]
-    [SerializeField] private string _lockedText = "Strike the gong first...";
     [SerializeField] private string _questText = "Complete your quests first...";
     [SerializeField] private string _unlockedText = "Press E to Enter Portal";
 
@@ -26,10 +32,7 @@ public class SamuraiPortalController : MonoBehaviour, IInteractable
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
-    private bool _gongStruck = false;
     private bool _isTeleporting = false;
-    private CanvasGroup fadeCanvasGroup;
-    private float fadeDuration = 1.2f;
 
     void Start()
     {
@@ -40,64 +43,9 @@ public class SamuraiPortalController : MonoBehaviour, IInteractable
         CreateFadeCanvas();
     }
 
-    void Update()
-    {
-        if (!_isTeleporting)
-            isInteractable = true;
-    }
-
-    string GetInteractionText()
-    {
-        if (!_gongStruck) return _lockedText;
-        if (!IsQuestComplete()) return _questText;
-        return _unlockedText;
-    }
-
-    bool IsQuestComplete()
-    {
-        if (bambooQuest == null) return false;
-        return QuestManager.Instance.IsQuestCompleted(bambooQuest.questName);
-    }
-
-    // Called by GongInteractable
-    public void ActivatePortal()
-    {
-        _gongStruck = true;
-        Debug.Log("<color=green>SAMURAI PORTAL:</color> Gong struck!");
-    }
-
-    public void Interact()
-    {
-        if (!isInteractable) return;
-        if (!_gongStruck) return;
-        if (!IsQuestComplete()) return;
-
-        _isTeleporting = true;
-        isInteractable = false;
-        StartCoroutine(TeleportSequence());
-    }
-
-    IEnumerator TeleportSequence()
-    {
-        if (teleportSound != null)
-            audioSource.PlayOneShot(teleportSound);
-
-        float t = 0f;
-        fadeCanvasGroup.blocksRaycasts = true;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / fadeDuration;
-            fadeCanvasGroup.alpha = Mathf.Clamp01(t);
-            yield return null;
-        }
-
-        SaveSystem.Save();
-        SceneManager.LoadScene(targetScene);
-    }
-
     void CreateFadeCanvas()
     {
-        GameObject canvasGO = new GameObject("PortalFadeCanvas");
+        GameObject canvasGO = new GameObject("SamuraiFadeCanvas");
         Canvas canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         canvas.sortingOrder = 999;
@@ -113,14 +61,69 @@ public class SamuraiPortalController : MonoBehaviour, IInteractable
         rect.anchorMax = Vector2.one;
         rect.sizeDelta = Vector2.zero;
 
-        fadeCanvasGroup = canvasGO.AddComponent<CanvasGroup>();
-        fadeCanvasGroup.alpha = 0f;
-        fadeCanvasGroup.blocksRaycasts = false;
+        _fadeCanvasGroup = canvasGO.AddComponent<CanvasGroup>();
+        _fadeCanvasGroup.alpha = 0f;
+        _fadeCanvasGroup.blocksRaycasts = false;
 
         FadeOutOnLoad fadeHelper = canvasGO.AddComponent<FadeOutOnLoad>();
-        fadeHelper.canvasGroup = fadeCanvasGroup;
+        fadeHelper.canvasGroup = _fadeCanvasGroup;
         fadeHelper.fadeDuration = fadeDuration;
 
         DontDestroyOnLoad(canvasGO);
     }
+
+    void Update()
+    {
+        if (!_isTeleporting)
+            isInteractable = true;
+    }
+
+    string GetInteractionText()
+    {
+        if (!IsQuestComplete()) return _questText;
+        return _unlockedText;
+    }
+
+    bool IsQuestComplete()
+    {
+        if (bambooQuest == null) return false;
+        return QuestManager.Instance.IsQuestCompleted(bambooQuest.questName);
+    }
+
+    public void Interact()
+    {
+        if (!isInteractable) return;
+        if (!IsQuestComplete()) return;
+
+        _isTeleporting = true;
+        isInteractable = false;
+        StartCoroutine(TeleportSequence());
+    }
+
+    IEnumerator TeleportSequence()
+    {
+        if (teleportSound != null)
+            audioSource.PlayOneShot(teleportSound);
+
+        yield return new WaitForSeconds(audioDelay);
+
+        _fadeCanvasGroup.blocksRaycasts = true;
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / fadeDuration;
+            _fadeCanvasGroup.alpha = Mathf.Clamp01(t);
+            yield return null;
+        }
+        _fadeCanvasGroup.alpha = 1f;
+
+        SavedValue.SetCurrentLevel(nextLevel);
+        SaveSystem.Save();
+
+        if (LoadingScreenController.Instance != null)
+            LoadingScreenController.Instance.LoadScene(targetScene);
+        else
+            SceneManager.LoadScene(targetScene);
+    }
+
 }

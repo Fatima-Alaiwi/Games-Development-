@@ -14,9 +14,6 @@ public class GongInteractable : MonoBehaviour, IInteractable
     public string requiredItemName = "Bamboo";
     public int requiredAmount = 5;
 
-    [Header("Portal")]
-    public SamuraiPortalController portal;
-
     [Header("Audio")]
     public AudioClip repairSound;
     public AudioClip gongStrikeSound;
@@ -94,8 +91,6 @@ public class GongInteractable : MonoBehaviour, IInteractable
         if (gongStrikeSound != null)
             audioSource.PlayOneShot(gongStrikeSound);
 
-        if (portal != null)
-            portal.ActivatePortal();
     }
 
     int GetBambooCount()
