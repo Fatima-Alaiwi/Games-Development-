@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 64928516181449824}
   - component: {fileID: 2584842974948948994}
   - component: {fileID: 2507196220302276504}
+  - component: {fileID: 8907175819796726390}
   m_Layer: 6
   m_Name: MagePotion
   m_TagString: Untagged
@@ -158,6 +159,19 @@ MonoBehaviour:
   collectSound: {fileID: 8300000, guid: 8aea700f036b4c9488e9ba55fb3994f2, type: 3}
   isRotatable: 1
   rotateSpeed: 1
+--- !u!114 &8907175819796726390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1200035444335532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba881c4152de1547ab2d3bb7641f5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleId: KingdomPotion2
 --- !u!1 &4509936439672512095
 GameObject:
   m_ObjectHideFlags: 0
