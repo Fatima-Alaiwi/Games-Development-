@@ -20,6 +20,12 @@ public class SceneController : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        AudioVolumeSlider.ApplySavedVolume();
+        OpenPanel(mainPanel);
+
         if (continueButton != null)
             continueButton.interactable = true;
     }

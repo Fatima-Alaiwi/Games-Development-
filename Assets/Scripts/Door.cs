@@ -10,6 +10,10 @@ public class Door : MonoBehaviour, IInteractable
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
+    [Header("Quest (Optional)")]
+    [Tooltip("If assigned, this quest is completed when the door is opened.")]
+    public Quest questToComplete;
+
     [Header("Sound")]
     public AudioClip openingDoorClip;
     private AudioSource audioSource;
@@ -29,6 +33,9 @@ public class Door : MonoBehaviour, IInteractable
         isInteractable = false;
 
         GetComponent<SaveableDoor>()?.MarkOpened();
+
+        if (questToComplete != null && QuestManager.Instance != null)
+            QuestManager.Instance.CompleteQuestPublic(questToComplete);
 
         if (audioSource != null && openingDoorClip != null)
             audioSource.PlayOneShot(openingDoorClip);

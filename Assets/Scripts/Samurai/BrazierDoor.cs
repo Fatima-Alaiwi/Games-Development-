@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BrazierDoor : MonoBehaviour, IInteractable
 {
@@ -16,10 +17,7 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     [Header("Requirements")]
     public BrazierGate brazierGate;
     public string requiredKeyName = "Key1";
-
-    [Header("Quest")]
-    public Quest farmerQuest;
-    public Quest killQuestBrazier; // drag KillQuest_Brazier here
+    public List<Quest> requiredQuests = new List<Quest>();
 
     [Header("Door Settings")]
     public float openAngle = -90f;
@@ -46,16 +44,14 @@ public class BrazierDoor : MonoBehaviour, IInteractable
         if (isOpen) return;
 
         bool braziersLit = brazierGate != null && brazierGate.BothLit();
+        bool allQuestsDone = AllQuestsDone();
         bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
-        bool killQuestDone = killQuestBrazier == null ||
-                             (QuestManager.Instance != null &&
-                             QuestManager.Instance.IsQuestCompleted(killQuestBrazier.questName));
 
         if (!braziersLit)
             _interactionText = "The braziers must be lit first...";
-        else if (!killQuestDone)
-            _interactionText = "Defeat all enemies first...";
+        else if (!allQuestsDone)
+            _interactionText = "Complete all quests first...";
         else if (!hasKey)
             _interactionText = "You need a key to open this gate.";
         else
@@ -67,29 +63,11 @@ public class BrazierDoor : MonoBehaviour, IInteractable
         if (isOpen) return;
 
         bool braziersLit = brazierGate != null && brazierGate.BothLit();
+        bool allQuestsDone = AllQuestsDone();
         bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
-        bool killQuestDone = killQuestBrazier == null ||
-                             (QuestManager.Instance != null &&
-                             QuestManager.Instance.IsQuestCompleted(killQuestBrazier.questName));
 
-        if (!braziersLit)
-        {
-            Debug.Log("Braziers not lit yet.");
-            return;
-        }
-
-        if (!killQuestDone)
-        {
-            Debug.Log("Enemies not defeated yet.");
-            return;
-        }
-
-        if (!hasKey)
-        {
-            Debug.Log("No key in inventory.");
-            return;
-        }
+        if (!braziersLit || !allQuestsDone || !hasKey) return;
 
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
 
@@ -97,6 +75,19 @@ public class BrazierDoor : MonoBehaviour, IInteractable
             brazierGate.PlayOpenSound();
 
         OpenDoor();
+    }
+
+    bool AllQuestsDone()
+    {
+        if (requiredQuests.Count == 0) return false;
+        if (QuestManager.Instance == null) return false;
+        foreach (var quest in requiredQuests)
+        {
+            if (quest == null) continue;
+            if (!QuestManager.Instance.IsQuestCompleted(quest.questName))
+                return false;
+        }
+        return true;
     }
 
     void OpenDoor()
@@ -108,7 +99,6 @@ public class BrazierDoor : MonoBehaviour, IInteractable
         if (openingDoorClip != null && audioSource != null)
             audioSource.PlayOneShot(openingDoorClip);
 
-        // Play voice line on VoiceAudioSource
         if (voiceLine != null)
         {
             GameObject voiceObj = GameObject.Find("VoiceAudioSource");
