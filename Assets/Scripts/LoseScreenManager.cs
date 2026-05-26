@@ -45,6 +45,7 @@ public class LoseScreenManager : MonoBehaviour
     {
         IsLoseScreenOpen = true;
         ClosePauseMenus();
+        HideHUDs();
 
         if (loseScreenPanel != null)
         {
@@ -56,6 +57,13 @@ public class LoseScreenManager : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    private void HideHUDs()
+    {
+        PauseMenuManager[] pauseMenus = FindObjectsByType<PauseMenuManager>(FindObjectsSortMode.None);
+        foreach (PauseMenuManager pm in pauseMenus)
+            pm.HideHUD();
     }
 
     public void TryAgain()

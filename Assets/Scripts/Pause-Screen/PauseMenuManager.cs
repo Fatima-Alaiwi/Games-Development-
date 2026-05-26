@@ -102,6 +102,14 @@ public class PauseMenuManager : MonoBehaviour
         RestorePauseCanvasSorting();
     }
 
+    public void HideHUD()
+    {
+        if (hudCanvas != null) hudCanvas.SetActive(false);
+        if (inventoryCanvas != null) inventoryCanvas.SetActive(false);
+        if (questPanel != null) questPanel.SetActive(false);
+        if (ammoPanel != null) ammoPanel.SetActive(false);
+    }
+
     private void HideAllPanels()
     {
         SetPanelActive(pauseMenuPanel, false);
