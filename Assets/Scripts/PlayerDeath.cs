@@ -1,20 +1,14 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerDeath : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Hazard"))
         {
-            Die();
+            Actor actor = GetComponentInParent<Actor>();
+            if (actor != null)
+                actor.Kill();
         }
-    }
-
-    void Die()
-    {
-        // Reload the current scene
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
     }
 }

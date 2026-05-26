@@ -69,6 +69,8 @@ public class Actor : MonoBehaviour
             healthBar.SetHealth(currentHealth);
     }
 
+    public void Kill() => Death();
+
     void Death()
     {
         if (isDead) return;
@@ -77,6 +79,13 @@ public class Actor : MonoBehaviour
         if (isPlayer)
         {
             Debug.Log("Player is dead!");
+
+            PlayerControllerGun gunController = GetComponentInParent<PlayerControllerGun>();
+            if (gunController != null) gunController.canMove = false;
+
+            PlayerController meleeController = GetComponentInParent<PlayerController>();
+            if (meleeController != null) meleeController.canMove = false;
+
             StartCoroutine(DelayedLoseScreen());
         }
         else
