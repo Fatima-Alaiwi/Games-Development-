@@ -46,6 +46,11 @@ public class PauseMenuManager : MonoBehaviour
 
     void Update()
     {
+        if (LoseScreenManager.IsLoseScreenOpen)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
@@ -83,6 +88,12 @@ public class PauseMenuManager : MonoBehaviour
     {
         HideAllPanels();
         SetPanelActive(restartConfirmPanel, true);
+    }
+
+    public void CloseAllPausePanels()
+    {
+        HideAllPanels();
+        RestorePauseCanvasSorting();
     }
 
     private void HideAllPanels()
