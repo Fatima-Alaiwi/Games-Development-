@@ -3182,7 +3182,7 @@ MonoBehaviour:
   instructionsPanel: {fileID: 364102340}
   creditsPanel: {fileID: 1907964361}
   continueButton: {fileID: 0}
-  firstLevelScene: Demo_01
+  firstLevelScene: LabLevel
 --- !u!114 &1212650301
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,23 +16,37 @@ public class SceneController : MonoBehaviour
 
     [Header("First Level")]
     [Tooltip("Scene name to load when starting a brand-new game.")]
-    public string firstLevelScene = "Demo_01";
+    public string firstLevelScene = "LabLevel";
 
     void Start()
     {
         if (continueButton != null)
-            continueButton.interactable = SaveSystem.HasSave();
+            continueButton.interactable = true;
     }
 
     public void StartGame()
     {
+        SaveSystem.DeleteSave();
         SceneManager.LoadScene(firstLevelScene);
     }
 
     public void ContinueGame()
     {
-        if (!SaveSystem.HasSave()) return;
-        SaveSystem.ContinueGame();
+        if (SaveSystem.HasSave())
+        {
+            SaveSystem.ContinueGame();
+            return;
+        }
+
+        SceneManager.LoadScene(firstLevelScene);
+    }
+
+    public void ResetGame()
+    {
+        SaveSystem.DeleteSave();
+
+        if (continueButton != null)
+            continueButton.interactable = true;
     }
 
     public void QuitGame()
