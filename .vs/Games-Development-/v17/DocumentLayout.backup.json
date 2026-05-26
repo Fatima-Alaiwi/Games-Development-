@@ -7,6 +7,14 @@
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\posterexamine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\kingdom-level\\examineuitest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\examineuitest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|c:\\users\\kitka\\desktop\\nono\\unity\\games project\\games-development-\\assets\\scripts\\pause-screen\\pausemenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\pause-screen\\pausemenumanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\assets\\scripts\\kingdom-level\\portalmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA32135-ADFC-78B9-8A63-4A90AC146545}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\kingdom-level\\portalmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -126,11 +134,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "Actor.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Actor.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Actor.cs",
@@ -140,6 +148,32 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-17T10:59:53.64Z",
               "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PauseMenuManager.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Pause-Screen\\PauseMenuManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Pause-Screen\\PauseMenuManager.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Pause-Screen\\PauseMenuManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Pause-Screen\\PauseMenuManager.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAAwC8AAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-26T03:55:53.543Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ExamineUITest.cs",
+              "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\ExamineUITest.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\ExamineUITest.cs",
+              "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\ExamineUITest.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\ExamineUITest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-26T03:52:11.269Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -153,14 +187,14 @@
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\PosterExamine.cs",
               "ToolTip": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\PosterExamine.cs",
               "RelativeToolTip": "Assets\\Scripts\\Kingdom-Level\\PosterExamine.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAgwD4AAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwCYAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-26T00:29:37.176Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Lit.shader",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\Lit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\Lit.shader",
@@ -168,11 +202,12 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\Lit.shader",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-05-25T23:02:25.268Z"
+              "WhenOpened": "2026-05-25T23:02:25.268Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "PortalManager.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\PortalManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\PortalManager.cs",
@@ -184,7 +219,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "PowerCell.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerCell.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Lab-Level\\PowerCell.cs",
@@ -196,7 +231,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "PowerControlPanel.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Lab-Level\\PowerControlPanel.cs",
@@ -208,7 +243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "FogRevealTrigger.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\FogRevealTrigger.cs",
@@ -220,7 +255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "MapPickupItem.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Map\\MapPickupItem.cs",
@@ -232,7 +267,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "PotionUsableEffect.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\PotionUsableEffect.cs",
@@ -244,7 +279,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "KeyQuestChain.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\KeyQuestChain.cs",
@@ -256,7 +291,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "LockedDoorKingdom.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\LockedDoorKingdom.cs",
@@ -268,7 +303,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "LightPulser.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\LightPulser.cs",
@@ -280,7 +315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "Box.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Box.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Box.cs",
@@ -292,7 +327,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "InventorySlotSelector.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventorySlotSelector.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\InventorySlotSelector.cs",
@@ -304,7 +339,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "InventoryManager.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\InventoryManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\InventoryManager.cs",
@@ -316,7 +351,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Mage.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Mage.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Mage.cs",
@@ -328,7 +363,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Collectable Rotate.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Collectable Rotate.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Collectable Rotate.cs",
@@ -339,7 +374,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "Merchant.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\Merchant.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\Merchant.cs",
@@ -351,7 +386,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "CollectiblePotion.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\CollectiblePotion.cs",
@@ -363,7 +398,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "FairyNPC.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyNPC.cs",
@@ -375,7 +410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "FairyWings.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Kingdom-Level\\FairyWings.cs",
@@ -387,7 +422,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "EnemyAttack.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyAttack.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyAttack.cs",
@@ -399,7 +434,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "ZoneTrigger.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\ZoneTrigger.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\ZoneTrigger.cs",
@@ -411,7 +446,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "EnemySpawnerReporter.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerReporter.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerReporter.cs",
@@ -423,7 +458,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "EnemySpawner.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawner.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawner.cs",
@@ -435,7 +470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "EnemySpawnerTest.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemySpawnerTest.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemySpawnerTest.cs",
@@ -447,7 +482,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "EnemyMoveGun.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMoveGun.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMoveGun.cs",
@@ -459,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "EnemyMove.cs",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Assets\\Scripts\\EnemyMove.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\EnemyMove.cs",
@@ -471,7 +506,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "SimpleLit.shader",
               "DocumentMoniker": "C:\\Users\\kitka\\Desktop\\nono\\unity\\Games Project\\Games-Development-\\Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
@@ -479,7 +514,8 @@
               "RelativeToolTip": "Library\\PackageCache\\com.unity.render-pipelines.universal@dcd8a2aecf3e\\Shaders\\SimpleLit.shader",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002777|",
-              "WhenOpened": "2026-04-21T09:40:42.715Z"
+              "WhenOpened": "2026-04-21T09:40:42.715Z",
+              "EditorCaption": ""
             }
           ]
         }
