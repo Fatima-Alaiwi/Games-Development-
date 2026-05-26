@@ -11,16 +11,25 @@ public class ShowImageOnHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
         if (hoverImage == null)
             hoverImage = GetComponent<Image>();
 
+        if (hoverImage == null)
+        {
+            Debug.LogWarning("ShowImageOnHover needs an Image reference.", this);
+            enabled = false;
+            return;
+        }
+
         hoverImage.enabled = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        hoverImage.enabled = true;
+        if (hoverImage != null)
+            hoverImage.enabled = true;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        hoverImage.enabled = false;
+        if (hoverImage != null)
+            hoverImage.enabled = false;
     }
 }

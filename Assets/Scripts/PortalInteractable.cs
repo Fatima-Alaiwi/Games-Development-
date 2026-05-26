@@ -110,6 +110,10 @@ public class PortalInteractable : MonoBehaviour, IInteractable
 
         SavedValue.SetCurrentLevel(nextLevel);
         SaveSystem.Save();
-        SceneManager.LoadScene(targetScene);
+
+        if (LoadingScreenController.Instance != null)
+            LoadingScreenController.Instance.LoadScene(targetScene);
+        else
+            SceneManager.LoadScene(targetScene);
     }
 }
