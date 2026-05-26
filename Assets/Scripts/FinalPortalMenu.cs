@@ -16,6 +16,9 @@ public class FinalPortalMenu : MonoBehaviour, IInteractable
     [Tooltip("When the final screen opens, hide everything in the current scene except the final canvas and UI event system.")]
     public bool hideSceneOnShow = true;
 
+    [Header("Win Sound")]
+    public AudioClip winSound;
+
     [Header("Interaction")]
     [SerializeField] private string interactionText = "Press E to Enter Portal";
     [SerializeField] private Transform labelAnchor;
@@ -54,6 +57,9 @@ public class FinalPortalMenu : MonoBehaviour, IInteractable
         {
             finalScreenPanel.SetActive(true);
         }
+
+        if (winSound != null)
+            AudioSource.PlayClipAtPoint(winSound, Camera.main != null ? Camera.main.transform.position : Vector3.zero, 1f);
 
         PauseMenuManager.isPaused = true;
         Time.timeScale = 0f;
