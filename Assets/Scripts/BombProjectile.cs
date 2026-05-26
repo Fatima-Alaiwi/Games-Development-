@@ -36,11 +36,17 @@ public class BombProjectile : MonoBehaviour
 {
     if (_hasHit) return;
 
-    DragonHealth dragon = other.GetComponent<DragonHealth>();
+    DragonHealth dragon = other.GetComponent<DragonHealth>()
+                       ?? other.GetComponentInParent<DragonHealth>();
     if (dragon != null)
     {
-        _hasHit = true; // ← add this!
-        dragon.TakeBombDamage();
+        _hasHit = true;
+        if (!dragon.IsDead())
+        {
+            dragon.TakeBombDamage();
+            if (QuestManager.Instance != null)
+                QuestManager.Instance.UpdateQuestCount("DungeonBomb", 1);
+        }
         Destroy(gameObject);
         return;
     }

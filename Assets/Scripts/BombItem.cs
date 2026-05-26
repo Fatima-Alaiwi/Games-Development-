@@ -18,9 +18,6 @@ public class BombItem : MonoBehaviour, IInteractable
 
         if (added)
         {
-            if (QuestManager.Instance != null)
-                QuestManager.Instance.UpdateQuestCount(itemName, 1);
-
             if (collectSound != null)
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
 
