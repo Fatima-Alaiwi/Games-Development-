@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4582177388681563772}
   - component: {fileID: 1765900757143420934}
   - component: {fileID: 8424455384332126572}
+  - component: {fileID: -3576506361920948355}
   m_Layer: 6
   m_Name: Potion
   m_TagString: Untagged
@@ -172,6 +173,19 @@ MonoBehaviour:
   collectSound: {fileID: 8300000, guid: 8aea700f036b4c9488e9ba55fb3994f2, type: 3}
   isRotatable: 0
   rotateSpeed: 1
+--- !u!114 &-3576506361920948355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1426366341057716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba881c4152de1547ab2d3bb7641f5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectibleId: KingdomPotion1
 --- !u!1 &3433388007533824875
 GameObject:
   m_ObjectHideFlags: 0
