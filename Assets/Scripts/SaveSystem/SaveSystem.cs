@@ -126,6 +126,8 @@ public static class SaveSystem
             if (s.hasTriggered && !string.IsNullOrEmpty(s.spawnerId))
                 data.triggeredSpawnerIds.Add(s.spawnerId);
 
+        data.playedAudioTriggerIds = AudioTriggerTracker.GetAll();
+
         return data;
     }
 
@@ -185,6 +187,9 @@ public static class SaveSystem
                 if (triggeredSet.Contains(s.spawnerId))
                     s.RestoreTriggered();
         }
+
+        // Restore played audio triggers so they don't play again
+        AudioTriggerTracker.LoadFrom(data.playedAudioTriggerIds);
     }
 
     static GameData LoadFromDisk()
