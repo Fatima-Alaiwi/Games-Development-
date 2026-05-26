@@ -18,6 +18,8 @@ public class KeyDoor : MonoBehaviour, IInteractable
     public AudioClip peterLockedClip;
     // Raghad: drag Peter_12 audio file here — plays after door opens and player sees the portal
     public AudioClip peterPortalClip;
+    [Tooltip("Drag the FirstaLookAtPortalSound GameObject here — locked clip won't play while this is still playing.")]
+    public AudioSource firstLookAudioSource;
     private AudioSource audioSource;
 
     [Header("Opening Settings")]
@@ -45,8 +47,9 @@ public class KeyDoor : MonoBehaviour, IInteractable
         {
             _interactionText = "You need a key to open this door";
 
-            // Raghad: play Peter's voice line once — "It's locked. There must be a key somewhere. I'll find it."
-            if (!peterLinePlayed && peterLockedClip != null && audioSource != null)
+            // Raghad: play Peter's voice line once, but only if the portal look sound is not still playing
+            bool firstLookStillPlaying = firstLookAudioSource != null && firstLookAudioSource.isPlaying;
+            if (!peterLinePlayed && !firstLookStillPlaying && peterLockedClip != null && audioSource != null)
             {
                 peterLinePlayed = true;
                 audioSource.PlayOneShot(peterLockedClip);
