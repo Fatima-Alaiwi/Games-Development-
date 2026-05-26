@@ -1223,7 +1223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loseScreenPanel: {fileID: 368580135353646448}
-  failSound: {fileID: 0}
+  failSound: {fileID: 8300000, guid: b30ebc8a1ab55dd408578187336466fb, type: 3}
   mainMenuScene: Maha-Scene
 --- !u!1 &1529208315397650639
 GameObject:
