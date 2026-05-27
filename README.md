@@ -8,6 +8,9 @@
 
 From a haunted mansion to a dragon dungeon, a futuristic city, a fantasy kingdom, a samurai village, and a mysterious lab, Peter must survive each world long enough to open the next portal. The game mixes exploration, quests, item collection, combat, NPC dialogue, locked paths, and world-to-world progression.
 
+**Download-link:** [Here](https://zahraahubail.itch.io/time-voyager)
+
+
 ## 🎮 Project Snapshot
 
 | Detail | Description |
@@ -52,7 +55,7 @@ The lab level is a technical chapter built around machines, panels, power system
 
 **Flow**
 
-1. Find Keycard to enter Portal Room
+1. Find Keycard to enter Portal Room.
 2. Use computers and control panels.
 3. Complete satellite and power Cell objectives.
 4. Pick up the gun.

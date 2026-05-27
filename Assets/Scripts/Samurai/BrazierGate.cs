@@ -10,6 +10,9 @@ public class BrazierGate : MonoBehaviour
     private AudioSource audioSource;
     [Header("Spawner")]
     public EnemySpawner gateSpawner;
+
+    [Header("Quest")]
+    public Quest killQuestGate;
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -26,7 +29,15 @@ public class BrazierGate : MonoBehaviour
     {
         braziersLit++;
         Debug.Log("Braziers lit: " + braziersLit + "/" + braziersRequired);
-        // No auto-open anymore — player must go interact with door using key
+
+        if (BothLit())
+        {
+            if (gateSpawner != null)
+                gateSpawner.StartSpawning();
+
+            if (killQuestGate != null && QuestManager.Instance != null)
+                QuestManager.Instance.AcceptQuest(killQuestGate);
+        }
     }
 
     public void PlayOpenSound()
