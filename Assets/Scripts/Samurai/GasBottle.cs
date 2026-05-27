@@ -18,7 +18,8 @@ public class GasBottle : MonoBehaviour, IInteractable
 
     [Header("Spawner")]
     public EnemySpawner brazierSpawner;
-    public int requiredGasCount = 2; // how many gas bottles needed before spawning
+    public int requiredGasCount = 2;
+    public Quest killQuestGas;
 
     public void Interact()
     {
@@ -40,7 +41,11 @@ public class GasBottle : MonoBehaviour, IInteractable
             // Check how many gas bottles collected
             int gasCount = GetGasCount();
             if (brazierSpawner != null && gasCount >= requiredGasCount)
+            {
                 brazierSpawner.StartSpawning();
+                if (QuestManager.Instance != null && killQuestGas != null)
+                    QuestManager.Instance.AcceptQuest(killQuestGas);
+            }
 
             gameObject.SetActive(false);
         }

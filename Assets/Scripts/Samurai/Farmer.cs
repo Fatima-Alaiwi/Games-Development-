@@ -31,6 +31,13 @@ public class Farmer : MonoBehaviour, IInteractable
     public Sprite keyIcon;
     public AudioClip collectSound;
 
+    [Header("Map Item")]
+    public string mapItemName = "SamuraiMap";
+    public Sprite mapIcon;
+    public AudioClip mapVoiceLine;   // farmer tells player about the map
+    public AudioClip mapPickupSound; // sound when map enters inventory
+    private bool _hasGivenMap = false;
+
     [Header("Dialogue")]
     public AudioClip greetingClip;
     public AudioClip oneItemClip;
@@ -38,6 +45,7 @@ public class Farmer : MonoBehaviour, IInteractable
 
     [Header("Quest Settings")]
     public Quest fruitQuest;
+    public Quest gasQuest;
 //    public Quest gasQuest;
     public string requiredItemName = "Fruit";
     public int requiredAmount = 2;
@@ -92,6 +100,22 @@ public class Farmer : MonoBehaviour, IInteractable
 
   public void Interact()
 {
+    if (!_hasGivenMap)
+    {
+        _hasGivenMap = true;
+        InventoryManager.instance.AddItem(mapItemName, mapIcon);
+
+        if (mapPickupSound != null)
+            AudioSource.PlayClipAtPoint(mapPickupSound, transform.position);
+
+        if (mapVoiceLine != null)
+        {
+            GameObject voiceObj = GameObject.Find("VoiceAudioSource");
+            if (voiceObj != null)
+                voiceObj.GetComponent<AudioSource>()?.PlayOneShot(mapVoiceLine);
+        }
+    }
+
     int count = GetItemCount();
     Debug.Log("COUNT IS: " + count);
 
@@ -108,6 +132,9 @@ public class Farmer : MonoBehaviour, IInteractable
 
         if (QuestManager.Instance != null && fruitQuest != null)
             QuestManager.Instance.CompleteQuestPublic(fruitQuest);
+
+        if (QuestManager.Instance != null && gasQuest != null)
+            QuestManager.Instance.AcceptQuest(gasQuest);
 
         if (villageSpawner != null)
             villageSpawner.StartSpawning();

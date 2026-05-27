@@ -21,6 +21,17 @@ public class Brazier : MonoBehaviour, IInteractable
     private bool isLit = false;
     private AudioSource audioSource;
 
+    void Update()
+    {
+        if (isLit) return;
+
+        bool hasGas = InventoryManager.instance != null &&
+                      InventoryManager.instance.HasItem(requiredItemName);
+
+        InteractionText = hasGas ? "Light the brazier [E]" : "Need a gas bottle to light this";
+        isInteractable = true;
+    }
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -36,10 +47,7 @@ public class Brazier : MonoBehaviour, IInteractable
         if (isLit) return;
 
         if (!InventoryManager.instance.HasItem(requiredItemName))
-        {
-            InteractionText = "I need a gas bottle...";
             return;
-        }
 
         InventoryManager.instance.RemoveItem(requiredItemName, 1);
 
