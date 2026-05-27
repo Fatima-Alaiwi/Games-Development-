@@ -55,7 +55,7 @@ The lab level is a technical chapter built around machines, panels, power system
 
 **Flow**
 
-1. Find Keycard to enter Portal Room
+1. Find Keycard to enter Portal Room.
 2. Use computers and control panels.
 3. Complete satellite and power Cell objectives.
 4. Pick up the gun.
