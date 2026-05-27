@@ -30,20 +30,17 @@ public class SceneController : MonoBehaviour
             continueButton.interactable = true;
     }
 
+    public void Play()
+    {
+        if (SaveSystem.HasSave())
+            SaveSystem.ContinueGame();
+        else
+            SceneManager.LoadScene(firstLevelScene);
+    }
+
     public void StartGame()
     {
         SaveSystem.DeleteSave();
-        SceneManager.LoadScene(firstLevelScene);
-    }
-
-    public void ContinueGame()
-    {
-        if (SaveSystem.HasSave())
-        {
-            SaveSystem.ContinueGame();
-            return;
-        }
-
         SceneManager.LoadScene(firstLevelScene);
     }
 
