@@ -28,8 +28,10 @@ public class HealthBar : MonoBehaviour
 
         if (healthBarFill != null)
         {
-            healthBarFill.rectTransform.pivot = new Vector2(0f, 0.5f);
-            healthBarFill.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+            healthBarFill.rectTransform.anchorMin = new Vector2(0f, 0f);
+            healthBarFill.rectTransform.anchorMax = new Vector2(1f, 1f);
+            healthBarFill.rectTransform.offsetMin = Vector2.zero;
+            healthBarFill.rectTransform.offsetMax = Vector2.zero;
             healthBarFill.color = greenColor;
         }
     }
@@ -45,8 +47,10 @@ public class HealthBar : MonoBehaviour
             Time.deltaTime * smoothSpeed
         );
 
-        healthBarFill.rectTransform.localScale =
-            new Vector3(displayedFill, 1f, 1f);
+        Vector2 aMax = healthBarFill.rectTransform.anchorMax;
+        aMax.x = displayedFill;
+        healthBarFill.rectTransform.anchorMax = aMax;
+        healthBarFill.rectTransform.offsetMax = new Vector2(0f, healthBarFill.rectTransform.offsetMax.y);
 
         // Smooth color without shaking
         Color targetColor = GetSmoothHealthColor(displayedFill);

@@ -12,6 +12,8 @@ public class FairyNPC : MonoBehaviour, IInteractable
     public Transform LabelAnchor => _labelAnchor != null ? _labelAnchor : transform;
 
     [Header("Audio & Voice Lines")]
+    [Tooltip("Peter's reaction voice line after the Fairy speaks")]
+    public AudioClip peterReactionClip;
     [Tooltip("The voice line file (.mp3, .wav) to play when interacting")]
     public AudioClip voiceLineClip;
     private AudioSource audioSource;
@@ -143,6 +145,12 @@ public class FairyNPC : MonoBehaviour, IInteractable
 
         // 3. Dialogue has finished: Stop fast wing-flapping animations instantly
         isTalking = false;
+        // Play Peter's reaction line right after fairy finishes
+        if (peterReactionClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(peterReactionClip);
+            yield return new WaitForSeconds(peterReactionClip.length);
+        }
 
         // 4. Drop the health reward pack right on cue when speech stops!
         if (healthPickupPrefab != null)
@@ -152,7 +160,7 @@ public class FairyNPC : MonoBehaviour, IInteractable
             Debug.Log("Potion spawned successfully!");
         }
 
-        // 5. Instantly hand over the 'Talk to Merchant' Quest to update Raghad's HUD layout
+        // 5. Instantly hand over the 'Talk to Merchant' Quest to update HUD layout
         if (talkToMerchantQuest != null && QuestManager.Instance != null)
         {
             talkToMerchantQuest.isCompleted = false;

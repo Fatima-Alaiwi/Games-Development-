@@ -23,6 +23,9 @@ public class PosterExamine : MonoBehaviour, IInteractable
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
         examineUI.SetActive(false);
     }
 
