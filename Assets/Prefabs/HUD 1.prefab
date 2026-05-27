@@ -177,7 +177,6 @@ GameObject:
   - component: {fileID: 3727041375875148943}
   - component: {fileID: 3217686523737985007}
   - component: {fileID: 6360277076267853371}
-  - component: {fileID: 3027271437803972456}
   m_Layer: 5
   m_Name: RedBar
   m_TagString: Untagged
@@ -265,19 +264,3 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &3027271437803972456
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8655815680666542773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 533ef16690dd1544eaef93c2cdd1a735, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthBarFill: {fileID: 3217686523737985007}
-  maxHealth: 10
-  currentHealth: 10
-  smoothSpeed: 100

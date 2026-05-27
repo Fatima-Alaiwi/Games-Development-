@@ -169,6 +169,8 @@ public class Magician : MonoBehaviour, IInteractable
 
         // Player has all 4 bottles — give the password
         hasGivenCode = true;
+        hasReplayedCode = true; // block any accidental second E press during playback
+        isInteractable = false;
         InventoryManager.instance.RemoveItem("Bottle", 4);
 
         if (findLibraryQuest != null)
@@ -191,6 +193,12 @@ public class Magician : MonoBehaviour, IInteractable
         if (peterCodeClip != null && audioSource != null)
             audioSource.PlayOneShot(peterCodeClip);
         Debug.Log("Peter reacts to the password.");
+
+        // Re-enable interaction after the full sequence so player can ask for reminder later
+        float peterLineDuration = peterCodeClip != null ? peterCodeClip.length + 0.3f : 2f;
+        yield return new WaitForSeconds(peterLineDuration);
+        isInteractable = true;
+        hasReplayedCode = false; // allow one reminder replay now that playback is fully done
     }
 
     int GetBottleCount()
