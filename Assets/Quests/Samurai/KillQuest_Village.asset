@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   goalItemName: enemy_kill
   activeMessage: 'Enemies remaining:'
-  completeMessage: Area cleared!
+  completeMessage: Light up the castle's braziers
   goalAmount: 2
   currentAmount: 2
   isCompleted: 0
