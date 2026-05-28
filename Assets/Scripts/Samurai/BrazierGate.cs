@@ -7,6 +7,7 @@ public class BrazierGate : MonoBehaviour
     public AudioClip gateOpenSound; // keep for when door actually opens
 
     private int braziersLit = 0;
+    private bool _spawnerStarted = false;
     private AudioSource audioSource;
     [Header("Spawner")]
     public EnemySpawner gateSpawner;
@@ -18,6 +19,8 @@ public class BrazierGate : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+
+        killQuestGate?.ResetQuest();
     }
 
     public bool BothLit()
@@ -30,8 +33,10 @@ public class BrazierGate : MonoBehaviour
         braziersLit++;
         Debug.Log("Braziers lit: " + braziersLit + "/" + braziersRequired);
 
-        if (BothLit())
+        if (BothLit() && !_spawnerStarted)
         {
+            _spawnerStarted = true;
+
             if (gateSpawner != null)
                 gateSpawner.StartSpawning();
 
