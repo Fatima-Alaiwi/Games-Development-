@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28148716228e71248b701802d96ed068, type: 3}
   m_Name: KillQuest_Gate
   m_EditorClassIdentifier: 
-  questName: KillQuest_Brazier
+  questName: KillQuest_Gate
   description: 
   goalItemName: enemy_kill
   activeMessage: 'Enemies remaining:'
-  completeMessage: Area cleared!
+  completeMessage: Open the Gate & Cut the Gold Bamboo
   goalAmount: 1
-  currentAmount: 0
-  isCompleted: 0
+  currentAmount: 1
+  isCompleted: 1

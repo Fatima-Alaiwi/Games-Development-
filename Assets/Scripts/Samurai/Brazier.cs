@@ -28,7 +28,7 @@ public class Brazier : MonoBehaviour, IInteractable
         bool hasGas = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredItemName);
 
-        InteractionText = hasGas ? "Light the brazier [E]" : "Need a gas bottle to light this";
+        InteractionText = hasGas ? "Light the brazier [E]" : "Get the gas from the Zen Garden";
         isInteractable = true;
     }
 

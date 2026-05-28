@@ -11,9 +11,6 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     public Transform labelAnchor;
     public Transform LabelAnchor => labelAnchor;
 
-    [Header("Spawner")]
-    public EnemySpawner brazierSpawner;
-
     [Header("Requirements")]
     public BrazierGate brazierGate;
     public string requiredKeyName = "Key1";
@@ -43,14 +40,11 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     {
         if (isOpen) return;
 
-        bool braziersLit = brazierGate != null && brazierGate.BothLit();
         bool allQuestsDone = AllQuestsDone();
         bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
 
-        if (!braziersLit)
-            _interactionText = "The braziers must be lit first...";
-        else if (!allQuestsDone)
+        if (!allQuestsDone)
             _interactionText = "Complete all quests first...";
         else if (!hasKey)
             _interactionText = "You need a key to open this gate.";
@@ -62,12 +56,11 @@ public class BrazierDoor : MonoBehaviour, IInteractable
     {
         if (isOpen) return;
 
-        bool braziersLit = brazierGate != null && brazierGate.BothLit();
         bool allQuestsDone = AllQuestsDone();
         bool hasKey = InventoryManager.instance != null &&
                       InventoryManager.instance.HasItem(requiredKeyName);
 
-        if (!braziersLit || !allQuestsDone || !hasKey) return;
+        if (!allQuestsDone || !hasKey) return;
 
         InventoryManager.instance.RemoveItem(requiredKeyName, 1);
 
@@ -109,9 +102,6 @@ public class BrazierDoor : MonoBehaviour, IInteractable
                     voiceSource.PlayOneShot(voiceLine);
             }
         }
-
-        if (brazierSpawner != null)
-            brazierSpawner.StartSpawning();
 
         StartCoroutine(OpenDoorCoroutine());
     }
